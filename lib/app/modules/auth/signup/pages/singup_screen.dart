@@ -11,6 +11,7 @@ import 'package:hezr/global/utils/widget_spacing.dart';
 import 'package:hezr/global/widgets/auth_text_field.dart';
 import 'package:hezr/global/widgets/common_button.dart';
 import 'package:hezr/global/widgets/socail_container.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpScreen extends GetView<SignUpCtrl> {
   const SignUpScreen({super.key});
@@ -85,6 +86,8 @@ class SignUpScreen extends GetView<SignUpCtrl> {
                   return null;
                 },
               ),
+              15.verticalSpace,
+              _buildPhoneContainer(),
               15.verticalSpace,
               CommonTextfeild(
                 scanIcons: false,
@@ -190,6 +193,50 @@ class SignUpScreen extends GetView<SignUpCtrl> {
       height: 0.5,
       width: size.width / 3.6,
       color: const Color(0xffE7E8EA),
+    );
+  }
+
+  _buildPhoneContainer() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: const Color(0xff6C5DD3),
+          )),
+      child: InternationalPhoneNumberInput(
+        onInputChanged: (PhoneNumber number) {},
+        onInputValidated: (bool value) {},
+        selectorConfig: const SelectorConfig(
+          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+        ),
+        ignoreBlank: false,
+        autoValidateMode: AutovalidateMode.disabled,
+        selectorTextStyle: AppTextStyles.medium.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+            color: AppColors.primaryColor),
+        // scrollPadding: EdgeInsets.zero,
+        textFieldController: controller.phone,
+        formatInput: false,
+        maxLength: 9,
+        keyboardType:
+            const TextInputType.numberWithOptions(signed: true, decimal: true),
+        cursorColor: Colors.black,
+        inputDecoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(bottom: 0, left: 0),
+          border: InputBorder.none,
+          isCollapsed: true,
+          isDense: false,
+          hintText: 'Phone Number',
+          hintStyle: AppTextStyles.medium.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: 15,
+            color: const Color(0xffA0A1AB),
+          ),
+        ),
+        onSaved: (PhoneNumber number) {},
+      ),
     );
   }
 }

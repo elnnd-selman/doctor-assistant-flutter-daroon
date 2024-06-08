@@ -1,19 +1,19 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/routes/app_pages.dart';
 import 'package:hezr/global/constants/app_colors.dart';
+import 'package:hezr/global/constants/app_constants.dart';
 import 'package:hezr/global/constants/size_config.dart';
 
 void main() {
-  // runApp(const MyApp());
-  runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) => const MyApp(),
-    ),
-  );
+  runApp(const MyApp());
+  // runApp(
+  //   DevicePreview(
+  //     enabled: false,
+  //     builder: (context) => const MyApp(),
+  //   ),
+  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
           defaultTransition: Transition.cupertino,
           initialRoute: AppPages.initial,
           theme: ThemeData(
+            fontFamily: kFontFamily,
             brightness: Brightness.light,
             scaffoldBackgroundColor: Colors.white,
             primaryColor: AppColors.blackBGColor,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/routes/app_routes.dart';
@@ -72,7 +73,8 @@ class LoginSelectionScreen extends StatelessWidget {
                   "Sign up with email or phone number",
                   style: AppTextStyles.bold.copyWith(
                     fontSize: 15,
-                    color: const Color(0xff6C5DD3),
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
                   ),
                 ),
               ),
@@ -80,7 +82,9 @@ class LoginSelectionScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Row(
               children: [
-                _dividerContainer(size),
+                Expanded(
+                  child: _dividerContainer(),
+                ),
                 const SizedBox(width: 10),
                 Text(
                   "Or",
@@ -90,7 +94,7 @@ class LoginSelectionScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                _dividerContainer(size),
+                Expanded(child: _dividerContainer()),
               ],
             ),
             const SizedBox(height: 16),
@@ -102,10 +106,8 @@ class LoginSelectionScreen extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: const Color(0xff707281),
               ),
-              subtitleStyle: AppTextStyles.bold.copyWith(
-                fontSize: 16,
-                color: const Color(0xff6C5DD3),
-              ),
+              subtitleStyle: AppTextStyles.bold
+                  .copyWith(fontSize: 16, color: AppColors.primaryColor),
               ontap: () {
                 Get.offAllNamed(Routes.login);
               },
@@ -117,10 +119,10 @@ class LoginSelectionScreen extends StatelessWidget {
     );
   }
 
-  Container _dividerContainer(Size size) {
+  Container _dividerContainer() {
     return Container(
       height: 0.5,
-      width: size.width / 2.5,
+      // width: size.width / 2.5,
       color: const Color(0xffE7E8EA),
     );
   }

@@ -9,4 +9,9 @@ abstract class Routes {
   static const emailPhoneNumber = '/emailPhoneNumber';
   static const otpScreen = '/otpScreen';
   static const forgetPassword = '/forgetPassword';
+
+  ////// Doctor  Screen/////
+
+  static const doctordrawerScreen = "/doctordrawerHomeScreen";
+  static const doctorBottomNaviBar = "/doctorBottomNaviBar";
 }

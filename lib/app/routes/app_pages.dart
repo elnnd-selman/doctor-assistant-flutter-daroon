@@ -6,6 +6,8 @@ import 'package:hezr/app/modules/auth/login/pages/login_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/email_phone_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/otp_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/singup_screen.dart';
+import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_bottom_navi_bar.dart';
+import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_drawer.dart';
 import 'package:hezr/app/modules/on_boarding/pages/login_selection_screen.dart';
 import 'package:hezr/app/modules/on_boarding/pages/onboarding_screen.dart';
 import 'package:hezr/app/modules/splash/splash_screen.dart';
@@ -51,6 +53,14 @@ class AppPages {
       name: Routes.forgetPassword,
       page: () => const ForgetPassowrdScreen(),
       binding: ForgetPasswordBindings(),
+    ),
+    GetPage(
+      name: Routes.doctordrawerScreen,
+      page: () => const DoctorDrawerScreen(),
+    ),
+    GetPage(
+      name: Routes.doctorBottomNaviBar,
+      page: () => const DoctorBottomNaviBar(),
     ),
   ];
 }

@@ -7,6 +7,7 @@ import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/app_constants.dart';
 import 'package:hezr/global/constants/email_validation.dart';
+import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
 import 'package:hezr/global/widgets/auth_text_field.dart';
@@ -18,18 +19,24 @@ class LoginScreen extends GetView<LoginCtrl> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+            )),
+      ),
       backgroundColor: AppColors.whiteBGColor,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 30),
+              const SizedBox(height: 25),
               Row(
                 children: [
                   Image.asset(
@@ -37,7 +44,7 @@ class LoginScreen extends GetView<LoginCtrl> {
                     width: 35,
                   ),
                   const SizedBox(width: 6),
-                  Text("Hezr",
+                  Text("Daroon",
                       style: AppTextStyles.bold.copyWith(
                         fontSize: 25,
                         fontFamily: ksecondaryFontFamily,
@@ -45,15 +52,15 @@ class LoginScreen extends GetView<LoginCtrl> {
                       )),
                 ],
               ),
-              const SizedBox(height: 60),
+              SizedBox(height: 6 * SizeConfig.heightMultiplier),
               Text("Log in to make your memories.",
                   style: AppTextStyles.medium.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     // fontFamily: ksecondaryFontFamily,
-                    color: AppColors.blackBGColor,
+                    color: const Color(0xff707281),
                   )),
-              const SizedBox(height: 30),
+              SizedBox(height: 2 * SizeConfig.heightMultiplier),
               CommonTextfeild(
                 scanIcons: false,
                 obscuretext: false,
@@ -102,12 +109,14 @@ class LoginScreen extends GetView<LoginCtrl> {
                       )),
                 ),
               ),
-              20.verticalSpace,
+              SizedBox(height: 2 * SizeConfig.heightMultiplier),
               CommonButton(
-                ontap: () {},
+                ontap: () {
+                  Get.offAllNamed(Routes.doctordrawerScreen);
+                },
                 name: "Log In",
               ),
-              20.verticalSpace,
+              SizedBox(height: 1 * SizeConfig.heightMultiplier),
               HaveAccount(
                 title: "Don’t have an account? ",
                 subtitle: "Sign up",
@@ -122,10 +131,10 @@ class LoginScreen extends GetView<LoginCtrl> {
                   Get.toNamed(Routes.singup);
                 },
               ),
-              35.verticalSpace,
+              SizedBox(height: 4 * SizeConfig.heightMultiplier),
               Row(
                 children: [
-                  _dividerContainer(size),
+                  Expanded(child: _dividerContainer()),
                   const SizedBox(width: 10),
                   Text(
                     "Or login with",
@@ -136,10 +145,10 @@ class LoginScreen extends GetView<LoginCtrl> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  _dividerContainer(size),
+                  Expanded(child: _dividerContainer()),
                 ],
               ),
-              35.verticalSpace,
+              SizedBox(height: 4 * SizeConfig.heightMultiplier),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -168,10 +177,9 @@ class LoginScreen extends GetView<LoginCtrl> {
     );
   }
 
-  Container _dividerContainer(Size size) {
+  Container _dividerContainer() {
     return Container(
       height: 0.5,
-      width: size.width / 3.4,
       color: const Color(0xffE7E8EA),
     );
   }

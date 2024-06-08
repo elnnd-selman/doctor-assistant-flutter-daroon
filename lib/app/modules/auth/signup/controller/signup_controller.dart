@@ -5,4 +5,5 @@ class SignUpCtrl extends GetxController {
   final email = TextEditingController();
   final userName = TextEditingController();
   final password = TextEditingController();
+  final phone = TextEditingController();
 }
