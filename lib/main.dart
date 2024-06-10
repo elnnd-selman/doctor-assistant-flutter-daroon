@@ -5,15 +5,16 @@ import 'package:hezr/app/routes/app_pages.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/app_constants.dart';
 import 'package:hezr/global/constants/size_config.dart';
+import 'package:device_preview/device_preview.dart';
 
 void main() {
-  runApp(const MyApp());
-  // runApp(
-  //   DevicePreview(
-  //     enabled: false,
-  //     builder: (context) => const MyApp(),
-  //   ),
-  // );
+  // runApp(const MyApp());
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

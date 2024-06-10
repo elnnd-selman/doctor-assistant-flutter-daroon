@@ -21,6 +21,7 @@ class LoginScreen extends GetView<LoginCtrl> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.whiteBGColor,
         leading: IconButton(
             onPressed: () {
               Get.back();

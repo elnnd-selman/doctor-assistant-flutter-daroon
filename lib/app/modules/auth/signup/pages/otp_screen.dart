@@ -84,7 +84,7 @@ class OtpScreen extends StatelessWidget {
             const Spacer(),
             CommonButton(
                 ontap: () {
-                  Get.offAllNamed(Routes.login);
+                  Get.offAllNamed(Routes.profilePic);
                 },
                 name: "Verify"),
             20.verticalSpace,

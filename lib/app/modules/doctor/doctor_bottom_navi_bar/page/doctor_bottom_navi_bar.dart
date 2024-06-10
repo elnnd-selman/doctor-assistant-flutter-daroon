@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hezr/app/modules/doctor/doctor_appointment/pages/doctor_appointment_screen.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_appointment_app_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_home_app_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_home/page/doctor_home_screen.dart';
@@ -101,6 +102,17 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
   final List _appBars = [
     const DoctorHomeAppBar(),
     const DoctorAppointmentAppBar(),
+    const DoctorAppointmentAppBar(),
+    const DoctorAppointmentAppBar(),
+    const DoctorAppointmentAppBar(),
+  ];
+
+  final List pagesList = [
+    const DoctorHomeScreen(),
+    const DoctorAppointmentScreen(),
+    Container(),
+    Container(),
+    Container(),
   ];
 
   @override
@@ -117,7 +129,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
           SizedBox(
             height: size.height,
             width: size.width,
-            child: currentValue == 0 ? const DoctorHomeScreen() : null,
+            child: pagesList[currentValue],
           ),
           Positioned(
             bottom: 0,

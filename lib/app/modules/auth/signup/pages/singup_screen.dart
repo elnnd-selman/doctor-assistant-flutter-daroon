@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:hezr/app/modules/auth/signup/controller/signup_controller.dart';
 import 'package:hezr/app/modules/on_boarding/pages/login_selection_screen.dart';
 import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/email_validation.dart';
+import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
 import 'package:hezr/global/widgets/auth_text_field.dart';
 import 'package:hezr/global/widgets/common_button.dart';
-import 'package:hezr/global/widgets/socail_container.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpScreen extends GetView<SignUpCtrl> {
@@ -18,10 +17,9 @@ class SignUpScreen extends GetView<SignUpCtrl> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColors.whiteBGColor,
         leading: IconButton(
             onPressed: () {
               Get.back();
@@ -122,54 +120,18 @@ class SignUpScreen extends GetView<SignUpCtrl> {
                   return null;
                 },
               ),
-              20.verticalSpace,
+              SizedBox(
+                height: 15 * SizeConfig.heightMultiplier,
+              ),
               CommonButton(
                   ontap: () {
-                    Get.toNamed(Routes.emailPhoneNumber);
+                    Get.toNamed(Routes.otpScreen);
                   },
-                  name: "Continue"),
-              20.verticalSpace,
-              Row(
-                children: [
-                  _dividerContainer(size),
-                  const SizedBox(width: 10),
-                  Text(
-                    "Or continue with",
-                    style: AppTextStyles.medium.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: const Color(0xffA0A1AB),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  _dividerContainer(size),
-                ],
-              ),
-              20.verticalSpace,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SocailContainer(
-                    imageUrl: Assets.googleLogo,
-                    height: 40,
-                    ontap: () {},
-                  ),
-                  SocailContainer(
-                    imageUrl: Assets.appleLogo,
-                    height: 40,
-                    ontap: () {},
-                  ),
-                  SocailContainer(
-                    imageUrl: Assets.facebookLogo,
-                    height: 40,
-                    ontap: () {},
-                  ),
-                ],
-              ),
-              50.verticalSpace,
+                  name: "Next"),
+              10.verticalSpace,
               HaveAccount(
                 title: "Already have an account? ",
-                subtitle: "Sign in",
+                subtitle: "Log in",
                 titleStyle: AppTextStyles.medium.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -181,6 +143,7 @@ class SignUpScreen extends GetView<SignUpCtrl> {
                   Get.back();
                 },
               ),
+              20.verticalSpace,
             ],
           ),
         ),
@@ -188,21 +151,14 @@ class SignUpScreen extends GetView<SignUpCtrl> {
     );
   }
 
-  Container _dividerContainer(Size size) {
-    return Container(
-      height: 0.5,
-      width: size.width / 3.6,
-      color: const Color(0xffE7E8EA),
-    );
-  }
-
   _buildPhoneContainer() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          color: const Color(0xffF7F7F8),
+          borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: const Color(0xff6C5DD3),
+            color: AppColors.borderColor,
           )),
       child: InternationalPhoneNumberInput(
         onInputChanged: (PhoneNumber number) {},
@@ -215,7 +171,7 @@ class SignUpScreen extends GetView<SignUpCtrl> {
         selectorTextStyle: AppTextStyles.medium.copyWith(
             fontWeight: FontWeight.w400,
             fontSize: 15,
-            color: AppColors.primaryColor),
+            color: AppColors.blackBGColor),
         // scrollPadding: EdgeInsets.zero,
         textFieldController: controller.phone,
         formatInput: false,

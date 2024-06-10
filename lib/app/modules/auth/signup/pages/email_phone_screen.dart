@@ -81,7 +81,7 @@ class _EmailPhoneNumberScreenState extends State<EmailPhoneNumberScreen>
                       color: AppColors.primaryColor,
                     ),
                     dividerColor: const Color(0xffE4E4E4),
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
                     indicatorColor: AppColors.primaryColor,
                     unselectedLabelStyle: AppTextStyles.semiBold.copyWith(
                       fontSize: 15,
