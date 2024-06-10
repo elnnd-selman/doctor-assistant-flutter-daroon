@@ -20,7 +20,7 @@ class DoctorDrawerWidget extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(
             top: 1 * SizeConfig.heightMultiplier,
-            left: 4 * SizeConfig.widthMultiplier),
+            left: 3 * SizeConfig.widthMultiplier),
         height: 4 * SizeConfig.heightMultiplier,
         width: 4 * SizeConfig.widthMultiplier,
         child: Column(

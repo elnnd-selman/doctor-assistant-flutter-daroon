@@ -58,7 +58,7 @@ class DoctorDrawerOption extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height: 4 * SizeConfig.heightMultiplier,
+            height: 4.5 * SizeConfig.heightMultiplier,
             width: 8 * SizeConfig.widthMultiplier,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
@@ -79,33 +79,6 @@ class DoctorDrawerOption extends StatelessWidget {
                 fontSize: 1.5 * SizeConfig.heightMultiplier,
               )),
         ],
-      ),
-    );
-  }
-
-  Widget drawerList(IconData icon, String text, int index) {
-    return GestureDetector(
-      onTap: () {
-        setIndex(index);
-      },
-      child: Container(
-        margin: EdgeInsets.only(left: 20, bottom: 12),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: Colors.white,
-            ),
-            SizedBox(
-              width: 12,
-            ),
-            Text(
-              text,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
       ),
     );
   }

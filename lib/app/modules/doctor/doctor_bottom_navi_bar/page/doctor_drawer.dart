@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_bottom_navi_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/widget/doctor_drawer_option.dart';
+import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 
 class DoctorDrawerScreen extends StatelessWidget {
@@ -11,7 +13,11 @@ class DoctorDrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ZoomDrawer(
       menuScreen: DoctorDrawerOption(
-        setIndex: (index) {},
+        setIndex: (index) {
+          if (index == 0) {
+            Get.toNamed(Routes.doctorOffers);
+          }
+        },
       ),
       mainScreen: const DoctorBottomNaviBar(),
       borderRadius: 40,

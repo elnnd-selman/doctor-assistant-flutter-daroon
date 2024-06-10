@@ -5,7 +5,7 @@ import 'package:hezr/global/utils/app_text_style.dart';
 // ignore: must_be_immutable
 class CommonTextfeild extends StatefulWidget {
   CommonTextfeild({
-    Key? key,
+    super.key,
     required this.obscuretext,
     required this.hinttext,
     required this.validations,
@@ -14,7 +14,7 @@ class CommonTextfeild extends StatefulWidget {
     required this.showicon,
     required this.scanIcons,
     this.onChange,
-  }) : super(key: key);
+  });
   bool obscuretext;
   final String hinttext;
   final TextEditingController controller;
