@@ -24,7 +24,8 @@ class CustomOptionalToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceWidth = MediaQuery.of(Get.context!).size.width - 200;
+    final deviceWidth = MediaQuery.of(Get.context!).size.width -
+        SizeConfig.widthMultiplier * 35;
     final widgetWidth = deviceWidth - 40;
     final capsuleWidth = widgetWidth * 0.33;
     return SizedBox(
@@ -33,7 +34,7 @@ class CustomOptionalToggleButton extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Container(
-            height: 40,
+            height: SizeConfig.heightMultiplier * 5,
             width: widgetWidth,
             decoration: BoxDecoration(
               color: const Color(0xff979797).withOpacity(0.08),
@@ -47,12 +48,13 @@ class CustomOptionalToggleButton extends StatelessWidget {
             left: value == 0
                 ? 0
                 : value == 1
-                    ? deviceWidth * 0.454 - capsuleWidth * 0.6
+                    ? deviceWidth * SizeConfig.widthMultiplier * 0.4 -
+                        capsuleWidth * SizeConfig.widthMultiplier * 0.18
                     : null,
             right: value == 2 ? 0 : null,
             child: Container(
               width: capsuleWidth,
-              height: 40,
+              height: SizeConfig.heightMultiplier * 5,
               decoration: BoxDecoration(
                 // color: AppColors.blackBGColor,
                 border: Border.all(

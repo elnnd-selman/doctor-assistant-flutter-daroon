@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hezr/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
 import 'package:hezr/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
 import 'package:hezr/app/modules/doctor/doctor_offers/widget/offer_toggle_button.dart';
+import 'package:hezr/app/routes/app_routes.dart';
+import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
@@ -57,12 +59,12 @@ class DoctorOffersPage extends GetView<DoctorOffersController> {
                 },
                 textEditingController: TextEditingController(),
                 trailingWidget: SvgPicture.asset(
-                  "assets/icons/serachIcon.svg",
+                  Assets.serachIcon,
                   colorFilter: const ColorFilter.mode(
                       Color(0xff979797), BlendMode.srcIn),
                 ),
                 secondaryButtonWidget: const Icon(Icons.close),
-                buttonWidget: SvgPicture.asset("assets/icons/serachIcon.svg"),
+                buttonWidget: SvgPicture.asset(Assets.serachIcon),
               ),
             ),
           ),
@@ -100,20 +102,27 @@ class DoctorOffersPage extends GetView<DoctorOffersController> {
                     fontSize: 17,
                   ),
                 ),
-                Text(
-                  "Add Offer",
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor,
-                    fontSize: 13,
+                GestureDetector(
+                  onTap: () => Get.toNamed(Routes.doctorAddOffers),
+                  child: Text(
+                    "Add Offer",
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primaryColor,
+                      fontSize: 13,
+                    ),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 3 * SizeConfig.heightMultiplier),
             Obx(() => controller.selectedTab == 0
-                ? const MoreOfferContainer(
-                    statusColor: Color(0xff5BA66B), statusText: "Published")
+                ? GestureDetector(
+                    onTap: () => Get.toNamed(Routes.doctorOffersDetails),
+                    child: const MoreOfferContainer(
+                        statusColor: Color(0xff5BA66B),
+                        statusText: "Published"),
+                  )
                 : const MoreOfferContainer(
                     statusColor: Color(0xffFFC000), statusText: "Pending"))
           ],

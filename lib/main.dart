@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/binding/initial_binding.dart';
 import 'package:hezr/app/routes/app_pages.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/app_constants.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final appDocumentDirectory =
+      await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+  await Hive.openBox('DaroonBox');
+
   // runApp(const MyApp());
   runApp(
     DevicePreview(
@@ -37,10 +47,11 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           key: MyApp.navigatorKey,
           debugShowCheckedModeBanner: false,
-          title: 'Hezr',
+          title: 'Daroon',
           getPages: AppPages.routes,
           defaultTransition: Transition.cupertino,
           initialRoute: AppPages.initial,
+          initialBinding: InitialBindings(),
           theme: ThemeData(
             fontFamily: kFontFamily,
             brightness: Brightness.light,

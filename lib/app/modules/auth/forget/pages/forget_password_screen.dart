@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/modules/auth/forget/controller/forget_password_controller.dart';
+import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:hezr/global/widgets/common_button.dart';
 
 class ForgetPassowrdScreen extends GetView<ForgetPasswordCtrl> {
   const ForgetPassowrdScreen({super.key});
@@ -24,40 +26,48 @@ class ForgetPassowrdScreen extends GetView<ForgetPasswordCtrl> {
       backgroundColor: AppColors.whiteBGColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 30),
-              Text("Forgot password 🔒",
-                  style: AppTextStyles.bold.copyWith(
-                    fontSize: 25,
-                    color: AppColors.darkBlackBGColor,
-                  )),
-              const SizedBox(height: 10),
-              Text(
-                  "Select which contact details should we use to reset your password.",
-                  style: AppTextStyles.medium.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    // fontFamily: ksecondaryFontFamily,
-                    color: const Color(0xff707281),
-                  )),
-              40.verticalSpace,
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      controller.currentIndex.value = index;
-                    },
-                    child: _buildForgetContainer(index),
-                  );
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            Text("Forgot password 🔒",
+                style: AppTextStyles.bold.copyWith(
+                  fontSize: 25,
+                  color: AppColors.darkBlackBGColor,
+                )),
+            const SizedBox(height: 10),
+            Text(
+                "Select which contact details should we use to reset your password.",
+                style: AppTextStyles.medium.copyWith(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  // fontFamily: ksecondaryFontFamily,
+                  color: const Color(0xff707281),
+                )),
+            40.verticalSpace,
+            ListView.builder(
+              shrinkWrap: true,
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    controller.currentIndex.value = index;
+                  },
+                  child: _buildForgetContainer(index),
+                );
+              },
+            ),
+            const Spacer(),
+            CommonButton(
+                ontap: () {
+                  if (controller.currentIndex.value == 0) {
+                    Get.toNamed(Routes.forgetEmail);
+                  } else {
+                    Get.toNamed(Routes.forgetPhone);
+                  }
                 },
-              ),
-            ],
-          ),
+                name: "Next")
+          ],
         ),
       ),
     );
@@ -111,7 +121,7 @@ class ForgetPassowrdScreen extends GetView<ForgetPasswordCtrl> {
                       color: AppColors.darkBlackBGColor,
                     )),
                 const SizedBox(height: 4),
-                Text(index == 0 ? "test@gmail.com" : "+9233333",
+                Text(index == 0 ? "Dor****@gmail.com" : "+9*********",
                     style: AppTextStyles.medium.copyWith(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
