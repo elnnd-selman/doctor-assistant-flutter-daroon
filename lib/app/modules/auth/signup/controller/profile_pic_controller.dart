@@ -1,10 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/global/constants/app_colors.dart';
+import 'package:hezr/global/constants/app_tokens.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:hezr/global/widgets/toast_message.dart';
+import 'package:hezr/services/api.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;
@@ -17,6 +22,9 @@ class ProfilePicController extends GetxController {
   late File image;
   String? selectedImageName;
   RxString? selectedimageName = "".obs;
+
+  final _processing = false.obs;
+  bool get processing => _processing.value;
 
   Future<void> addPhoto(BuildContext context) async {
     showCupertinoModalPopup(
@@ -123,5 +131,36 @@ class ProfilePicController extends GetxController {
       percentage: percentage,
     );
     return path;
+  }
+
+  uploadProfilePic({
+    required String image,
+    required String userToken,
+    required BuildContext context,
+  }) async {
+    _processing.value = true;
+    final response = await ApiService.patchImage(
+      filepath: image,
+      userToken: userToken,
+      url: '${AppTokens.apiURl}/users/profilePicture',
+    );
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      _processing.value = false;
+      showToastMessage(
+          message: "Successfully Picture uploaded",
+          // ignore: use_build_context_synchronously
+          context: context,
+          color: const Color(0xff5BA66B),
+          icon: Icons.check);
+      Get.offAllNamed(Routes.welcome);
+    } else {
+      _processing.value = false;
+      showToastMessage(
+          message: "Issue while uploading Picture",
+          // ignore: use_build_context_synchronously
+          context: context,
+          color: const Color(0xffEC1C24),
+          icon: Icons.close);
+    }
   }
 }

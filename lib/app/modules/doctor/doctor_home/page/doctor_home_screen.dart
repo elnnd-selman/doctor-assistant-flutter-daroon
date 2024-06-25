@@ -34,7 +34,7 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: AppColors.blackBGColor,
-                    fontSize: 16,
+                    fontSize: SizeConfig.heightMultiplier * 1.6,
                   ),
                 ),
                 const Spacer(),
@@ -57,7 +57,7 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
               style: AppTextStyles.medium.copyWith(
                 fontWeight: FontWeight.w500,
                 color: AppColors.blackBGColor,
-                fontSize: 16,
+                fontSize: SizeConfig.heightMultiplier * 1.6,
               ),
             ),
             SizedBox(height: 2 * SizeConfig.heightMultiplier),
@@ -70,7 +70,7 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w500,
                     color: AppColors.blackBGColor,
-                    fontSize: 16,
+                    fontSize: SizeConfig.heightMultiplier * 1.6,
                   ),
                 ),
                 const Spacer(),

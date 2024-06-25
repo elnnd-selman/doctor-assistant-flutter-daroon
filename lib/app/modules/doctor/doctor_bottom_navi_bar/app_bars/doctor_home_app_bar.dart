@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/widget/doctor_drawer_widget.dart';
+import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
@@ -54,9 +56,15 @@ class DoctorHomeAppBar extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          SvgPicture.asset(Assets.notificationIcon, height: 23, width: 23),
+          GestureDetector(
+              onTap: () => Get.toNamed(Routes.doctorNotification),
+              child: SvgPicture.asset(Assets.notificationIcon,
+                  height: 23, width: 23)),
           14.horizontalSpace,
-          SvgPicture.asset(Assets.messageIcon, height: 23, width: 23),
+          GestureDetector(
+              onTap: () => Get.toNamed(Routes.doctorMessage),
+              child:
+                  SvgPicture.asset(Assets.messageIcon, height: 23, width: 23)),
           SizedBox(width: 2.5 * SizeConfig.widthMultiplier)
         ],
       ),

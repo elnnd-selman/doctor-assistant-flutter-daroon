@@ -34,11 +34,11 @@ class CompleteAppointment extends StatelessWidget {
             },
             child: CustomPaint(
               size: Size(MediaQuery.of(context).size.width * 0.8,
-                  (MediaQuery.of(context).size.height * 0.34)),
+                  (MediaQuery.of(context).size.height * 0.32)),
               painter: RPSCustomPainters(),
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 1,
-                height: (MediaQuery.of(context).size.height * 0.27).toDouble(),
+                height: (MediaQuery.of(context).size.height * 0.32).toDouble(),
                 child: Stack(
                   children: [
                     _startButton(),
@@ -46,8 +46,7 @@ class CompleteAppointment extends StatelessWidget {
                       top: 0,
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 5 * SizeConfig.widthMultiplier,
-                            vertical: 0),
+                            horizontal: 5 * SizeConfig.widthMultiplier),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -74,26 +73,26 @@ class CompleteAppointment extends StatelessWidget {
                                     6.horizontalSpace,
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      // mainAxisAlignment: MainAxisAlignment.,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "Patient Name",
                                           style: AppTextStyles.medium.copyWith(
                                             fontWeight: FontWeight.w600,
                                             color: AppColors.primaryColor,
-                                            fontSize: 16,
+                                            fontSize:
+                                                SizeConfig.heightMultiplier *
+                                                    2.2,
                                           ),
                                         ),
-                                        // SizedBox(
-                                        //     height:
-                                        //         1 * SizeConfig.heightMultiplier),
                                         Text(
                                           "For her mother",
                                           style: AppTextStyles.medium.copyWith(
                                             fontWeight: FontWeight.w500,
                                             color: const Color(0xff737373),
-                                            fontSize: 14,
+                                            fontSize:
+                                                SizeConfig.heightMultiplier *
+                                                    1.8,
                                           ),
                                         ),
                                       ],
@@ -106,7 +105,9 @@ class CompleteAppointment extends StatelessWidget {
                                           MainAxisAlignment.start,
                                       children: [
                                         Container(
-                                          margin: const EdgeInsets.only(top: 4),
+                                          margin: EdgeInsets.only(
+                                              top: SizeConfig.heightMultiplier *
+                                                  0.8),
                                           height:
                                               7 * SizeConfig.heightMultiplier,
                                           width: 7 * SizeConfig.widthMultiplier,
@@ -131,8 +132,9 @@ class CompleteAppointment extends StatelessWidget {
                             SizedBox(height: 2 * SizeConfig.heightMultiplier),
                             Container(
                               width: MediaQuery.of(context).size.width * 0.8,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 14, vertical: 14),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: SizeConfig.widthMultiplier * 4,
+                                  vertical: SizeConfig.heightMultiplier * 2),
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: const Color(0xffC4C4C4)
@@ -145,7 +147,8 @@ class CompleteAppointment extends StatelessWidget {
                                     children: [
                                       SvgPicture.asset(
                                         "assets/icons/clock.svg",
-                                        height: 20,
+                                        height:
+                                            SizeConfig.heightMultiplier * 2.8,
                                       ),
                                       8.horizontalSpace,
                                       Text(
@@ -153,17 +156,21 @@ class CompleteAppointment extends StatelessWidget {
                                         style: AppTextStyles.medium.copyWith(
                                           fontWeight: FontWeight.w500,
                                           color: const Color(0xff427347),
-                                          fontSize: 14,
+                                          fontSize:
+                                              SizeConfig.heightMultiplier * 1.6,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  14.verticalSpace,
+                                  SizedBox(
+                                      height:
+                                          SizeConfig.heightMultiplier * 1.7),
                                   Row(
                                     children: [
                                       SvgPicture.asset(
                                         Assets.locationIcon,
-                                        height: 20,
+                                        height:
+                                            SizeConfig.heightMultiplier * 2.8,
                                         colorFilter: const ColorFilter.mode(
                                             Color(0xff979797), BlendMode.srcIn),
                                       ),
@@ -173,7 +180,8 @@ class CompleteAppointment extends StatelessWidget {
                                         style: AppTextStyles.medium.copyWith(
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.primaryColor,
-                                          fontSize: 14,
+                                          fontSize:
+                                              SizeConfig.heightMultiplier * 1.6,
                                         ),
                                       ),
                                     ],
@@ -181,6 +189,7 @@ class CompleteAppointment extends StatelessWidget {
                                 ],
                               ),
                             ),
+                            // SizedBox(height: 2.5 * SizeConfig.heightMultiplier),
                           ],
                         ),
                       ),
@@ -198,10 +207,12 @@ class CompleteAppointment extends StatelessWidget {
   Positioned _startButton() {
     return Positioned(
       right: 2,
-      top: 0,
+      top: 4,
       child: FadeInRight(
           child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        padding: EdgeInsets.symmetric(
+            horizontal: SizeConfig.widthMultiplier * 3.5,
+            vertical: SizeConfig.heightMultiplier * 1),
         decoration: BoxDecoration(
             color: AppColors.primaryColor,
             borderRadius: BorderRadius.circular(20)),
@@ -212,14 +223,14 @@ class CompleteAppointment extends StatelessWidget {
               style: AppTextStyles.medium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.whiteBGColor,
-                fontSize: 12,
+                fontSize: SizeConfig.heightMultiplier * 1.2,
               ),
             ),
-            8.horizontalSpace,
-            const Icon(
+            SizedBox(width: SizeConfig.widthMultiplier * 0.5),
+            Icon(
               Icons.arrow_forward_ios,
               color: AppColors.whiteBGColor,
-              size: 12,
+              size: SizeConfig.heightMultiplier * 1.2,
             )
           ],
         ),

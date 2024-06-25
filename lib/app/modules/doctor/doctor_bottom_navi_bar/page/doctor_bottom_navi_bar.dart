@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hezr/app/modules/doctor/doctor_add_post/pages/doctor_add_post.dart';
 import 'package:hezr/app/modules/doctor/doctor_appointment/pages/doctor_appointment_screen.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_appointment_app_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_home_app_bar.dart';
+import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_post_app_bar.dart';
+import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_profile_app_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_home/page/doctor_home_screen.dart';
+import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_profile.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
@@ -40,50 +44,65 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
     super.initState();
     _controller = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    _animation = Tween<double>(begin: 25, end: 33).animate(CurvedAnimation(
-        parent: _controller!,
-        curve: Curves.fastLinearToSlowEaseIn,
-        reverseCurve: Curves.easeIn))
+    _animation = Tween<double>(
+            begin: SizeConfig.heightMultiplier * 2.0,
+            end: SizeConfig.heightMultiplier * 2.5)
+        .animate(CurvedAnimation(
+            parent: _controller!,
+            curve: Curves.fastLinearToSlowEaseIn,
+            reverseCurve: Curves.easeIn))
       ..addListener(() {
         setState(() {});
       });
 
     _controller2 = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    _animation2 = Tween<double>(begin: 25, end: 33).animate(CurvedAnimation(
-        parent: _controller2!,
-        curve: Curves.fastLinearToSlowEaseIn,
-        reverseCurve: Curves.easeIn))
+    _animation2 = Tween<double>(
+            begin: SizeConfig.heightMultiplier * 2.0,
+            end: SizeConfig.heightMultiplier * 2.5)
+        .animate(CurvedAnimation(
+            parent: _controller2!,
+            curve: Curves.fastLinearToSlowEaseIn,
+            reverseCurve: Curves.easeIn))
       ..addListener(() {
         setState(() {});
       });
 
     _controller3 = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    _animation3 = Tween<double>(begin: 25, end: 33).animate(CurvedAnimation(
-        parent: _controller3!,
-        curve: Curves.fastLinearToSlowEaseIn,
-        reverseCurve: Curves.easeIn))
+    _animation3 = Tween<double>(
+            begin: SizeConfig.heightMultiplier * 2.8,
+            end: SizeConfig.heightMultiplier * 3)
+        .animate(CurvedAnimation(
+            parent: _controller3!,
+            curve: Curves.fastLinearToSlowEaseIn,
+            reverseCurve: Curves.easeIn))
       ..addListener(() {
         setState(() {});
       });
 
     _controller4 = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    _animation4 = Tween<double>(begin: 25, end: 33).animate(CurvedAnimation(
-        parent: _controller4!,
-        curve: Curves.fastLinearToSlowEaseIn,
-        reverseCurve: Curves.easeIn))
+    _animation4 = Tween<double>(
+            begin: SizeConfig.heightMultiplier * 2.8,
+            end: SizeConfig.heightMultiplier * 3)
+        .animate(CurvedAnimation(
+            parent: _controller4!,
+            curve: Curves.fastLinearToSlowEaseIn,
+            reverseCurve: Curves.easeIn))
       ..addListener(() {
         setState(() {});
       });
 
     _controller5 = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
-    _animation5 = Tween<double>(begin: 25, end: 33).animate(CurvedAnimation(
-        parent: _controller5!,
-        curve: Curves.fastLinearToSlowEaseIn,
-        reverseCurve: Curves.ease))
+    _animation5 = Tween<double>(
+            begin: SizeConfig.heightMultiplier * 2.8,
+            end: SizeConfig.heightMultiplier * 3)
+        .animate(CurvedAnimation(
+            parent: _controller5!,
+            curve: Curves.fastLinearToSlowEaseIn,
+            reverseCurve: Curves.ease))
       ..addListener(() {
         setState(() {});
       });
@@ -102,17 +121,17 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
   final List _appBars = [
     const DoctorHomeAppBar(),
     const DoctorAppointmentAppBar(),
-    const DoctorAppointmentAppBar(),
-    const DoctorAppointmentAppBar(),
-    const DoctorAppointmentAppBar(),
+    const DoctorPostAppBar(),
+    const DoctorPostAppBar(),
+    const DoctorProfileAppBar(),
   ];
 
   final List pagesList = [
     const DoctorHomeScreen(),
     const DoctorAppointmentScreen(),
+    const DoctorAddPostScreen(),
     Container(),
-    Container(),
-    Container(),
+    const DoctorProfileScreen(),
   ];
 
   @override
@@ -151,9 +170,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _bottomIcons(
-                      size: currentValue == 0
-                          ? (_animation!.value) - 6.5
-                          : (_animation!.value) - 5,
+                      size: _animation!.value,
                       icon: Assets.homeIcon,
                       color: currentValue == 0
                           ? AppColors.primaryColor
@@ -170,9 +187,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                         });
                       }),
                   _bottomIcons(
-                      size: currentValue == 1
-                          ? (_animation2!.value) - 6.5
-                          : (_animation2!.value) - 5,
+                      size: _animation2!.value,
                       icon: Assets.personIcon,
                       color: currentValue == 1
                           ? AppColors.primaryColor

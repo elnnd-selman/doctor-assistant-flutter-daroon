@@ -7,6 +7,7 @@ class AppColors {
   static const Color lightgreyColor = Color(0xff787B80);
   static const Color dotColor = Color(0xffD9D9D9);
   static const Color borderColor = Color(0xffE7E8EA);
+  static const Color secondaryborderColor = Color(0xffE8E8E8);
 
   static const Color blackBGColor = Colors.black;
   static const Color darkBlackBGColor = Color(0xff11142D);

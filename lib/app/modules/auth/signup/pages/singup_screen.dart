@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/modules/auth/signup/controller/signup_controller.dart';
-import 'package:hezr/app/modules/on_boarding/pages/login_selection_screen.dart';
-import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/email_validation.dart';
 import 'package:hezr/global/constants/size_config.dart';
@@ -10,14 +8,17 @@ import 'package:hezr/global/utils/app_text_style.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
 import 'package:hezr/global/widgets/auth_text_field.dart';
 import 'package:hezr/global/widgets/common_button.dart';
+import 'package:hezr/global/widgets/loading_overlay.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpScreen extends GetView<SignUpCtrl> {
-  const SignUpScreen({super.key});
+  SignUpScreen({super.key});
 
+  final form = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: AppColors.whiteBGColor,
         leading: IconButton(
@@ -29,124 +30,173 @@ class SignUpScreen extends GetView<SignUpCtrl> {
             )),
       ),
       backgroundColor: AppColors.whiteBGColor,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 30),
-              Text("Create account",
-                  style: AppTextStyles.bold.copyWith(
-                    fontSize: 25,
-                    color: AppColors.darkBlackBGColor,
-                  )),
-              const SizedBox(height: 10),
-              Text(
-                  "Set up your username and password. You can always change it later.",
-                  style: AppTextStyles.medium.copyWith(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    // fontFamily: ksecondaryFontFamily,
-                    color: const Color(0xff707281),
-                  )),
-              40.verticalSpace,
-              CommonTextfeild(
-                scanIcons: false,
-                obscuretext: false,
-                hinttext: "Username",
-                controller: controller.userName,
-                keyboardType: TextInputType.emailAddress,
-                showicon: false,
-                validations: (value) {
-                  if (value!.isEmpty) {
-                    return "";
-                  } else if (!isEmailValidator(value)) {
-                    return "";
-                  }
-                  return null;
-                },
-              ),
-              15.verticalSpace,
-              CommonTextfeild(
-                scanIcons: false,
-                obscuretext: false,
-                hinttext: "Email",
-                controller: controller.email,
-                keyboardType: TextInputType.emailAddress,
-                showicon: false,
-                validations: (value) {
-                  if (value!.isEmpty) {
-                    return "";
-                  } else if (!isEmailValidator(value)) {
-                    return "";
-                  }
-                  return null;
-                },
-              ),
-              15.verticalSpace,
-              _buildPhoneContainer(),
-              15.verticalSpace,
-              CommonTextfeild(
-                scanIcons: false,
-                obscuretext: true,
-                hinttext: "Password",
-                controller: controller.password,
-                keyboardType: TextInputType.emailAddress,
-                showicon: true,
-                validations: (value) {
-                  if (value!.isEmpty) {
-                    return "";
-                  } else if (!isEmailValidator(value)) {
-                    return "";
-                  }
-                  return null;
-                },
-              ),
-              15.verticalSpace,
-              CommonTextfeild(
-                scanIcons: false,
-                obscuretext: true,
-                hinttext: "Confirm Password",
-                controller: controller.password,
-                keyboardType: TextInputType.emailAddress,
-                showicon: true,
-                validations: (value) {
-                  if (value!.isEmpty) {
-                    return "";
-                  } else if (!isEmailValidator(value)) {
-                    return "";
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 15 * SizeConfig.heightMultiplier,
-              ),
-              CommonButton(
-                  ontap: () {
-                    Get.toNamed(Routes.otpScreen);
-                  },
-                  name: "Next"),
-              10.verticalSpace,
-              HaveAccount(
-                title: "Already have an account? ",
-                subtitle: "Log in",
-                titleStyle: AppTextStyles.medium.copyWith(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xff11142D),
+      body: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Form(
+                key: form,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 30),
+                    Text("Create account",
+                        style: AppTextStyles.bold.copyWith(
+                          fontSize: 25,
+                          color: AppColors.darkBlackBGColor,
+                        )),
+                    const SizedBox(height: 10),
+                    Text("create account to use app features.",
+                        style: AppTextStyles.medium.copyWith(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          // fontFamily: ksecondaryFontFamily,
+                          color: const Color(0xff707281),
+                        )),
+                    40.verticalSpace,
+                    CommonTextfeild(
+                      scanIcons: false,
+                      obscuretext: false,
+                      hinttext: "Username",
+                      controller: controller.userName,
+                      keyboardType: TextInputType.name,
+                      showicon: false,
+                      validations: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Username";
+                        }
+                        return null;
+                      },
+                    ),
+                    15.verticalSpace,
+                    CommonTextfeild(
+                      scanIcons: false,
+                      obscuretext: false,
+                      hinttext: "E-mail",
+                      controller: controller.email,
+                      keyboardType: TextInputType.emailAddress,
+                      showicon: false,
+                      validations: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter E-mail";
+                        } else if (!isEmailValidator(value)) {
+                          return "Email Invalid";
+                        }
+                        return null;
+                      },
+                    ),
+                    15.verticalSpace,
+                    _buildPhoneContainer(),
+                    Obx(
+                      () => controller.phoneEmpty.value
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 16),
+                              child: Text(
+                                controller.errorMessage.value,
+                                style: AppTextStyles.medium.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: const Color(0xff8B0000)),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                    15.verticalSpace,
+                    CommonTextfeild(
+                      scanIcons: false,
+                      obscuretext: true,
+                      hinttext: "Password",
+                      controller: controller.password,
+                      keyboardType: TextInputType.visiblePassword,
+                      showicon: true,
+                      validations: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Password";
+                        } else if (value.length < 6) {
+                          return "Password length should at least 6";
+                        }
+                        return null;
+                      },
+                    ),
+                    15.verticalSpace,
+                    CommonTextfeild(
+                      scanIcons: false,
+                      obscuretext: true,
+                      hinttext: "Confirm Password",
+                      controller: controller.confirmpassword,
+                      keyboardType: TextInputType.emailAddress,
+                      showicon: true,
+                      validations: (value) {
+                        if (value!.isEmpty) {
+                          return "Enter Password";
+                        } else if (controller.password.text !=
+                            controller.confirmpassword.text) {
+                          return "Password donot match";
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 4 * SizeConfig.heightMultiplier),
+                    CommonButton(
+                        ontap: () {
+                          if (form.currentState!.validate()) {
+                            if (controller.phone.text.isEmpty) {
+                              controller.phoneEmpty.value = true;
+                            } else {
+                              String newText =
+                                  controller.phone.text.replaceAll(' ', '');
+
+                              controller.checkPhoneValidation(
+                                newText,
+                                controller.dialCode.value,
+                              );
+                            }
+                            if (!controller.phoneEmpty.value) {
+                              controller.registerUser(context);
+                            }
+                          }
+                          if (controller.phone.text.isEmpty) {
+                            controller.phoneEmpty.value = true;
+                          } else {
+                            String newText =
+                                controller.phone.text.replaceAll(' ', '');
+
+                            controller.checkPhoneValidation(
+                              newText,
+                              controller.dialCode.value,
+                            );
+                          }
+                        },
+                        name: "Next"),
+                    // 10.verticalSpace,
+                    // HaveAccount(
+                    //   title: "Already have an account? ",
+                    //   subtitle: "Log in",
+                    //   titleStyle: AppTextStyles.medium.copyWith(
+                    //     fontSize: 14,
+                    //     fontWeight: FontWeight.w500,
+                    //     color: const Color(0xff11142D),
+                    //   ),
+                    //   subtitleStyle: AppTextStyles.bold
+                    //       .copyWith(fontSize: 16, color: AppColors.primaryColor),
+                    //   ontap: () {
+                    //     Get.back();
+                    //   },
+                    // ),
+                    20.verticalSpace,
+                  ],
                 ),
-                subtitleStyle: AppTextStyles.bold
-                    .copyWith(fontSize: 16, color: AppColors.primaryColor),
-                ontap: () {
-                  Get.back();
-                },
               ),
-              20.verticalSpace,
-            ],
+            ),
           ),
-        ),
+          Obx(() {
+            if (controller.processing) {
+              return const LoadingOverlay();
+            }
+            return const SizedBox();
+          }),
+        ],
       ),
     );
   }
@@ -161,10 +211,23 @@ class SignUpScreen extends GetView<SignUpCtrl> {
             color: AppColors.borderColor,
           )),
       child: InternationalPhoneNumberInput(
-        onInputChanged: (PhoneNumber number) {},
-        onInputValidated: (bool value) {},
+        validator: (p0) {
+          return null;
+        },
+        onInputChanged: (PhoneNumber number) {
+          controller.dialCode.value = number.dialCode!;
+          controller.phoneNumberFormat = PhoneNumber(
+              phoneNumber: number.phoneNumber,
+              isoCode: number.isoCode,
+              dialCode: number.dialCode);
+        },
+        initialValue: controller.phoneNumberFormat,
         selectorConfig: const SelectorConfig(
           selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+        ),
+        inputBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.borderColor),
+          borderRadius: BorderRadius.circular(15),
         ),
         ignoreBlank: false,
         autoValidateMode: AutovalidateMode.disabled,
@@ -172,10 +235,8 @@ class SignUpScreen extends GetView<SignUpCtrl> {
             fontWeight: FontWeight.w400,
             fontSize: 15,
             color: AppColors.blackBGColor),
-        // scrollPadding: EdgeInsets.zero,
         textFieldController: controller.phone,
-        formatInput: false,
-        maxLength: 9,
+        formatInput: true,
         keyboardType:
             const TextInputType.numberWithOptions(signed: true, decimal: true),
         cursorColor: Colors.black,

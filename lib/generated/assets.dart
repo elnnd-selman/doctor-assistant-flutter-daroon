@@ -26,4 +26,23 @@ class Assets {
   static const arrowDownIcon = "assets/icons/arrowDownIcon.svg";
   static const messageIcon = "assets/icons/messageIcon.svg";
   static const notificationIcon = "assets/icons/notificationIcon.svg";
+  static const serachIcon = "assets/icons/serachIcon.svg";
+  static const editIcon = "assets/icons/editIcon.svg";
+
+  static const addIconRound = "assets/icons/addIconRound.svg";
+  static const removeIcon = "assets/icons/removeIcon.svg";
+  static const levelIcon = "assets/icons/levelIcon.svg";
+  static const likeIcon = "assets/icons/likeIcon.svg";
+  static const commentIcon = "assets/icons/commentIcon.svg";
+  static const ratingStarIcon = "assets/icons/ratingStarIcon.svg";
+  static const gallery = "assets/icons/galleryIcons.svg";
+  static const cameraIcon = "assets/icons/cameraIcon.svg";
+
+  //// User Icons ////
+  static const addBottomIcon = "assets/icons/addBottom.svg";
+  static const reelIcon = "assets/icons/reelIcon.svg";
+  static const nutritionIcon = "assets/icons/nutritionIcon.svg";
+  static const generalIcon = "assets/icons/generalIcon.svg";
+
+  static const ophthalIcon = "assets/icons/ophthalIcon.svg";
 }

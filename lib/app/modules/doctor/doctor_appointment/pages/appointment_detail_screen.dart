@@ -251,8 +251,8 @@ class AppointmentDetailScreen extends StatelessWidget {
                               fontSize: 16,
                             ),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Wrap(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               _patientDetailContainer(
                                 "assets/icons/offerBookIcon.svg",
@@ -298,7 +298,9 @@ class AppointmentDetailScreen extends StatelessWidget {
                       ontap: () {
                         showToastMessage(
                             message: "Appointment completed successfully.",
-                            context: context);
+                            context: context,
+                            color: const Color(0xff5BA66B),
+                            icon: Icons.check);
                       },
                       name: Get.arguments["buttonName"])
                   : const SizedBox(),

@@ -12,10 +12,13 @@ class DoctorDrawerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ZoomDrawer(
+      controller: ZoomDrawerController(),
       menuScreen: DoctorDrawerOption(
         setIndex: (index) {
           if (index == 0) {
             Get.toNamed(Routes.doctorOffers);
+          } else if (index == 1) {
+            Get.toNamed(Routes.doctorAssistant);
           }
         },
       ),

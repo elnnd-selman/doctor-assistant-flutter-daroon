@@ -124,7 +124,9 @@ class CancelAppointmentDetail extends GetView<CancelAppointmentController> {
                   ontap: () {
                     showToastMessage(
                         message: "Appointment cancelled successfully.",
-                        context: context);
+                        context: context,
+                        color: const Color(0xff5BA66B),
+                        icon: Icons.check);
 
                     Future.delayed(const Duration(seconds: 1), () {
                       Get.back();

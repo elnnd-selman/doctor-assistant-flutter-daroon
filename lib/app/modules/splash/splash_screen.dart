@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/controllers/local_storage_controller.dart';
 import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
@@ -33,6 +34,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _handleNavigation() async {
     await Future.delayed(const Duration(seconds: 3));
-    Get.offAllNamed(Routes.onboarding);
+
+    if (Get.find<LocalStorageController>().daroonBox!.get("isLogin") != null) {
+      if (Get.find<LocalStorageController>().daroonBox!.get("isLogin")!) {
+        Get.offAllNamed(Routes.userdrawerScreen);
+      } else {
+        Get.offAllNamed(Routes.onboarding);
+      }
+    } else {
+      Get.offAllNamed(Routes.onboarding);
+    }
   }
 }

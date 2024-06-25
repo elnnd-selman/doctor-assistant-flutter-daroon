@@ -13,14 +13,18 @@ class CommonTextfeild extends StatefulWidget {
     required this.keyboardType,
     required this.showicon,
     required this.scanIcons,
+    this.maxLine = 1,
     this.onChange,
+    this.borderColor = AppColors.borderColor,
   });
   bool obscuretext;
   final String hinttext;
   final TextEditingController controller;
   final bool showicon;
+  final Color borderColor;
   final bool scanIcons;
 
+  final int? maxLine;
   Function(String)? onChange;
   // ignore: prefer_typing_uninitialized_variables
   final validations;
@@ -35,6 +39,7 @@ class _CommonTextfeildState extends State<CommonTextfeild> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: widget.maxLine,
       style: AppTextStyles.medium.copyWith(
         fontWeight: FontWeight.w400,
         fontSize: 15,
@@ -53,23 +58,23 @@ class _CommonTextfeildState extends State<CommonTextfeild> {
         fillColor: const Color(0xffF7F7F8),
         filled: true,
         errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.borderColor),
+          borderSide: BorderSide(color: widget.borderColor),
           borderRadius: BorderRadius.circular(15),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.borderColor),
+          borderSide: BorderSide(color: widget.borderColor),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.borderColor),
+          borderSide: BorderSide(color: widget.borderColor),
           borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.borderColor),
+          borderSide: BorderSide(color: widget.borderColor),
           borderRadius: BorderRadius.circular(15),
         ),
         border: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.borderColor),
+          borderSide: BorderSide(color: widget.borderColor),
           borderRadius: BorderRadius.circular(15),
         ),
         isDense: true,
@@ -95,7 +100,7 @@ class _CommonTextfeildState extends State<CommonTextfeild> {
         hintStyle: AppTextStyles.medium.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 15,
-          color: const Color(0xffA0A1AB),
+          color: const Color(0xff535353),
         ),
       ),
     );

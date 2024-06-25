@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
@@ -8,6 +9,8 @@ import 'package:hezr/global/utils/widget_spacing.dart';
 showToastMessage({
   required String message,
   required BuildContext context,
+  required Color color,
+  required IconData icon,
 }) {
   FToast().init(context);
   FToast().showToast(
@@ -18,6 +21,9 @@ showToastMessage({
       decoration: BoxDecoration(
         color: AppColors.whiteBGColor,
         borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color,
+        ),
       ),
       child: Row(
         children: [
@@ -25,7 +31,7 @@ showToastMessage({
             height: 5 * SizeConfig.heightMultiplier,
             width: 10 * SizeConfig.widthMultiplier,
             decoration: BoxDecoration(
-              color: const Color(0xff5BA66B),
+              color: color,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
@@ -38,10 +44,10 @@ showToastMessage({
                     color: AppColors.whiteBGColor,
                     shape: BoxShape.circle,
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Icon(
-                      Icons.check,
-                      color: Color(0xff5BA66B),
+                      icon,
+                      color: color,
                       size: 18,
                     ),
                   ),
