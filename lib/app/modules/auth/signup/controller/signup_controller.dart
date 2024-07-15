@@ -32,7 +32,7 @@ class SignUpCtrl extends GetxController {
   Rx<String> dialCode = "+964".obs;
   Rx<String> errorMessage = "Enter Phone Number".obs;
 
-  var userModel = Rxn<Users>();
+  // var userModel = Rxn<Users>();
 
   RxList<String> genderList = ['Male', 'Female'].obs;
 
@@ -73,14 +73,21 @@ class SignUpCtrl extends GetxController {
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
-          final json = jsonDecode(response.body);
+          final jsonData = jsonDecode(response.body);
           Get.find<LocalStorageController>().daroonBox!.put("isLogin", true);
-          await sendOtptoUser(json["token"]);
+          await sendOtptoUser(jsonData["token"]);
+
+          await sendOtptoUserInEmail(jsonData["token"]);
+
+          final userModel = UserModel.fromJson(jsonData);
+          Get.find<LocalStorageController>()
+              .daroonBox!
+              .put("userModel", userModel);
 
           _processing.value = false;
 
           Get.offAllNamed(Routes.otpScreen, arguments: {
-            "userToken": json["token"],
+            "userToken": jsonData["token"],
             "email": email.text,
           });
           cleanController();
@@ -111,10 +118,23 @@ class SignUpCtrl extends GetxController {
   }
 
   sendOtptoUser(String userToken) async {
-    await ApiService.postwithOutHeader(
+    final response = await ApiService.postwithOutHeader(
+      userToken: {"Authorization": userToken},
+      endPoint:
+          '${AppTokens.apiURl}/users/send-verification-code-via-phone-number',
+      body: {},
+    );
+    print(response!.statusCode);
+    print(response.body);
+  }
+
+  sendOtptoUserInEmail(String userToken) async {
+    final response = await ApiService.postwithOutHeader(
         userToken: {"Authorization": userToken},
-        endPoint: '${AppTokens.apiURl}/users/sendVerificationCodeViaEmail',
+        endPoint: '${AppTokens.apiURl}/users/send-verification-code-via-email',
         body: {});
+    print(response!.statusCode);
+    print(response.body);
   }
 
   cleanController() {

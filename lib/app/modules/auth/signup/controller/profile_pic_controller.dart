@@ -142,7 +142,7 @@ class ProfilePicController extends GetxController {
     final response = await ApiService.patchImage(
       filepath: image,
       userToken: userToken,
-      url: '${AppTokens.apiURl}/users/profilePicture',
+      url: '${AppTokens.apiURl}/users/profile-picture',
     );
     if (response.statusCode == 201 || response.statusCode == 200) {
       _processing.value = false;

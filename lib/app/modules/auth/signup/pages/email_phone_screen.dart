@@ -35,6 +35,10 @@ class _EmailPhoneNumberScreenState extends State<EmailPhoneNumberScreen>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          shadowColor: Colors.white,
+          surfaceTintColor: Colors.white,
           leading: IconButton(
               onPressed: () {
                 Get.back();

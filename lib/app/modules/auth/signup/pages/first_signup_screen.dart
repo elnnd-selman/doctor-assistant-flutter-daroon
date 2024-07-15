@@ -22,7 +22,10 @@ class FirstSignupScreen extends GetView<SignUpCtrl> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: AppColors.whiteBGColor,
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          shadowColor: Colors.white,
+          surfaceTintColor: Colors.white,
           leading: IconButton(
               onPressed: () {
                 Get.back();
@@ -168,7 +171,7 @@ class FirstSignupScreen extends GetView<SignUpCtrl> {
                               padding: EdgeInsets.symmetric(horizontal: 16),
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           // SizedBox(
                           //   height: 35 * SizeConfig.heightMultiplier,
                           // ),

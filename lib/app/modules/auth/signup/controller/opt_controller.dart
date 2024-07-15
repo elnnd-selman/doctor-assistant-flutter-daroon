@@ -38,7 +38,8 @@ class OptController extends GetxController {
     _startTimer();
     final response = await ApiService.postwithOutHeader(
         userToken: {"Authorization": userToken},
-        endPoint: '${AppTokens.apiURl}/users/sendVerificationCodeViaEmail',
+        endPoint:
+            '${AppTokens.apiURl}/users/send-verification-code-via-phone-number',
         body: {});
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -66,6 +67,24 @@ class OptController extends GetxController {
     }
   }
 
+  resendCodebyEmail(String userToken, BuildContext context) async {
+    startDuration.value = 60;
+    _startTimer();
+    final response = await ApiService.postwithOutHeader(
+        userToken: {"Authorization": userToken},
+        endPoint: '${AppTokens.apiURl}/users/send-verification-code-via-email',
+        body: {});
+    if (response != null) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        print(response.body);
+      } else {
+        print(response.body);
+      }
+    } else {
+      print("isiie");
+    }
+  }
+
   verifyOtpCode({
     required String code,
     required BuildContext context,
@@ -74,7 +93,12 @@ class OptController extends GetxController {
     _processing.value = true;
     final response = await ApiService.postwithOutHeader(
         userToken: {"Authorization": userToken},
-        endPoint: '${AppTokens.apiURl}/users/verifyPhone/$code',
+        endPoint: '${AppTokens.apiURl}/users/verify-phone/$code',
+        body: {});
+
+    await ApiService.postwithOutHeader(
+        userToken: {"Authorization": userToken},
+        endPoint: '${AppTokens.apiURl}/users/verify-email-by-code/$code',
         body: {});
 
     if (response != null) {

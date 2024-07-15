@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/binding/initial_binding.dart';
+import 'package:hezr/app/model/user_model.dart';
 import 'package:hezr/app/routes/app_pages.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/app_constants.dart';
@@ -16,12 +18,17 @@ Future<void> main() async {
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(UserModelAdapter());
+  Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(EducationAdapter());
+  Hive.registerAdapter(PhoneAdapter());
+
   await Hive.openBox('DaroonBox');
 
   // runApp(const MyApp());
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: !kReleaseMode,
       builder: (context) => const MyApp(),
     ),
   );

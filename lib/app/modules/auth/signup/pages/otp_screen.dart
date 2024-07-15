@@ -47,6 +47,10 @@ class OtpScreen extends GetView<OptController> {
     );
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Get.back();
@@ -117,6 +121,8 @@ class OtpScreen extends GetView<OptController> {
                   onTap: () {
                     if (controller.startDuration.value == 0) {
                       controller.resendCode(
+                          Get.arguments["userToken"], context);
+                      controller.resendCodebyEmail(
                           Get.arguments["userToken"], context);
                     }
                   },
