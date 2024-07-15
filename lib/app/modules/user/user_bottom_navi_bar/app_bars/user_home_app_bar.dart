@@ -15,7 +15,10 @@ class UserHomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      backgroundColor: AppColors.whiteBGColor,
+      foregroundColor: Colors.black,
+      backgroundColor: Colors.white,
+      shadowColor: Colors.white,
+      surfaceTintColor: Colors.white,
       actions: [
         GestureDetector(
           onTap: () => Get.toNamed(Routes.doctorNotification),

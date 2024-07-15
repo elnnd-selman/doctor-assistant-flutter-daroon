@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/controllers/local_storage_controller.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 
 class UserHomeController extends GetxController {
@@ -23,11 +24,11 @@ class UserHomeController extends GetxController {
     AppColors.primaryColor,
   ];
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
+  }
 
   Future<void> shakeCard() async {
     const double distance = 30;

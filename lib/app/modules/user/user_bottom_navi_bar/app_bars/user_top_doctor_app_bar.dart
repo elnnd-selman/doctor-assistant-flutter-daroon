@@ -6,13 +6,16 @@ import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
 
-class UserPostAppBar extends GetView<DoctorCustomNaviController> {
-  const UserPostAppBar({super.key});
+class UserTopDoctorAppBar extends GetView<DoctorCustomNaviController> {
+  const UserTopDoctorAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.whiteBGColor,
+      foregroundColor: Colors.black,
+      backgroundColor: Colors.white,
+      shadowColor: Colors.white,
+      surfaceTintColor: Colors.white,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Padding(
@@ -29,8 +32,10 @@ class UserPostAppBar extends GetView<DoctorCustomNaviController> {
       actions: [
         SvgPicture.asset(
           "assets/icons/locationRound.svg",
-          height: 20,
+          height: 30,
+          width: 30,
         ),
+        const SizedBox(width: 20),
       ],
     );
   }

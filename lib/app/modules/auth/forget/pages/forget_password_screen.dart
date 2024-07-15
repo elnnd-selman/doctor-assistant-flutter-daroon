@@ -15,6 +15,10 @@ class ForgetPassowrdScreen extends GetView<ForgetPasswordCtrl> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Get.back();

@@ -17,7 +17,10 @@ class CancelAppointmentDetail extends GetView<CancelAppointmentController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.whiteBGColor,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
         // leading: const SizedBox(),
         centerTitle: true,

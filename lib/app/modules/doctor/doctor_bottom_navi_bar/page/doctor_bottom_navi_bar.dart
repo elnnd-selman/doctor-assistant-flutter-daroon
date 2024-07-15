@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hezr/app/modules/doctor/doctor_add_post/pages/doctor_add_post.dart';
+import 'package:hezr/app/modules/doctor/doctor_address/pages/doctor_address.dart';
 import 'package:hezr/app/modules/doctor/doctor_appointment/pages/doctor_appointment_screen.dart';
+import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_address_appbar.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_appointment_app_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_home_app_bar.dart';
 import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_post_app_bar.dart';
@@ -122,15 +124,15 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
     const DoctorHomeAppBar(),
     const DoctorAppointmentAppBar(),
     const DoctorPostAppBar(),
-    const DoctorPostAppBar(),
+    const DoctorLocationAppBar(),
     const DoctorProfileAppBar(),
   ];
 
   final List pagesList = [
     const DoctorHomeScreen(),
     const DoctorAppointmentScreen(),
-    const DoctorAddPostScreen(),
-    Container(),
+    DoctorAddPostScreen(),
+    DoctorAdressScreen(),
     const DoctorProfileScreen(),
   ];
 
@@ -138,9 +140,11 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56),
+        preferredSize: Size.fromHeight(
+            currentValue == 3 ? MediaQuery.of(context).size.height * 0.12 : 56),
         child: _appBars[currentValue],
       ),
       body: Stack(
@@ -222,7 +226,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                       }),
                   _bottomIcons(
                       size: _animation4!.value,
-                      icon: Assets.calendarIcon,
+                      icon: Assets.locationBottomIcon,
                       color: currentValue == 3
                           ? AppColors.primaryColor
                           : const Color(0xff979797),

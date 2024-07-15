@@ -1,16 +1,83 @@
-import 'dart:io';
-import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:hezr/global/widgets/toast_message.dart';
+import 'package:hezr/services/api.dart';
 import 'package:image_picker/image_picker.dart';
-// ignore: depend_on_referenced_packages
-import 'package:path/path.dart' as path;
 
 class DoctorAddPostController extends GetxController {
-  RxBool isNoPhoto = true.obs;
   final imagePicker = ImagePicker();
-  late File image;
-  String? selectedImageName;
-  RxString? selectedimageName = "".obs;
+
+  final _processing = false.obs;
+  bool get processing => _processing.value;
+
+  RxList<String> imageList = <String>[].obs;
+  RxList<String> videoList = <String>[].obs;
+
+  TextEditingController titleKU = TextEditingController();
+  TextEditingController titleEN = TextEditingController();
+  TextEditingController titleAR = TextEditingController();
+
+  TextEditingController descKU = TextEditingController();
+  TextEditingController descEN = TextEditingController();
+  TextEditingController descAR = TextEditingController();
+
+  uploadContent(BuildContext context) async {
+    print(Get.find<DoctorHomeController>().userModel.value!.token!);
+    print(Get.find<DoctorHomeController>().userModel.value!.user!.id!);
+    _processing.value = true;
+    final response = await ApiService.uploadContentApi(
+      userToken: Get.find<DoctorHomeController>().userModel.value!.token!,
+      imageList: imageList,
+      videoList: videoList,
+      titleKU: titleKU.text,
+      titleEN: titleEN.text,
+      titleAR: titleAR.text,
+      descriptionKU: descKU.text,
+      descriptionEN: descEN.text,
+      descriptionAR: descAR.text,
+    );
+
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      showToastMessage(
+          message: "Successfully added Content",
+          context: context,
+          color: const Color(0xff5BA66B),
+          icon: Icons.check);
+      clearController();
+    } else {
+      showToastMessage(
+          message: response.body,
+          context: context,
+          color: const Color(0xffEC1C24),
+          icon: Icons.close);
+    }
+    _processing.value = false;
+  }
+
+  clearController() {
+    titleKU.clear();
+    titleEN.clear();
+    titleAR.clear();
+    descKU.clear();
+    descEN.clear();
+    descAR.clear();
+    imageList.value = [];
+    videoList.value = [];
+  }
+
+  removeImage(int index) {
+    imageList.removeAt(index);
+    update();
+  }
+
+  removeVideo(int index) {
+    videoList.removeAt(index);
+    update();
+  }
 
   Future getGalleryImage() async {
     imagePicker
@@ -22,16 +89,9 @@ class DoctorAddPostController extends GetxController {
     )
         .then((value) async {
       if (value != null) {
-        image = File(value.path);
+        imageList.add(value.path);
 
-        selectedimageName!.value = value.path;
-
-        isNoPhoto.value = false;
-        image = await compress(image: image);
-        selectedImageName = path.basename(image.path);
         update();
-      } else {
-        selectedImageName = '';
       }
     });
   }
@@ -46,28 +106,35 @@ class DoctorAddPostController extends GetxController {
     )
         .then((value) async {
       if (value != null) {
-        image = File(value.path);
-        selectedimageName!.value = value.path;
+        imageList.add(value.path);
         update();
-        isNoPhoto.value = false;
-        // image = await compress(image: image);
-        selectedImageName = 'captured-image.jpg';
-      } else {
-        selectedImageName = '';
       }
     });
   }
 
-  static Future<File> compress({
-    required File image,
-    int quality = 100,
-    int percentage = 70,
-  }) async {
-    final path = await FlutterNativeImage.compressImage(
-      image.absolute.path,
-      quality: quality,
-      percentage: percentage,
-    );
-    return path;
+  Future pickVideoFromGallery() async {
+    imagePicker
+        .pickVideo(
+      source: ImageSource.gallery,
+    )
+        .then((value) async {
+      if (value != null) {
+        videoList.add(value.path);
+        update();
+      }
+    });
+  }
+
+  Future pickVideoFromCamera() async {
+    imagePicker
+        .pickVideo(
+      source: ImageSource.camera,
+    )
+        .then((value) async {
+      if (value != null) {
+        videoList.add(value.path);
+        update();
+      }
+    });
   }
 }

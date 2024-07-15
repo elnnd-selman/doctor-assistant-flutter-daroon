@@ -1,17 +1,24 @@
 import 'package:get/get.dart';
 import 'package:hezr/app/modules/auth/forget/binding/forget_password_binding.dart';
 import 'package:hezr/app/modules/auth/forget/pages/forget_email.dart';
+import 'package:hezr/app/modules/auth/forget/pages/forget_otp_screen.dart';
 import 'package:hezr/app/modules/auth/forget/pages/forget_password_screen.dart';
 import 'package:hezr/app/modules/auth/forget/pages/forget_phone.dart';
 import 'package:hezr/app/modules/auth/login/binding/login_binding.dart';
 import 'package:hezr/app/modules/auth/login/binding/opt_binding.dart';
 import 'package:hezr/app/modules/auth/login/pages/login_screen.dart';
+import 'package:hezr/app/modules/auth/reset_password/binding/reset_password_binding.dart';
+import 'package:hezr/app/modules/auth/reset_password/pages/reset_password.dart';
 import 'package:hezr/app/modules/auth/signup/pages/email_phone_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/first_signup_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/otp_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/profile_picture_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/singup_screen.dart';
 import 'package:hezr/app/modules/auth/signup/pages/welcome_screen.dart';
+import 'package:hezr/app/modules/doctor/doctor_address/binding/doctor_address_binding.dart';
+import 'package:hezr/app/modules/doctor/doctor_address/pages/add_adress_detail.dart';
+import 'package:hezr/app/modules/doctor/doctor_address/pages/add_doctor_address.dart';
+import 'package:hezr/app/modules/doctor/doctor_address/pages/doctor_address_details.dart';
 import 'package:hezr/app/modules/doctor/doctor_appointment/binding/doctor_appointment_binding.dart';
 import 'package:hezr/app/modules/doctor/doctor_appointment/pages/appointment_detail_screen.dart';
 import 'package:hezr/app/modules/doctor/doctor_appointment/pages/cancel_appointment_detail.dart';
@@ -45,6 +52,8 @@ import 'package:hezr/app/modules/user/user_bottom_navi_bar/page/user_drawer.dart
 import 'package:hezr/app/modules/user/user_offer/binding/user_offers_binding.dart';
 import 'package:hezr/app/modules/user/user_offer/pages/user_offer_detail.dart';
 import 'package:hezr/app/modules/user/user_offer/pages/user_offer_screen.dart';
+import 'package:hezr/app/modules/user/user_top_doctors/binding/user_top_doctor_binding.dart';
+import 'package:hezr/app/modules/user/user_top_doctors/pages/filter_screen.dart';
 import 'package:hezr/app/routes/app_routes.dart';
 
 class AppPages {
@@ -99,9 +108,19 @@ class AppPages {
       binding: ForgetPasswordBindings(),
     ),
     GetPage(
+      name: Routes.forgetOTPScreen,
+      page: () => const ForgetOtpScreen(),
+      binding: ForgetPasswordBindings(),
+    ),
+    GetPage(
       name: Routes.forgetEmail,
       page: () => ForgetEmailScreen(),
       binding: ForgetPasswordBindings(),
+    ),
+    GetPage(
+      name: Routes.resetPasswordScreen,
+      page: () => const ResetPasswordScreen(),
+      binding: ResetPasswordBinding(),
     ),
     GetPage(
       name: Routes.profilePic,
@@ -201,6 +220,21 @@ class AppPages {
       name: Routes.doctorNotification,
       page: () => const DoctorNotificationScreen(),
     ),
+    GetPage(
+      name: Routes.addDoctorAdress,
+      page: () => const AddDoctorAddressScreen(),
+      binding: DoctorAddressBinding(),
+    ),
+    GetPage(
+      name: Routes.addDoctorAdressDetail,
+      page: () => const AddAdressDetailScreen(),
+      binding: DoctorAddressBinding(),
+    ),
+    GetPage(
+      name: Routes.doctorAdressDetail,
+      page: () => const DoctorAddressDetailsScreen(),
+      binding: DoctorAddressBinding(),
+    ),
 
     /////////////// User Side Screens///
     GetPage(
@@ -216,6 +250,11 @@ class AppPages {
     GetPage(
       name: Routes.userOffersDetails,
       page: () => const UserOfferDetailScreen(),
+    ),
+    GetPage(
+      name: Routes.filterScreen,
+      page: () => const FilterScreen(),
+      binding: UserTopDoctorBinding(),
     ),
   ];
 }

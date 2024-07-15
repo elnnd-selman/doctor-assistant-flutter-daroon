@@ -20,7 +20,10 @@ class SignUpScreen extends GetView<SignUpCtrl> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: AppColors.whiteBGColor,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Get.back();

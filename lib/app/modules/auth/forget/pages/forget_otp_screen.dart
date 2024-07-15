@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/modules/auth/forget/controller/forget_password_controller.dart';
-import 'package:hezr/app/modules/auth/signup/controller/opt_controller.dart';
+import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
@@ -48,6 +48,10 @@ class ForgetOtpScreen extends GetView<ForgetPasswordCtrl> {
     );
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Get.back();
@@ -78,31 +82,59 @@ class ForgetOtpScreen extends GetView<ForgetPasswordCtrl> {
                     color: const Color(0xff707281),
                   ),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "email ",
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.medium.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: const Color(0xff707281),
+                Get.arguments["type"] == "email"
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "email ",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.medium.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xff707281),
+                            ),
+                          ),
+                          6.horizontalSpace,
+                          Text(
+                            Get.arguments["data"],
+                            // Get.arguments["email"],
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.medium.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.blackBGColor,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "phone ",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.medium.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: const Color(0xff707281),
+                            ),
+                          ),
+                          6.horizontalSpace,
+                          Text(
+                            Get.arguments["data"],
+                            // Get.arguments["email"],
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.medium.copyWith(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.blackBGColor,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    6.horizontalSpace,
-                    Text(
-                      Get.arguments["email"],
-                      textAlign: TextAlign.center,
-                      style: AppTextStyles.medium.copyWith(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.blackBGColor,
-                      ),
-                    ),
-                  ],
-                ),
                 40.verticalSpace,
                 Pinput(
                     length: 6,
@@ -117,8 +149,7 @@ class ForgetOtpScreen extends GetView<ForgetPasswordCtrl> {
                 GestureDetector(
                   onTap: () {
                     if (controller.startDuration.value == 0) {
-                      controller.resendCode(
-                          Get.arguments["userToken"], context);
+                      controller.resendCode(context);
                     }
                   },
                   child: Row(
@@ -153,10 +184,9 @@ class ForgetOtpScreen extends GetView<ForgetPasswordCtrl> {
                 CommonButton(
                     ontap: () {
                       if (controller.otpCode.value.length == 6) {
-                        controller.verifyOtpCode(
-                            userToken: Get.arguments["userToken"],
-                            code: controller.otpCode.value,
-                            context: context);
+                        Get.toNamed(Routes.resetPasswordScreen);
+                        // controller.verifyOtpCode(
+                        //     code: controller.otpCode.value, context: context);
                       } else {
                         showToastMessage(
                             message: "Complete Otp Code",

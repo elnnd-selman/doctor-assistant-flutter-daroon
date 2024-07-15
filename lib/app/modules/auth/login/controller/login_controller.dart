@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/controllers/local_storage_controller.dart';
+import 'package:hezr/app/model/user_model.dart';
 import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/global/constants/app_tokens.dart';
 import 'package:hezr/global/widgets/toast_message.dart';
@@ -32,12 +35,26 @@ class LoginCtrl extends GetxController {
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
+          final jsonData = jsonDecode(response.body);
 
           Get.find<LocalStorageController>().daroonBox!.put("isLogin", true);
-          Get.find<LocalStorageController>().daroonBox!.put("userRole", "");
+
+          final userModel = UserModel.fromJson(jsonData);
+          print(jsonData);
+          Get.find<LocalStorageController>()
+              .daroonBox!
+              .put("userModel", userModel);
+          print("Checkin ${jsonData["typeOfUser"]}");
+          Get.find<LocalStorageController>()
+              .daroonBox!
+              .put("userRole", userModel.user!.typeOfUser!);
+          if (jsonData["typeOfUser"] == "user") {
+            Get.offAllNamed(Routes.userdrawerScreen);
+          } else {
+            Get.offAllNamed(Routes.doctordrawerScreen);
+          }
           cleanController();
           _processing.value = false;
-          Get.offAllNamed(Routes.doctordrawerScreen);
         } else {
           _processing.value = false;
           showToastMessage(

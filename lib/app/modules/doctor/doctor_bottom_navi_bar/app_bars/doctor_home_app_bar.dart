@@ -16,7 +16,10 @@ class DoctorHomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      backgroundColor: AppColors.whiteBGColor,
+      foregroundColor: Colors.black,
+      backgroundColor: Colors.white,
+      shadowColor: Colors.white,
+      surfaceTintColor: Colors.white,
       title: Row(
         children: [
           Column(

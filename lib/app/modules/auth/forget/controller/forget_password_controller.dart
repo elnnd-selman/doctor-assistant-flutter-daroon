@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:country_phone_validator/country_phone_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/global/constants/app_tokens.dart';
 import 'package:hezr/global/widgets/toast_message.dart';
 import 'package:hezr/services/api.dart';
@@ -30,8 +29,13 @@ class ForgetPasswordCtrl extends GetxController {
 
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 201) {
-        final json = jsonDecode(response.body);
-        print(json);
+        Get.toNamed(
+          Routes.forgetOTPScreen,
+          arguments: {
+            "type": "email",
+            "data": email.text,
+          },
+        );
       }
     }
   }
@@ -50,7 +54,7 @@ class ForgetPasswordCtrl extends GetxController {
 
   sendOtptoUserPhone() async {
     String newText = phone.text.replaceAll(' ', '');
-    print("$dialCode$newText");
+
     final response = await ApiService.post(
         endPoint: '${AppTokens.apiURl}/users/forgotPasswordViaPhoneNumber',
         body: {
@@ -59,12 +63,18 @@ class ForgetPasswordCtrl extends GetxController {
 
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 201) {
-        final json = jsonDecode(response.body);
+        Get.toNamed(
+          Routes.forgetOTPScreen,
+          arguments: {
+            "type": "phone",
+            "data": "$dialCode$newText",
+          },
+        );
       }
     }
   }
 
-  RxInt startDuration = 60.obs;
+  RxInt startDuration = 0.obs;
   RxString otpCode = "".obs;
 
   final _processing = false.obs;
@@ -84,19 +94,17 @@ class ForgetPasswordCtrl extends GetxController {
     );
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    // _startTimer();
-  }
-
-  resendCode(String userToken, BuildContext context) async {
+  resendCode(BuildContext context) async {
     startDuration.value = 60;
     _startTimer();
-    final response = await ApiService.postwithOutHeader(
-        userToken: {"Authorization": userToken},
-        endPoint: '${AppTokens.apiURl}/users/sendVerificationCodeViaEmail',
-        body: {});
+    String newText = phone.text.replaceAll(' ', '');
+
+    final response = await ApiService.post(
+        endPoint: '${AppTokens.apiURl}/users/forgotPasswordViaPhoneNumber',
+        body: {
+          "phoneNumber": "$dialCode$newText",
+        });
+
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 200) {
         showToastMessage(
@@ -126,13 +134,10 @@ class ForgetPasswordCtrl extends GetxController {
   verifyOtpCode({
     required String code,
     required BuildContext context,
-    required String userToken,
   }) async {
     _processing.value = true;
-    final response = await ApiService.postwithOutHeader(
-        userToken: {"Authorization": userToken},
-        endPoint: '${AppTokens.apiURl}/users/verifyPhone/$code',
-        body: {});
+    final response = await ApiService.post(
+        endPoint: '${AppTokens.apiURl}/users/verifyPhone/$code', body: {});
 
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 201) {

@@ -13,6 +13,7 @@ abstract class Routes {
   static const forgetEmail = '/forgetEmail';
   static const forgetPhone = '/forgetPhone';
   static const forgetOTPScreen = '/forgetOTPScreen';
+  static const resetPasswordScreen = '/resetPasswordScreen';
   static const profilePic = '/profilePic';
   static const welcome = '/welcome';
 
@@ -38,9 +39,13 @@ abstract class Routes {
   static const doctorMessage = "/doctorMessage";
   static const doctorChatRoom = "/doctorChatRoom";
   static const doctorNotification = "/doctorNotification";
+  static const addDoctorAdress = "/addDoctorAdress";
+  static const addDoctorAdressDetail = "/addDoctorAdressDetail";
+  static const doctorAdressDetail = "/doctorAdressDetail";
 
   //////   User Side///
   static const userdrawerScreen = "/userdrawerScreen";
   static const userOfferScreen = "/userOfferScreen";
   static const userOffersDetails = "/userOffersDetails";
+  static const filterScreen = "/filterScreen";
 }

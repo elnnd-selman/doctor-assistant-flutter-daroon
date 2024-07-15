@@ -23,6 +23,9 @@ class LoginScreen extends GetView<LoginCtrl> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         backgroundColor:
             controller.processing ? Colors.transparent : AppColors.whiteBGColor,
         leading: IconButton(

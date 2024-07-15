@@ -1,21 +1,14 @@
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/widget/doctor_profile_header_row.dart';
 import 'package:hezr/app/modules/user/user_home/controller/user_home_controller.dart';
-import 'package:hezr/app/modules/user/user_home/model/doctor_specialty_model.dart';
 import 'package:hezr/app/modules/user/user_home/widget/top_doctor_conatiner.dart';
 import 'package:hezr/app/modules/user/user_home/widget/user_doctor_special_container.dart';
 import 'package:hezr/app/modules/user/user_home/widget/user_upcoming_appointment.dart';
-import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
-import 'package:hezr/global/widgets/common_button.dart';
 
 class UserHomeScreen extends GetView<UserHomeController> {
   const UserHomeScreen({super.key});

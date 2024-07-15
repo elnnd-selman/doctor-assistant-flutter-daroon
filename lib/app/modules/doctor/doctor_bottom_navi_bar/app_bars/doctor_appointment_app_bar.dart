@@ -14,7 +14,10 @@ class DoctorAppointmentAppBar extends GetView<DoctorCustomNaviController> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColors.whiteBGColor,
+      foregroundColor: Colors.black,
+      backgroundColor: Colors.white,
+      shadowColor: Colors.white,
+      surfaceTintColor: Colors.white,
       elevation: 0,
       // leading: const SizedBox(),
       automaticallyImplyLeading: false,

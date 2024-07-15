@@ -56,12 +56,15 @@ showToastMessage({
             ),
           ),
           10.horizontalSpace,
-          Text(
-            message,
-            style: AppTextStyles.medium.copyWith(
-              fontWeight: FontWeight.w400,
-              color: AppColors.blackBGColor,
-              fontSize: 14,
+          Flexible(
+            child: Text(
+              message,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.medium.copyWith(
+                fontWeight: FontWeight.w400,
+                color: AppColors.blackBGColor,
+                fontSize: 14,
+              ),
             ),
           )
         ],

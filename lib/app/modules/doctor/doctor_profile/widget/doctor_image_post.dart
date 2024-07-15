@@ -1,5 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:hezr/app/modules/doctor/doctor_profile/widget/video_player_post.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
@@ -43,7 +47,6 @@ class DoctorImagePostContainer extends StatelessWidget {
                       fontSize: SizeConfig.heightMultiplier * 1.6,
                     ),
                   ),
-                  // 4.verticalSpace,
                   Text(
                     "10-Jun-2020",
                     style: AppTextStyles.medium.copyWith(
@@ -73,16 +76,56 @@ class DoctorImagePostContainer extends StatelessWidget {
             ),
           ),
           SizedBox(height: 2 * SizeConfig.heightMultiplier),
-          Container(
-            height: 25 * SizeConfig.heightMultiplier,
-            width: MediaQuery.of(context).size.width,
-            // width: 5 * SizeConfig.heightMultiplier,
-            decoration: BoxDecoration(
-                image: const DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage("assets/images/temp2.png"),
-                ),
-                borderRadius: BorderRadius.circular(12)),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                ...List.generate(3, (index) {
+                  return Container(
+                    height: 25 * SizeConfig.heightMultiplier,
+                    width: MediaQuery.of(context).size.width * .8,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.028),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: Colors.transparent),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            "https://rebazdevdata.s3-eu-central-1.amazonaws.com/daroon/images/cf2fe9157bdd40fbef32619c-scaled_1000117414.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQAVTYUR3S7EOIVH4%2F20240701%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20240701T095716Z&X-Amz-Expires=600&X-Amz-Signature=e1fa83bc43181b2ed291784d5d8d18f6fc098d3ca8a499b98903c2574b6dcad1&X-Amz-SignedHeaders=host",
+                        fit: BoxFit.cover,
+                        width: MediaQuery.of(context).size.width,
+                        color: AppColors.blackBGColor.withOpacity(0.3),
+                        colorBlendMode: BlendMode.darken,
+                        placeholder: (context, url) {
+                          return BlurHash(
+                            hash:
+                                "https://rebazdevdata.s3-eu-central-1.amazonaws.com/daroon/images/cf2fe9157bdd40fbef32619c-scaled_1000117414.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQAVTYUR3S7EOIVH4%2F20240701%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20240701T095716Z&X-Amz-Expires=600&X-Amz-Signature=e1fa83bc43181b2ed291784d5d8d18f6fc098d3ca8a499b98903c2574b6dcad1&X-Amz-SignedHeaders=host",
+                            imageFit: BoxFit.cover,
+                          );
+                        },
+                        placeholderFadeInDuration: 0.75.seconds,
+                      ),
+                    ),
+                  );
+                }),
+                ...List.generate(2, (index) {
+                  return Container(
+                    height: 25 * SizeConfig.heightMultiplier,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    margin: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.028),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: Colors.transparent),
+                    child: VideoPlayerPost(
+                      videoPath: videoList[0],
+                    ),
+                  );
+                })
+              ],
+            ),
           ),
           SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
           Container(
@@ -95,11 +138,24 @@ class DoctorImagePostContainer extends StatelessWidget {
               _buildLikeRow(
                 " 26 Likes",
                 Assets.likeIcon,
+                () {},
               ),
               20.horizontalSpace,
               _buildLikeRow(
                 " 26 Comment",
                 Assets.commentIcon,
+                () {
+                  showModalBottomSheet(
+                    context: Get.context!,
+                    builder: (context) => const CommentBottomSheet(),
+                    isScrollControlled: true,
+                    isDismissible: true,
+                    backgroundColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                  );
+                },
               ),
             ],
           )
@@ -108,22 +164,218 @@ class DoctorImagePostContainer extends StatelessWidget {
     );
   }
 
-  Row _buildLikeRow(String title, String iconUrl) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          iconUrl,
-          height: 16,
-        ),
-        Text(
-          title,
-          style: AppTextStyles.medium.copyWith(
-            fontWeight: FontWeight.w400,
-            color: const Color(0xff484848),
-            fontSize: SizeConfig.heightMultiplier * 1.4,
+  InkWell _buildLikeRow(String title, String iconUrl, Function()? onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            iconUrl,
+            height: 16,
+          ),
+          Text(
+            title,
+            style: AppTextStyles.medium.copyWith(
+              fontWeight: FontWeight.w400,
+              color: const Color(0xff484848),
+              fontSize: SizeConfig.heightMultiplier * 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+List<String> videoList = [
+  "https://firebasestorage.googleapis.com/v0/b/the-fittest.appspot.com/o/Exercise-Videos%2Fbiceps%2FBand_Concentration_Curl_female.mp4?alt=media&token=d37813c7-a816-4852-a08c-6512ca8e5757",
+  "https://firebasestorage.googleapis.com/v0/b/the-fittest.appspot.com/o/Exercise-Videos%2Fbiceps%2FBand_Concentration_Curl_female.mp4?alt=media&token=d37813c7-a816-4852-a08c-6512ca8e5757",
+  "https://firebasestorage.googleapis.com/v0/b/the-fittest.appspot.com/o/Exercise-Videos%2Fbiceps%2FBand_Concentration_Curl_female.mp4?alt=media&token=d37813c7-a816-4852-a08c-6512ca8e5757",
+];
+
+class CommentBottomSheet extends StatelessWidget {
+  const CommentBottomSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Container(
+        height: MediaQuery.of(context).size.height / 1.2 +
+            MediaQuery.of(context).viewInsets.bottom,
+        width: MediaQuery.of(context).size.width,
+        // margin: EdgeInsets.only(
+        //   top: MediaQuery.of(Get.context!).size.height * 0.08,
+        // ),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(32),
           ),
         ),
-      ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              SizedBox(height: 1.2 * SizeConfig.heightMultiplier),
+              Container(
+                height: 5,
+                width: 80,
+                decoration: BoxDecoration(
+                    color: Color(0xffE7E8EA),
+                    borderRadius: BorderRadius.circular(20)),
+              ),
+              SizedBox(height: 1.2 * SizeConfig.heightMultiplier),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 6 * SizeConfig.heightMultiplier,
+                        width: 6 * SizeConfig.heightMultiplier,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(width: 2 * SizeConfig.widthMultiplier),
+                  Flexible(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: .5 * SizeConfig.heightMultiplier),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: "Melvin Joseph",
+                                    style: AppTextStyles.medium.copyWith(
+                                      color: const Color(0xff11142D),
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                const TextSpan(
+                                    text:
+                                        " it's never too late to start something new. Start easy. Because needs a process. We can not imArticletely get the best results. At least, let's get started.",
+                                    style: TextStyle(
+                                      color: Color(0xff11142D),
+                                      fontWeight: FontWeight.w400,
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
+              Container(
+                height: .5,
+                color: const Color(0xffE4E4E4),
+              ),
+              SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
+              Container(
+                height: 60 * SizeConfig.heightMultiplier,
+                color: Colors.red,
+              ),
+              const Spacer(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      color: Colors.transparent,
+                      height: MediaQuery.of(context).size.height * 0.07,
+                      width: MediaQuery.of(context).size.width * 0.72,
+                      child: TextFormField(
+                        style: AppTextStyles.medium.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                          color: AppColors.blackBGColor,
+                        ),
+                        cursorColor: Colors.black12,
+                        cursorWidth: 1,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 18, horizontal: 14),
+                          fillColor: const Color(0xffF7F7F8),
+                          filled: true,
+                          errorBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xffE7E8EA)),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xffE7E8EA)),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xffE7E8EA)),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xffE7E8EA)),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Color(0xffE7E8EA)),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          isDense: true,
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: SvgPicture.asset(
+                              Assets.sendIcon,
+                            ),
+                          ),
+                          hintText: "Send Comment",
+                          hintStyle: AppTextStyles.medium.copyWith(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            color: const Color(0xff535353),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 2 * SizeConfig.widthMultiplier),
+                  //
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.065,
+                    width: MediaQuery.of(context).size.width * 0.15,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color(0xffE4E4E4).withOpacity(.3),
+                      border: Border.all(
+                        color: const Color(0xffE4E4E4),
+                      ),
+                    ),
+                    child: Center(
+                      child: Text("😍",
+                          style: AppTextStyles.medium.copyWith(
+                            color: const Color(0xff11142D),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                          )),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 1 * SizeConfig.heightMultiplier),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

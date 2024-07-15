@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:hezr/app/modules/doctor/doctor_message/pages/doctor_chat_room.dart';
-import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
 
 class DoctorMessageScreen extends StatelessWidget {
   const DoctorMessageScreen({super.key});
@@ -17,7 +13,10 @@ class DoctorMessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.whiteBGColor,
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: true,

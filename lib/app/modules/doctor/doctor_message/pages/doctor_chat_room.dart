@@ -181,9 +181,9 @@ Container buildChatComposer() {
 
 class Conversation extends StatelessWidget {
   const Conversation({
-    Key? key,
+    super.key,
     required this.user,
-  }) : super(key: key);
+  });
 
   final User user;
 

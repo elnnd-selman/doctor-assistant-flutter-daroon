@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hezr/app/controllers/local_storage_controller.dart';
+import 'package:hezr/app/model/user_model.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 
 class DoctorHomeController extends GetxController {
@@ -18,9 +19,15 @@ class DoctorHomeController extends GetxController {
     AppColors.primaryColor,
   ];
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
-  // }
+  Rxn<UserModel> userModel = Rxn();
+
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    // Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
+
+    userModel.value = await Get.find<LocalStorageController>()
+        .daroonBox!
+        .get("userModel", defaultValue: UserModel);
+  }
 }

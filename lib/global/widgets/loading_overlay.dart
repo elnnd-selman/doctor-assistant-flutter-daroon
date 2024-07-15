@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 
 class LoadingOverlay extends StatelessWidget {
@@ -17,12 +18,9 @@ class LoadingOverlay extends StatelessWidget {
       child: Container(
         height: double.infinity,
         width: double.infinity,
-        color: AppColors.blackBGColor.withOpacity(0.65),
-        child: const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-            strokeWidth: 1,
-          ),
+        color: Colors.transparent,
+        child: const SpinKitSpinningLines(
+          color: AppColors.primaryColor,
         ),
       ),
     );

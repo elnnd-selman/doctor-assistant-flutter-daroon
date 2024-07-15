@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hezr/app/modules/doctor/doctor_add_post/pages/doctor_add_post.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/doctor_appointment_screen.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_appointment_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_home_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_post_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_profile_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/page/doctor_home_screen.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_profile.dart';
 import 'package:hezr/app/modules/user/user_bottom_navi_bar/app_bars/user_home_app_bar.dart';
+import 'package:hezr/app/modules/user/user_bottom_navi_bar/app_bars/user_top_doctor_app_bar.dart';
 import 'package:hezr/app/modules/user/user_home/pages/user_home_screen.dart';
 import 'package:hezr/app/modules/user/user_top_doctors/pages/user_top_doctor_screen.dart';
 import 'package:hezr/generated/assets.dart';
@@ -123,7 +116,7 @@ class _UserBottomNaviBarState extends State<UserBottomNaviBar>
 
   final List _appBars = [
     const UserHomeAppBar(),
-    Container(),
+    const UserTopDoctorAppBar(),
     Container(),
     Container(),
     Container(),

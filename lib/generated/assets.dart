@@ -20,6 +20,7 @@ class Assets {
   static const addIcon = "assets/icons/addIcon.svg";
   static const calendarIcon = "assets/icons/calendarIcon.svg";
   static const profileIcon = "assets/icons/profileIcon.svg";
+  static const locationBottomIcon = "assets/icons/locationBottomIcon.svg";
   //////
   // Doctor  APp Bar Icons
   static const locationIcon = "assets/icons/locationIcon.svg";
@@ -28,6 +29,7 @@ class Assets {
   static const notificationIcon = "assets/icons/notificationIcon.svg";
   static const serachIcon = "assets/icons/serachIcon.svg";
   static const editIcon = "assets/icons/editIcon.svg";
+  static const videoCallIcon = "assets/icons/videoIcons.svg";
 
   static const addIconRound = "assets/icons/addIconRound.svg";
   static const removeIcon = "assets/icons/removeIcon.svg";
@@ -37,12 +39,19 @@ class Assets {
   static const ratingStarIcon = "assets/icons/ratingStarIcon.svg";
   static const gallery = "assets/icons/galleryIcons.svg";
   static const cameraIcon = "assets/icons/cameraIcon.svg";
+  static const videoIcon = "assets/icons/videoIcon.svg";
+  static const videoPauseIcon = "assets/icons/videoPause.svg";
+  static const videoPlayIcon = "assets/icons/videoPlay.svg";
+  static const sendIcon = "assets/icons/sendIcon.svg";
+
+  static const moreDotIcon = "assets/icons/moreDot.svg";
 
   //// User Icons ////
   static const addBottomIcon = "assets/icons/addBottom.svg";
   static const reelIcon = "assets/icons/reelIcon.svg";
   static const nutritionIcon = "assets/icons/nutritionIcon.svg";
   static const generalIcon = "assets/icons/generalIcon.svg";
+  static const filterIcon = "assets/icons/filterIcon.svg";
 
   static const ophthalIcon = "assets/icons/ophthalIcon.svg";
 }
