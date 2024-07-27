@@ -106,7 +106,7 @@ class ApiService {
     required String descriptionAR,
   }) async {
     var uri = Uri.parse(
-      '${AppTokens.apiURl}/content?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false',
+      '${AppTokens.apiURl}/content?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false&contentType=post',
     );
     var request = http.MultipartRequest('POST', uri)
       ..headers['Content-Type'] = 'multipart/form-data'

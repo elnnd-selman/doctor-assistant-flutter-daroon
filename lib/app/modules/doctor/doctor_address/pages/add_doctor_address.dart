@@ -5,7 +5,6 @@ import 'package:hezr/app/modules/doctor/doctor_address/controller/add_doctor_add
 import 'package:hezr/app/modules/doctor/doctor_address/model/office_type_model.dart';
 import 'package:hezr/app/modules/doctor/doctor_address/widget/google_map_address_container.dart';
 import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
@@ -13,7 +12,6 @@ import 'package:hezr/global/utils/widget_spacing.dart';
 import 'package:hezr/global/widgets/auth_text_field.dart';
 import 'package:hezr/global/widgets/common_button.dart';
 import 'package:hezr/global/widgets/toast_message.dart';
-import 'package:searchbar_animation/searchbar_animation.dart';
 
 class AddDoctorAddressScreen extends GetView<AddDoctorAddressController> {
   const AddDoctorAddressScreen({super.key});

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:hezr/app/modules/user/user_bottom_navi_bar/widget/user_drawer_widget.dart';
 import 'package:hezr/app/routes/app_routes.dart';
 import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
 

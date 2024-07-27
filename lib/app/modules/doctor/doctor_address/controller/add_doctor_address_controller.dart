@@ -1,14 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:get/get.dart';
-import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:hezr/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:hezr/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
 import 'package:hezr/app/modules/doctor/doctor_address/model/office_type_model.dart';
 import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
 import 'package:hezr/global/widgets/toast_message.dart';
 import 'package:hezr/services/api.dart';
 import 'package:intl/intl.dart';

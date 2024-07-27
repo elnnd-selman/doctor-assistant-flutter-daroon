@@ -3,16 +3,13 @@ import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hezr/app/modules/doctor/doctor_address/controller/add_doctor_address_controller.dart';
 import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
 import 'package:hezr/global/utils/google_map_key.dart';
-import 'package:searchbar_animation/searchbar_animation.dart';
 
 class GoogleMapContainerAddress extends StatefulWidget {
   const GoogleMapContainerAddress({

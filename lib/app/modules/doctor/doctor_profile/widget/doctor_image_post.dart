@@ -3,19 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:hezr/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
+import 'package:hezr/app/modules/doctor/doctor_profile/model/post_model.dart';
 import 'package:hezr/app/modules/doctor/doctor_profile/widget/video_player_post.dart';
 import 'package:hezr/generated/assets.dart';
 import 'package:hezr/global/constants/app_colors.dart';
 import 'package:hezr/global/constants/size_config.dart';
 import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:hezr/global/utils/spaces.dart';
 import 'package:hezr/global/utils/widget_spacing.dart';
 
 class DoctorImagePostContainer extends StatelessWidget {
-  const DoctorImagePostContainer({super.key});
+  final ContentData contentData;
+  const DoctorImagePostContainer({super.key, required this.contentData});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 20),
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       decoration: BoxDecoration(
@@ -26,21 +32,64 @@ class DoctorImagePostContainer extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                height: 5 * SizeConfig.heightMultiplier,
-                width: 5 * SizeConfig.heightMultiplier,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/tempImages.png"),
+              Get.find<DoctorHomeController>()
+                          .userModel
+                          .value!
+                          .user!
+                          .profilePicture ==
+                      null
+                  ? Container(
+                      height: 5 * SizeConfig.heightMultiplier,
+                      width: 5 * SizeConfig.heightMultiplier,
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                          color: AppColors.blackBGColor,
+                          shape: BoxShape.circle),
+                      child: Center(
+                        child: FittedBox(
+                          child: Text(
+                            '${Get.find<DoctorHomeController>().userModel.value!.user!.username![0].toUpperCase()}${Get.find<DoctorHomeController>().userModel.value!.user!.name![0].toUpperCase()}',
+                            style: AppTextStyles.bold.copyWith(
+                              color: Colors.white,
+                              fontSize: Spaces.fontSize(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                      ))
+                  : CircleAvatar(
+                      radius: 14,
+                      child: ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl: Get.find<DoctorHomeController>()
+                              .userModel
+                              .value!
+                              .user!
+                              .profilePicture,
+                          fit: BoxFit.cover,
+                          height: 5 * SizeConfig.heightMultiplier,
+                          width: 5 * SizeConfig.heightMultiplier,
+                        ),
+                      ),
                     ),
-                    shape: BoxShape.circle),
-              ),
+              // Container(
+              //   height: 5 * SizeConfig.heightMultiplier,
+              //   width: 5 * SizeConfig.heightMultiplier,
+              //   decoration: const BoxDecoration(
+              //       image: DecorationImage(
+              //         image: AssetImage("assets/images/tempImages.png"),
+              //       ),
+              //       shape: BoxShape.circle),
+              // ),
               12.horizontalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Dr. Doctor Name",
+                    Get.find<DoctorHomeController>()
+                        .userModel
+                        .value!
+                        .user!
+                        .username!,
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColors.blackBGColor,
@@ -48,7 +97,8 @@ class DoctorImagePostContainer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "10-Jun-2020",
+                    Get.find<DoctorProfileController>()
+                        .convertDateToformat(contentData.updatedAt.toString()),
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w400,
                       color: const Color(0xff717171),
@@ -68,7 +118,7 @@ class DoctorImagePostContainer extends StatelessWidget {
           ),
           SizedBox(height: 2.5 * SizeConfig.heightMultiplier),
           Text(
-            "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a form of a   form of a  document In publishing and graphic design form of a  document ...",
+            contentData.contentEn!,
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w400,
               color: const Color(0xff484848),
@@ -80,7 +130,7 @@ class DoctorImagePostContainer extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                ...List.generate(3, (index) {
+                ...List.generate(contentData.images.length, (index) {
                   return Container(
                     height: 25 * SizeConfig.heightMultiplier,
                     width: MediaQuery.of(context).size.width * .8,
@@ -92,8 +142,7 @@ class DoctorImagePostContainer extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       child: CachedNetworkImage(
-                        imageUrl:
-                            "https://rebazdevdata.s3-eu-central-1.amazonaws.com/daroon/images/cf2fe9157bdd40fbef32619c-scaled_1000117414.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQAVTYUR3S7EOIVH4%2F20240701%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20240701T095716Z&X-Amz-Expires=600&X-Amz-Signature=e1fa83bc43181b2ed291784d5d8d18f6fc098d3ca8a499b98903c2574b6dcad1&X-Amz-SignedHeaders=host",
+                        imageUrl: contentData.images[index],
                         fit: BoxFit.cover,
                         width: MediaQuery.of(context).size.width,
                         color: AppColors.blackBGColor.withOpacity(0.3),
@@ -110,7 +159,7 @@ class DoctorImagePostContainer extends StatelessWidget {
                     ),
                   );
                 }),
-                ...List.generate(2, (index) {
+                ...List.generate(contentData.videos.length, (index) {
                   return Container(
                     height: 25 * SizeConfig.heightMultiplier,
                     width: MediaQuery.of(context).size.width * 0.8,
@@ -120,7 +169,7 @@ class DoctorImagePostContainer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(0),
                         color: Colors.transparent),
                     child: VideoPlayerPost(
-                      videoPath: videoList[0],
+                      videoPath: contentData.videos[index],
                     ),
                   );
                 })
@@ -136,13 +185,13 @@ class DoctorImagePostContainer extends StatelessWidget {
           Row(
             children: [
               _buildLikeRow(
-                " 26 Likes",
+                " ${contentData.likes} Likes",
                 Assets.likeIcon,
                 () {},
               ),
               20.horizontalSpace,
               _buildLikeRow(
-                " 26 Comment",
+                " 0 Comment",
                 Assets.commentIcon,
                 () {
                   showModalBottomSheet(
@@ -280,8 +329,8 @@ class CommentBottomSheet extends StatelessWidget {
               ),
               SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
               Container(
-                height: 60 * SizeConfig.heightMultiplier,
-                color: Colors.red,
+                height: 55 * SizeConfig.heightMultiplier,
+                // color: Colors.red,
               ),
               const Spacer(),
               Row(
