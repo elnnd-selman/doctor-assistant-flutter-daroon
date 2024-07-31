@@ -47,13 +47,6 @@ import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_profile.dart
 import 'package:hezr/app/modules/on_boarding/pages/login_selection_screen.dart';
 import 'package:hezr/app/modules/on_boarding/pages/onboarding_screen.dart';
 import 'package:hezr/app/modules/splash/splash_screen.dart';
-import 'package:hezr/app/modules/user/user_bottom_navi_bar/binding/user_home_binding.dart';
-import 'package:hezr/app/modules/user/user_bottom_navi_bar/page/user_drawer.dart';
-import 'package:hezr/app/modules/user/user_offer/binding/user_offers_binding.dart';
-import 'package:hezr/app/modules/user/user_offer/pages/user_offer_detail.dart';
-import 'package:hezr/app/modules/user/user_offer/pages/user_offer_screen.dart';
-import 'package:hezr/app/modules/user/user_top_doctors/binding/user_top_doctor_binding.dart';
-import 'package:hezr/app/modules/user/user_top_doctors/pages/filter_screen.dart';
 import 'package:hezr/app/routes/app_routes.dart';
 
 class AppPages {
@@ -237,24 +230,24 @@ class AppPages {
     ),
 
     /////////////// User Side Screens///
-    GetPage(
-      name: Routes.userdrawerScreen,
-      page: () => const UserDrawerScreen(),
-      binding: UserHomeBinding(),
-    ),
-    GetPage(
-      name: Routes.userOfferScreen,
-      page: () => const UserOfferScreen(),
-      binding: UserOffersBinding(),
-    ),
-    GetPage(
-      name: Routes.userOffersDetails,
-      page: () => const UserOfferDetailScreen(),
-    ),
-    GetPage(
-      name: Routes.filterScreen,
-      page: () => const FilterScreen(),
-      binding: UserTopDoctorBinding(),
-    ),
+    // GetPage(
+    //   name: Routes.userdrawerScreen,
+    //   page: () => const UserDrawerScreen(),
+    //   binding: UserHomeBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.userOfferScreen,
+    //   page: () => const UserOfferScreen(),
+    //   binding: UserOffersBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.userOffersDetails,
+    //   page: () => const UserOfferDetailScreen(),
+    // ),
+    // GetPage(
+    //   name: Routes.filterScreen,
+    //   page: () => const FilterScreen(),
+    //   binding: UserTopDoctorBinding(),
+    // ),
   ];
 }
