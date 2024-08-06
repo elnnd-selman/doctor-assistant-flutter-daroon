@@ -1,130 +1,65 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/office_type_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class AddDoctorAddressController extends GetxController {
-  RxBool isAppBarOpen = false.obs;
-  RxInt slectedOffice = 0.obs;
-
+class EditDoctorAddressController extends GetxController {
   TextEditingController title = TextEditingController();
   TextEditingController description = TextEditingController();
-  TextEditingController feeClinic = TextEditingController();
-  TextEditingController feeMessage = TextEditingController();
-  TextEditingController feeCall = TextEditingController();
-  TextEditingController feeVideo = TextEditingController();
-
   TextEditingController streetNumber = TextEditingController();
   TextEditingController townName = TextEditingController();
   TextEditingController cityName = TextEditingController();
   TextEditingController countryName = TextEditingController();
-
-  ///
-  DateTime selectedDayTimeStamp = DateTime.now();
-//// Loader Variable.
-  final _processing = false.obs;
-  bool get processing => _processing.value;
-
-  RxBool isStartWithTime = false.obs;
-  Rx<TimeOfDay> startWithTime = const TimeOfDay(hour: 0, minute: 0).obs;
-
-  RxBool isEndWithTime = false.obs;
-  Rx<TimeOfDay> endWithTime = const TimeOfDay(hour: 0, minute: 0).obs;
-
   RxDouble long = 0.0.obs;
   RxDouble lat = 0.0.obs;
 
-  ///
-  RxBool istimeDuration = false.obs;
-  Rx<Duration> timeDuration = const Duration().obs;
+  RxInt slectedOffice = 0.obs;
+  final _processing = false.obs;
+  bool get processing => _processing.value;
+  RxBool isReBuild = false.obs;
 
-  RxList<String> weekDaysList = [
-    "Sun",
-    "Mon",
-    "Tue",
-    "Wed",
-    "Thu",
-    "Fri",
-    "Sat",
-  ].obs;
+  setAddressData(OfficeAddreesModel ofiices) {
+    title.text = ofiices.title!;
+    description.text = ofiices.description!;
+    streetNumber.text = ofiices.address!.street!;
+    townName.text = ofiices.address!.town!;
+    cityName.text = ofiices.address!.city!;
+    countryName.text = ofiices.address!.country!;
 
-  RxList<String> weekDaysListFull = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday"
-  ].obs;
+    long.value = ofiices.address!.coordinate!.longitude!;
+    lat.value = ofiices.address!.coordinate!.latitude!;
 
-  RxList selectedWeekDays = [].obs;
-
-  String convertTo12HourFormat(int hours, int minutes) {
-    DateTime currentTime = DateTime.now();
-
-    // Create DateTime object with specified hours and minutes
-    DateTime parsedTime = DateTime(
-      currentTime.year,
-      currentTime.month,
-      currentTime.day,
-      hours,
-      minutes,
-    );
-
-    // Format the parsed DateTime into 12-hour format string
-    String time12 = DateFormat('h:mm a').format(parsedTime);
-
-    return time12;
+    if (ofiices.typeOfOffice == "house") {
+      slectedOffice.value = 0;
+    } else if (ofiices.typeOfOffice == "building") {
+      slectedOffice.value = 1;
+    } else if (ofiices.typeOfOffice == "office") {
+      slectedOffice.value = 2;
+    } else {
+      slectedOffice.value = 3;
+    }
   }
 
-  String convert24HourTo12Hour(String time24) {
-    // Parse the input time string to a DateTime object
-    DateTime dateTime = DateFormat.Hm().parse(time24);
-
-    // Format the DateTime object to a 12-hour time format
-    String formattedTime = DateFormat('h:mm a').format(dateTime);
-
-    return formattedTime;
-  }
-
-  int separeteHours(int totalMinutes) {
-    int hours = totalMinutes ~/ 60;
-    return hours;
-  }
-
-  int separeteMinutes(int totalMinutes) {
-    int minutes = totalMinutes % 60;
-
-    return minutes;
-  }
-
-  Future<void> registerOffice(BuildContext context) async {
+  Future<void> updateOffice(
+      {required BuildContext context,
+      required OfficeAddreesModel office}) async {
     try {
       _processing.value = true;
       FocusManager.instance.primaryFocus?.unfocus();
-      print(
-        "${startWithTime.value.hour.toString()}:${startWithTime.value.minute.toString()}",
-      );
-      print(
-        "${endWithTime.value.hour.toString()}:${endWithTime.value.minute.toString()}",
-      );
-      print(Get.find<DoctorHomeController>().userModel.value!.token!);
 
-      final response = await ApiService.postwithOutHeader(
+      final response = await ApiService.pustwithOutHeader(
           userToken: {
             'Content-Type': 'application/json',
-            'Authorization':
+            "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: 'https://development-api.daroon.krd/api/office',
+          endPoint:
+              'https://development-api.daroon.krd/api/office/update-my-office/${office.id}',
           body: {
             "title": title.text,
             "doctorId":
@@ -132,18 +67,16 @@ class AddDoctorAddressController extends GetxController {
             "description": description.text,
             "typeOfOffice":
                 officeTypeList[slectedOffice.value].title.toLowerCase(),
-            "daysOpen": selectedWeekDays,
-            "startTime":
-                "${startWithTime.value.hour.toString()}:${startWithTime.value.minute.toString()}",
-            "endTime":
-                "${endWithTime.value.hour.toString()}:${endWithTime.value.minute.toString()}",
-            "appointmentDuration": timeDuration.value.inMinutes.toString(),
+            "daysOpen": office.daysOpen,
+            "startTime": office.startTime,
+            "endTime": office.endTime,
+            "appointmentDuration": office.appointmentDuration,
             "appointmentTimeType": "hour",
             "fee": {
-              "feeClinic": feeClinic.text,
-              "feeMessage": feeMessage.text,
-              "feeCall": feeCall.text,
-              "feeVideoCall": feeVideo.text
+              "feeClinic": office.fee!.feeClinic!,
+              "feeMessage": office.fee!.feeMessage!,
+              "feeCall": office.fee!.feeCall!,
+              "feeVideoCall": office.fee!.feeVideoCall!
             },
             "typeOfCurrency": "usd",
             "phoneNumbers": ["07500132", "075016132"],
@@ -169,8 +102,11 @@ class AddDoctorAddressController extends GetxController {
           final jsonData = jsonDecode(response.body)['data'];
           Get.find<DoctorAddressController>()
               .officeAddressModelList
+              .removeWhere((item) => item.id == office.id);
+          Get.find<DoctorAddressController>()
+              .officeAddressModelList
               .add(OfficeAddreesModel.fromJson(jsonData));
-          print(jsonData);
+
           Get.back();
           Get.back();
 

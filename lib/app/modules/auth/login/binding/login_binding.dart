@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/auth/login/controller/login_controller.dart';
-import 'package:hezr/app/modules/auth/signup/controller/profile_pic_controller.dart';
-import 'package:hezr/app/modules/auth/signup/controller/signup_controller.dart';
+import 'package:daroon_doctor/app/modules/auth/login/controller/login_controller.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/controller/profile_pic_controller.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/controller/signup_controller.dart';
 
 class LoginBindings extends Bindings {
   @override

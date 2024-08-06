@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
-import 'package:hezr/global/widgets/toast_message.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:daroon_doctor/services/api.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DoctorAddPostController extends GetxController {

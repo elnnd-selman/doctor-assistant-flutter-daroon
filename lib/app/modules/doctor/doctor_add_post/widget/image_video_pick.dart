@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_add_post/controller/doctor_add_post_controller.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_add_post/controller/doctor_add_post_controller.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 Future<void> addPhoto(BuildContext context) async {
   final controller = Get.find<DoctorAddPostController>();

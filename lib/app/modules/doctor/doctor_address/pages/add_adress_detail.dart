@@ -2,16 +2,16 @@ import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/controller/add_doctor_address_controller.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
-import 'package:hezr/global/widgets/auth_text_field.dart';
-import 'package:hezr/global/widgets/common_button.dart';
-import 'package:hezr/global/widgets/loading_overlay.dart';
-import 'package:hezr/global/widgets/toast_message.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/add_doctor_address_controller.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
+import 'package:daroon_doctor/global/widgets/common_button.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
 
 class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
   const AddAdressDetailScreen({super.key});
@@ -341,6 +341,23 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                       return null;
                     },
                   ),
+                  20.verticalSpace,
+                  _buildTitle("Fee (Video)", "assets/icons/videoCall.svg"),
+                  10.verticalSpace,
+                  AddressTextField(
+                    scanIcons: false,
+                    obscuretext: false,
+                    hinttext: "0.0",
+                    controller: controller.feeVideo,
+                    keyboardType: TextInputType.number,
+                    showicon: false,
+                    validations: (value) {
+                      if (value!.isEmpty) {
+                        return "Enter  Video Fees";
+                      }
+                      return null;
+                    },
+                  ),
                   SizedBox(height: 3 * SizeConfig.heightMultiplier),
                   CommonButton(
                       ontap: () {
@@ -350,6 +367,7 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                             controller.istimeDuration.value == true &&
                             controller.feeClinic.text.isNotEmpty &&
                             controller.feeMessage.text.isNotEmpty &&
+                            controller.feeVideo.text.isNotEmpty &&
                             controller.feeCall.text.isNotEmpty) {
                           controller.registerOffice(context);
                         } else {

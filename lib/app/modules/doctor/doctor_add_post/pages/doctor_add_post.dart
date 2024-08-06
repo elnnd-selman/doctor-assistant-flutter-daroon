@@ -2,15 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_add_post/controller/doctor_add_post_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_add_post/widget/image_video_pick.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
-import 'package:hezr/global/widgets/auth_text_field.dart';
-import 'package:hezr/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_add_post/controller/doctor_add_post_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_add_post/widget/image_video_pick.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 
 class DoctorAddPostScreen extends GetView<DoctorAddPostController> {
   DoctorAddPostScreen({super.key});

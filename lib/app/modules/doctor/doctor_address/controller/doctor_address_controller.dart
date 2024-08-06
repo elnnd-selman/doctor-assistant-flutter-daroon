@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hezr/app/controllers/local_storage_controller.dart';
-import 'package:hezr/app/model/user_model.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
+import 'package:daroon_doctor/app/model/user_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/services/api.dart';
 
 class DoctorAddressController extends GetxController {
   RxBool isLoading = false.obs;
@@ -23,7 +23,7 @@ class DoctorAddressController extends GetxController {
     final response = await ApiService.getwithUserToken(
       endPoint: "${AppTokens.apiURl}/office/my-offices",
       userToken: {
-        "Authorization": userModel.value!.token!,
+        "Authorization": "Bearer ${userModel.value!.token!}",
       },
     );
     if (response!.statusCode == 200 || response.statusCode == 201) {
@@ -53,7 +53,8 @@ class DoctorAddressController extends GetxController {
           ),
         );
       }
-
+      officeAddressModelList
+          .sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
       isLoading.value = false;
     } else {
       isLoading.value = false;
