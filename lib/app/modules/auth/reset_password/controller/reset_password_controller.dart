@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/services/api.dart';
 
 class ResetPasswordController extends GetxController {
   TextEditingController password = TextEditingController();

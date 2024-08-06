@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'package:country_phone_validator/country_phone_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/controllers/local_storage_controller.dart';
-import 'package:hezr/app/model/user_model.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/global/widgets/toast_message.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
+import 'package:daroon_doctor/app/model/user_model.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:daroon_doctor/services/api.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignUpCtrl extends GetxController {

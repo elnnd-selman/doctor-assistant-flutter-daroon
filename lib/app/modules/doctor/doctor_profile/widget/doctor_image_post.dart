@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/model/post_model.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/widget/video_player_post.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/spaces.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/post_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/video_player_post.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorImagePostContainer extends StatelessWidget {
   final ContentData contentData;
@@ -148,7 +148,7 @@ class DoctorImagePostContainer extends StatelessWidget {
                         color: AppColors.blackBGColor.withOpacity(0.3),
                         colorBlendMode: BlendMode.darken,
                         placeholder: (context, url) {
-                          return BlurHash(
+                          return const BlurHash(
                             hash:
                                 "https://rebazdevdata.s3-eu-central-1.amazonaws.com/daroon/images/cf2fe9157bdd40fbef32619c-scaled_1000117414.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQAVTYUR3S7EOIVH4%2F20240701%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20240701T095716Z&X-Amz-Expires=600&X-Amz-Signature=e1fa83bc43181b2ed291784d5d8d18f6fc098d3ca8a499b98903c2574b6dcad1&X-Amz-SignedHeaders=host",
                             imageFit: BoxFit.cover,
@@ -271,7 +271,7 @@ class CommentBottomSheet extends StatelessWidget {
                 height: 5,
                 width: 80,
                 decoration: BoxDecoration(
-                    color: Color(0xffE7E8EA),
+                    color: const Color(0xffE7E8EA),
                     borderRadius: BorderRadius.circular(20)),
               ),
               SizedBox(height: 1.2 * SizeConfig.heightMultiplier),
@@ -283,7 +283,7 @@ class CommentBottomSheet extends StatelessWidget {
                       Container(
                         height: 6 * SizeConfig.heightMultiplier,
                         width: 6 * SizeConfig.heightMultiplier,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.red,
                         ),

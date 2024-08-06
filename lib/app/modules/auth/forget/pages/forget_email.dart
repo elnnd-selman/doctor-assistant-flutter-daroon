@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/auth/forget/controller/forget_password_controller.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/email_validation.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
-import 'package:hezr/global/widgets/auth_text_field.dart';
-import 'package:hezr/global/widgets/common_button.dart';
+import 'package:daroon_doctor/app/modules/auth/forget/controller/forget_password_controller.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/email_validation.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
+import 'package:daroon_doctor/global/widgets/common_button.dart';
 
 class ForgetEmailScreen extends GetView<ForgetPasswordCtrl> {
   ForgetEmailScreen({super.key});

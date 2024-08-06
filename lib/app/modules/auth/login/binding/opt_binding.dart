@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/auth/signup/controller/opt_controller.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/controller/opt_controller.dart';
 
 class OptBinding extends Bindings {
   @override

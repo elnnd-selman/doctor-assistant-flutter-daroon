@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/controllers/local_storage_controller.dart';
-import 'package:hezr/app/model/user_model.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/global/widgets/toast_message.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
+import 'package:daroon_doctor/app/model/user_model.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:daroon_doctor/services/api.dart';
 
 class LoginCtrl extends GetxController {
   final email = TextEditingController();
@@ -29,8 +29,7 @@ class LoginCtrl extends GetxController {
           });
 
       if (response != null) {
-        if (response.statusCode == 201) {
-          
+        if (response.statusCode == 201 || response.statusCode == 200) {
           showToastMessage(
               message: "Successfully login.",
               context: context,

@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/widgets/toast_message.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:daroon_doctor/services/api.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:path/path.dart' as path;

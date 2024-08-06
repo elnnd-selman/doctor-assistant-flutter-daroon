@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/global/widgets/toast_message.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:daroon_doctor/services/api.dart';
 
 class OptController extends GetxController {
   RxInt startDuration = 60.obs;
