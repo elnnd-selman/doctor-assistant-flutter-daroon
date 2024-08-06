@@ -29,24 +29,24 @@ class DoctorOfficeAddressModel {
 
 class OfficeAddreesModel {
   OfficeAddreesModel({
-    required this.fee,
-    required this.address,
-    required this.id,
-    required this.doctor,
-    required this.title,
-    required this.description,
-    required this.typeOfOffice,
-    required this.daysOpen,
-    required this.startTime,
-    required this.endTime,
-    required this.appointmentDuration,
-    required this.appointmentTimeType,
-    required this.typeOfCurrency,
-    required this.phoneNumbers,
-    required this.isDeleted,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.v,
+    this.fee,
+    this.address,
+    this.id,
+    this.doctor,
+    this.title,
+    this.description,
+    this.typeOfOffice,
+    this.daysOpen,
+    this.startTime,
+    this.endTime,
+    this.appointmentDuration,
+    this.appointmentTimeType,
+    this.typeOfCurrency,
+    this.phoneNumbers,
+    this.isDeleted,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
   });
 
   final Fee? fee;
@@ -56,13 +56,13 @@ class OfficeAddreesModel {
   final String? title;
   final String? description;
   final String? typeOfOffice;
-  final List<String> daysOpen;
+  final List<String>? daysOpen;
   final String? startTime;
   final String? endTime;
   final int? appointmentDuration;
   final String? appointmentTimeType;
   final String? typeOfCurrency;
-  final List<String> phoneNumbers;
+  final List<String>? phoneNumbers;
   final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -104,13 +104,13 @@ class OfficeAddreesModel {
         "title": title,
         "description": description,
         "typeOfOffice": typeOfOffice,
-        "daysOpen": daysOpen.map((x) => x).toList(),
+        "daysOpen": daysOpen!.map((x) => x).toList(),
         "startTime": startTime,
         "endTime": endTime,
         "appointmentDuration": appointmentDuration,
         "appointmentTimeType": appointmentTimeType,
         "typeOfCurrency": typeOfCurrency,
-        "phoneNumbers": phoneNumbers.map((x) => x).toList(),
+        "phoneNumbers": phoneNumbers!.map((x) => x).toList(),
         "isDeleted": isDeleted,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
@@ -121,12 +121,24 @@ class OfficeAddreesModel {
 class Address {
   Address({
     required this.coordinate,
+    required this.country,
+    required this.city,
+    required this.town,
+    required this.street,
   });
 
   final Coordinate? coordinate;
+  final String? country;
+  final String? city;
+  final String? town;
+  final String? street;
 
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
+      country: json["country"],
+      city: json["city"],
+      town: json["town"],
+      street: json["street"],
       coordinate: json["coordinate"] == null
           ? null
           : Coordinate.fromJson(json["coordinate"]),

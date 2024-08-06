@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/on_boarding/model/on_boarding_model.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/app_constants.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/app/modules/on_boarding/model/on_boarding_model.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/app_constants.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});

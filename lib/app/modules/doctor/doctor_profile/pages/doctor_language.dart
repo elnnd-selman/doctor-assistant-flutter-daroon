@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/controller/doctor_language_controller.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_language_controller.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 class DoctorLanguageScreen extends GetView<DoctorLanguageController> {
   const DoctorLanguageScreen({super.key});

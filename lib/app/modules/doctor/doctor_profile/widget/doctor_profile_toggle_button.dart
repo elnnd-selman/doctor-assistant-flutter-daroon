@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 class DoctorProfileToggleButton extends StatelessWidget {
   const DoctorProfileToggleButton({
@@ -54,7 +54,7 @@ class DoctorProfileToggleButton extends StatelessWidget {
               height: 41,
               decoration: BoxDecoration(
                 color: AppColors.primaryColor.withOpacity(0.06),
-                borderRadius: BorderRadius.all(Radius.circular(12)),
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
               ),
             ),
           ),

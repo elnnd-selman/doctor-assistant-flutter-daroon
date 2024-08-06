@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
 
 class DoctorOffersBinding extends Bindings {
   @override

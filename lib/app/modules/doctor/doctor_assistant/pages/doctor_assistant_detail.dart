@@ -1,18 +1,20 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/widget/doctor_assistant_detail_container.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/widget/doctor_assistant_detail_container.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorAssistantDetailScreen extends StatelessWidget {
-  const DoctorAssistantDetailScreen({super.key});
+  DoctorAssistantDetailScreen({super.key});
 
+  final assistantData = Get.arguments[0] as AssistantElement;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class DoctorAssistantDetailScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
-            "Assistant Name",
+            assistantData.assistant!.fullName!,
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.blackBGColor,
@@ -59,9 +61,9 @@ class DoctorAssistantDetailScreen extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 4 * SizeConfig.heightMultiplier),
-              const DoctorAssistantDetailContainer(),
+              DoctorAssistantDetailContainer(assistantElement: assistantData),
               SizedBox(height: 2 * SizeConfig.heightMultiplier),
-              _buildAddress(context),
+              _buildAddress(context: context, office: assistantData.office!),
               SizedBox(height: 2 * SizeConfig.heightMultiplier),
               premissionContainer(context),
               SizedBox(height: 2 * SizeConfig.heightMultiplier),
@@ -144,23 +146,45 @@ class DoctorAssistantDetailScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 2 * SizeConfig.heightMultiplier),
-          Row(
-            children: [
-              SvgPicture.asset(
-                Assets.removeIcon,
-                height: 2.4 * SizeConfig.heightMultiplier,
-              ),
-              14.horizontalSpace,
-              _buldManageAppointmentContainer(
-                  "assets/icons/appointmetManage.svg", "Managing Appointments"),
-            ],
-          ),
+          assistantData.permissions.contains("manageAppointments")
+              ? Row(
+                  children: [
+                    SvgPicture.asset(
+                      Assets.removeIcon,
+                      height: 2.4 * SizeConfig.heightMultiplier,
+                    ),
+                    14.horizontalSpace,
+                    _buldManageAppointmentContainer(
+                        "assets/icons/appointmetManage.svg",
+                        "Managing Appointments"),
+                  ],
+                )
+              : const SizedBox(),
+          assistantData.permissions.contains("manageAppointments")
+              ? SizedBox(height: 1 * SizeConfig.heightMultiplier)
+              : const SizedBox(),
+          assistantData.permissions.contains("managePosts")
+              ? Row(
+                  children: [
+                    SvgPicture.asset(
+                      Assets.removeIcon,
+                      height: 2.4 * SizeConfig.heightMultiplier,
+                    ),
+                    14.horizontalSpace,
+                    _buldManageAppointmentContainer(
+                        "assets/icons/managePost.svg", "Managing Posts"),
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     );
   }
 
-  Container _buildAddress(BuildContext context) {
+  Container _buildAddress({
+    required BuildContext context,
+    required Office office,
+  }) {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: 2 * SizeConfig.heightMultiplier,
@@ -171,6 +195,7 @@ class DoctorAssistantDetailScreen extends StatelessWidget {
           border:
               Border.all(color: AppColors.secondaryborderColor, width: 0.5)),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -224,7 +249,7 @@ class DoctorAssistantDetailScreen extends StatelessWidget {
           ),
           SizedBox(height: 2 * SizeConfig.heightMultiplier),
           Text(
-            "Sulaymaniyah, Orzdi street, Asa building, floor 3, appartment 30..",
+            office.description!,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w500,
               color: AppColors.primaryColor,

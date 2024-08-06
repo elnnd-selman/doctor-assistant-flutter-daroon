@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:hezr/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -37,6 +37,17 @@ class ApiService {
     required Map<String, String>? userToken,
   }) async {
     final response = await http.post(Uri.parse(endPoint),
+        headers: userToken, body: jsonEncode(body));
+
+    return response;
+  }
+
+  static Future<http.Response?> pustwithOutHeader({
+    required String endPoint,
+    required Map<String, dynamic>? body,
+    required Map<String, String>? userToken,
+  }) async {
+    final response = await http.put(Uri.parse(endPoint),
         headers: userToken, body: jsonEncode(body));
 
     return response;

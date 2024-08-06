@@ -1,10 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:flutter/material.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:get/get.dart';
 
 class DoctorAssistantDetailContainer extends StatelessWidget {
-  const DoctorAssistantDetailContainer({super.key});
+  final AssistantElement assistantElement;
+  const DoctorAssistantDetailContainer(
+      {super.key, required this.assistantElement});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +31,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Assistant Name",
+                    assistantElement.assistant!.fullName!,
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColors.blackBGColor,
@@ -33,7 +39,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "@Username",
+                    assistantElement.assistant!.username!,
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w400,
                       color: AppColors.lighttextColor,
@@ -42,30 +48,104 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
                   ),
                   SizedBox(height: 2 * SizeConfig.heightMultiplier),
                   _buildAssistantContainer(
-                      context: context, title: "Gender", subtitle: "Female"),
+                      context: context,
+                      title: "Gender",
+                      subtitle:
+                          assistantElement.assistant!.gender!.toUpperCase()),
                   _buildAssistantContainer(
                       context: context,
                       title: "Phone Number",
-                      subtitle: "+963 750 123 4567"),
+                      subtitle: assistantElement.assistant!.phone!.number!),
                   _buildAssistantContainer(
                       context: context,
                       title: "Email",
-                      subtitle: "assistant@gmail.com"),
+                      subtitle: assistantElement.assistant!.email!),
                   SizedBox(height: 2.5 * SizeConfig.heightMultiplier)
                 ],
               ),
             ),
           ),
+          // Center(
+          //   child: Container(
+          //     height: SizeConfig.heightMultiplier * 12,
+          //     width: SizeConfig.heightMultiplier * 12,
+          //     decoration: const BoxDecoration(
+          //         shape: BoxShape.circle,
+          //         // color: Colors.red,
+          //         image: DecorationImage(
+          //           image: AssetImage("assets/images/tempImages.png"),
+          //         )),
+          //   ),
+          // ),
           Center(
             child: Container(
               height: SizeConfig.heightMultiplier * 12,
               width: SizeConfig.heightMultiplier * 12,
               decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
+                  shape: BoxShape.circle, color: AppColors.blackBGColor
                   // color: Colors.red,
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/tempImages.png"),
-                  )),
+                  // image: DecorationImage(
+                  //   image: AssetImage("assets/images/tempImages.png"),
+                  // ),
+                  ),
+              child: assistantElement.assistant!.profilePicture == null
+                  ? Center(
+                      child: FittedBox(
+                        child: Text(
+                          '${assistantElement.assistant!.name![0].toUpperCase()}${assistantElement.assistant!.fullName![1].toUpperCase()}',
+                          style: AppTextStyles.bold.copyWith(
+                            color: Colors.white,
+                            fontSize: Spaces.fontSize(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    )
+                  : CachedNetworkImage(
+                      imageUrl: assistantElement.assistant!.profilePicture!.md!,
+                      fit: BoxFit.cover,
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: SizeConfig.heightMultiplier * 12,
+                        width: SizeConfig.heightMultiplier * 12,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ),
+                      height: SizeConfig.heightMultiplier * 12,
+                      width: SizeConfig.heightMultiplier * 12,
+                      color: AppColors.blackBGColor.withOpacity(0.3),
+                      colorBlendMode: BlendMode.darken,
+                      errorWidget: (context, url, error) {
+                        return Center(
+                          child: FittedBox(
+                            child: Text(
+                              '${assistantElement.assistant!.name![0].toUpperCase()}${assistantElement.assistant!.fullName![1].toUpperCase()}',
+                              style: AppTextStyles.bold.copyWith(
+                                color: Colors.white,
+                                fontSize: Spaces.fontSize(fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        );
+                        // return Padding(
+                        //   padding: const EdgeInsets.all(25),
+                        //   child: SvgPicture.asset(
+                        //     "assets/icons/alert_error.svg",
+                        //     colorFilter: ColorFilter.mode(
+                        //         Colors.white, BlendMode.srcIn),
+                        //   ),
+                        // );
+                      },
+                      placeholder: (context, url) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ),
+                        );
+                      },
+                      placeholderFadeInDuration: 0.75.seconds,
+                    ),
             ),
           ),
         ],

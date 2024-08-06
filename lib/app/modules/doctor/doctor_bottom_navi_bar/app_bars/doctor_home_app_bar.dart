@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/widget/doctor_drawer_widget.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/widget/doctor_drawer_widget.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorHomeAppBar extends StatelessWidget {
   const DoctorHomeAppBar({super.key});

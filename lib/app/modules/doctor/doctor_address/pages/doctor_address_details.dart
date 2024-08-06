@@ -1,22 +1,22 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_detail_controller.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/controller/add_doctor_address_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
-class DoctorAddressDetailsScreen extends GetView<AddDoctorAddressController> {
+class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
   const DoctorAddressDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final officeAddreesModel =
-        Get.arguments["addressModel"] as OfficeAddreesModel;
+    final officeAddreesModel = Get.arguments[0] as OfficeAddreesModel;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -63,12 +63,19 @@ class DoctorAddressDetailsScreen extends GetView<AddDoctorAddressController> {
                     Assets.editIcon,
                   ),
                   6.horizontalSpace,
-                  Text(
-                    "Edit Schedule",
-                    style: AppTextStyles.medium.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primaryColor,
-                      fontSize: SizeConfig.heightMultiplier * 1.6,
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.editdoctorSchedule, arguments: [
+                        officeAddreesModel,
+                      ]);
+                    },
+                    child: Text(
+                      "Edit Schedule",
+                      style: AppTextStyles.medium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryColor,
+                        fontSize: SizeConfig.heightMultiplier * 1.6,
+                      ),
                     ),
                   ),
                 ],
@@ -218,12 +225,19 @@ class DoctorAddressDetailsScreen extends GetView<AddDoctorAddressController> {
                     Assets.editIcon,
                   ),
                   6.horizontalSpace,
-                  Text(
-                    "Edit Address",
-                    style: AppTextStyles.medium.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.primaryColor,
-                      fontSize: SizeConfig.heightMultiplier * 1.6,
+                  GestureDetector(
+                    onTap: () {
+                      Get.toNamed(Routes.editdoctorAdress, arguments: [
+                        officeAddreesModel,
+                      ]);
+                    },
+                    child: Text(
+                      "Edit Address",
+                      style: AppTextStyles.medium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.primaryColor,
+                        fontSize: SizeConfig.heightMultiplier * 1.6,
+                      ),
                     ),
                   ),
                 ],
@@ -231,7 +245,7 @@ class DoctorAddressDetailsScreen extends GetView<AddDoctorAddressController> {
               10.verticalSpace,
               Container(
                 height: 0.5,
-                color: Color(0xffE0E0E0),
+                color: const Color(0xffE0E0E0),
               ),
               14.verticalSpace,
               Row(
@@ -432,12 +446,12 @@ class DoctorAddressDetailsScreen extends GetView<AddDoctorAddressController> {
                 margin: EdgeInsets.only(right: index == 7 ? 0 : 10),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: office.daysOpen
+                    color: office.daysOpen!
                             .contains(controller.weekDaysListFull[index])
                         ? AppColors.primaryColor
                         : const Color(0xffE0E0E0),
                   ),
-                  color: office.daysOpen
+                  color: office.daysOpen!
                           .contains(controller.weekDaysListFull[index])
                       ? AppColors.primaryColor
                       : Colors.transparent,
@@ -448,7 +462,7 @@ class DoctorAddressDetailsScreen extends GetView<AddDoctorAddressController> {
                     controller.weekDaysList[index],
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: office.daysOpen
+                      color: office.daysOpen!
                               .contains(controller.weekDaysListFull[index])
                           ? AppColors.whiteBGColor
                           : AppColors.blackBGColor,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/controllers/local_storage_controller.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
+import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,7 +37,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (Get.find<LocalStorageController>().daroonBox!.get("isLogin") != null) {
       if (Get.find<LocalStorageController>().daroonBox!.get("isLogin")!) {
-        print(Get.find<LocalStorageController>().daroonBox!.get("userRole"));
         if (Get.find<LocalStorageController>().daroonBox!.get("userRole") ==
             "doctor") {
           // Get.offAllNamed(Routes.doctordrawerScreen);

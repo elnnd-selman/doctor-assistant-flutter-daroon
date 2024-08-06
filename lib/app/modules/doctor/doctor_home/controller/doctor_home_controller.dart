@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/controllers/local_storage_controller.dart';
-import 'package:hezr/app/model/user_model.dart';
-import 'package:hezr/global/constants/app_colors.dart';
+import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
+import 'package:daroon_doctor/app/model/user_model.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
 
 class DoctorHomeController extends GetxController {
   RxInt isSelected = 0.obs;
@@ -29,5 +29,6 @@ class DoctorHomeController extends GetxController {
     userModel.value = await Get.find<LocalStorageController>()
         .daroonBox!
         .get("userModel", defaultValue: UserModel);
+    print(userModel.value!.token!);
   }
 }

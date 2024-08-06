@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/size_config.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
 
 class DoctorDrawerWidget extends StatelessWidget {
   const DoctorDrawerWidget({super.key});

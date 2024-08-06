@@ -1,18 +1,19 @@
 import 'dart:async';
 
+import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorAdressScreen extends GetView<DoctorAddressController> {
   DoctorAdressScreen({super.key});
@@ -100,25 +101,37 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                       ),
                     ),
                     SizedBox(height: 1 * SizeConfig.heightMultiplier),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: controller.officeAddressModelList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.doctorAdressDetail,
-                                  arguments: {
-                                    "addressModel": controller
-                                        .officeAddressModelList[index],
-                                  });
-                            },
-                            child: AddressContainer(
-                              officeAddreesModel:
-                                  controller.officeAddressModelList[index],
-                            ),
-                          );
-                        }),
+                    controller.officeAddressModelList.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 30),
+                            child: NoDataWidget(
+                                backGroundcolor: AppColors.secondaryborderColor,
+                                svgIconColor: Colors.white,
+                                iconType: true,
+                                iconPath: "assets/icons_png/no_location.png",
+                                title: "No Address",
+                                description: "No office Address Available"),
+                          )
+                        : ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.officeAddressModelList.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(
+                                    Routes.doctorAdressDetail,
+                                    arguments: [
+                                      controller.officeAddressModelList[index],
+                                    ],
+                                  );
+                                },
+                                child: AddressContainer(
+                                  officeAddreesModel:
+                                      controller.officeAddressModelList[index],
+                                ),
+                              );
+                            }),
                     SizedBox(height: 2 * SizeConfig.heightMultiplier),
                   ],
                 ),
@@ -162,7 +175,7 @@ class AddressContainer extends StatelessWidget {
               ),
               10.horizontalSpace,
               Text(
-                "${officeAddreesModel.daysOpen.length} days per week",
+                "${officeAddreesModel.daysOpen!.length} days per week",
                 style: AppTextStyles.medium.copyWith(
                   fontWeight: FontWeight.w400,
                   color: const Color(0xff898A8D),

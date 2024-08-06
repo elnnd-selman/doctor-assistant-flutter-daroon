@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hezr/app/modules/doctor/doctor_add_post/pages/doctor_add_post.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/pages/doctor_address.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/doctor_appointment_screen.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_address_appbar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_appointment_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_home_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_post_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_profile_app_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/page/doctor_home_screen.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_profile.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_add_post/pages/doctor_add_post.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/doctor_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/doctor_appointment_screen.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_address_appbar.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_appointment_app_bar.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_home_app_bar.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_post_app_bar.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/app_bars/doctor_profile_app_bar.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/page/doctor_home_screen.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_profile.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
 
 class DoctorBottomNaviBar extends StatefulWidget {
   const DoctorBottomNaviBar({super.key});

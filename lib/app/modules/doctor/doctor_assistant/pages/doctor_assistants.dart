@@ -1,13 +1,14 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/widget/assistant_info_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/controller/doctor_assistant_controller.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/doctor_assistant_controller.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
 class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
@@ -63,6 +64,14 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
                   colorFilter: const ColorFilter.mode(
                       Color(0xff979797), BlendMode.srcIn),
                 ),
+                onChanged: (val) {
+                  if (val.isNotEmpty) {
+                    controller.isSearch.value = true;
+                    controller.searchAssitant(val);
+                  } else {
+                    controller.isSearch.value = false;
+                  }
+                },
                 secondaryButtonWidget: const Icon(Icons.close),
                 buttonWidget: SvgPicture.asset(Assets.serachIcon),
               ),
@@ -73,187 +82,140 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
       body: Padding(
         padding:
             EdgeInsets.symmetric(horizontal: 6 * SizeConfig.widthMultiplier),
-        child: Column(
-          children: [
-            SizedBox(height: 2 * SizeConfig.heightMultiplier),
-            Row(
-              children: [
-                Text(
-                  "4 Assistants",
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xff979797),
-                    fontSize: 17,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(height: 2 * SizeConfig.heightMultiplier),
+              Row(
+                children: [
+                  Obx(
+                    () => Text(
+                      "${controller.isLoading.value ? '--' : controller.isSearch.value ? controller.assistantSearchList.length : controller.assistantModel.value!.assistants.length} Assistants",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xff979797),
+                        fontSize: 17,
+                      ),
+                    ),
                   ),
-                ),
-                const Spacer(),
-                Text(
-                  "+ ",
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primaryColor,
-                    fontSize: 17,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => Get.toNamed(Routes.adddoctorAssistant),
-                  child: Text(
-                    "Add Assistant",
+                  const Spacer(),
+                  Text(
+                    "+ ",
                     style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       color: AppColors.primaryColor,
-                      fontSize: 14,
+                      fontSize: 17,
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 4 * SizeConfig.heightMultiplier),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.doctorAssistantDetail);
-              },
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                    horizontal: 3 * SizeConfig.widthMultiplier,
-                    vertical: 2 * SizeConfig.heightMultiplier),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: const Color(0xffE8E8E8),
-                    width: .5,
+                  GestureDetector(
+                    onTap: () => Get.toNamed(Routes.adddoctorAssistant),
+                    child: Text(
+                      "Add Assistant",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primaryColor,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              height: SizeConfig.heightMultiplier * 10,
-                              width: SizeConfig.heightMultiplier * 10,
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  // color: Colors.red,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        "assets/images/tempImages.png"),
-                                  )),
-                            )
-                          ],
+                ],
+              ),
+              SizedBox(height: 4 * SizeConfig.heightMultiplier),
+              Obx(
+                () => controller.isLoading.value
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                            top: 30 * SizeConfig.heightMultiplier),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.blackBGColor,
+                          ),
                         ),
-                        SizedBox(width: 2 * SizeConfig.widthMultiplier),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 2 * SizeConfig.heightMultiplier),
-                            SizedBox(
-                              // color: Colors.red,
-                              width: MediaQuery.of(context).size.width * 0.58,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Assistant Name",
-                                    style: AppTextStyles.medium.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.blackBGColor,
-                                      fontSize: 2 * SizeConfig.heightMultiplier,
-                                    ),
+                      )
+                    : controller.isSearch.value
+                        ? controller.assistantSearchList.isEmpty
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    top: 30 * SizeConfig.heightMultiplier),
+                                child: Text(
+                                  "No Assistant found",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.blackBGColor,
+                                    fontSize: 14,
                                   ),
-                                  Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: const BoxDecoration(
-                                        color: Color(0xffe3f0ff),
-                                        shape: BoxShape.circle),
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        color: AppColors.primaryColor,
-                                        size: 16,
+                                ),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    controller.assistantSearchList.length,
+                                itemBuilder: (context, index) {
+                                  return AssistantInfoContainer(
+                                    assistantElement:
+                                        controller.assistantSearchList[index],
+                                    onTap: () {
+                                      Get.toNamed(Routes.doctorAssistantDetail,
+                                          arguments: [
+                                            controller
+                                                .assistantSearchList[index],
+                                          ]);
+                                    },
+                                  );
+                                },
+                              )
+                        : controller.assistantModel.value == null
+                            ? Padding(
+                                padding: EdgeInsets.only(
+                                    top: 30 * SizeConfig.heightMultiplier),
+                                child: Text(
+                                  "No Assistant available",
+                                  style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.blackBGColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              )
+                            : controller
+                                    .assistantModel.value!.assistants.isEmpty
+                                ? Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 30 * SizeConfig.heightMultiplier),
+                                    child: Text(
+                                      "No Assistant available",
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.blackBGColor,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   )
-                                ],
-                              ),
-                            ),
-                            Text(
-                              "@Username",
-                              style: AppTextStyles.medium.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.lighttextColor,
-                                fontSize: 1.5 * SizeConfig.heightMultiplier,
-                              ),
-                            ),
-                            SizedBox(height: 2 * SizeConfig.heightMultiplier),
-                            Container(
-                              height: 0.5,
-                              width: MediaQuery.of(context).size.width * 0.58,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: const Color(0xffE8E8E8),
-                                  width: .5,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
-                    Wrap(
-                      children: [
-                        _buldManageAppointmentContainer(
-                            "assets/icons/appointmetManage.svg",
-                            "Managing Appointments"),
-                        _buldManageAppointmentContainer(
-                            "assets/icons/postManage.svg", "Managing Posts"),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            )
-          ],
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: controller.assistantModel.value!
+                                        .assistants.length,
+                                    itemBuilder: (context, index) {
+                                      return AssistantInfoContainer(
+                                        assistantElement: controller
+                                            .assistantModel
+                                            .value!
+                                            .assistants[index],
+                                        onTap: () {
+                                          Get.toNamed(
+                                              Routes.doctorAssistantDetail,
+                                              arguments: [
+                                                controller.assistantModel.value!
+                                                    .assistants[index],
+                                              ]);
+                                        },
+                                      );
+                                    },
+                                  ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
-  }
-
-  Container _buldManageAppointmentContainer(String icon, String title) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: .5 * SizeConfig.heightMultiplier),
-      padding: EdgeInsets.symmetric(
-          vertical: 1 * SizeConfig.heightMultiplier,
-          horizontal: 3 * SizeConfig.widthMultiplier),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.primaryColor.withOpacity(0.05),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            icon,
-            height: 2 * SizeConfig.heightMultiplier,
-            width: 2 * SizeConfig.widthMultiplier,
-          ),
-          SizedBox(width: 2 * SizeConfig.widthMultiplier),
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w400,
-              color: AppColors.primaryColor,
-              fontSize: 1.5 * SizeConfig.heightMultiplier,
-            ),
-          ),
-        ],
       ),
     );
   }

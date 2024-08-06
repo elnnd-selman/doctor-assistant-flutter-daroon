@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/controller/doctor_custom_navi_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/spaces.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/controller/doctor_custom_navi_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorPostAppBar extends GetView<DoctorCustomNaviController> {
   const DoctorPostAppBar({super.key});
@@ -47,7 +47,8 @@ class DoctorPostAppBar extends GetView<DoctorCustomNaviController> {
                         ),
                       ),
                     ),
-                  ))
+                  ),
+                )
               : CircleAvatar(
                   radius: 14,
                   child: ClipOval(

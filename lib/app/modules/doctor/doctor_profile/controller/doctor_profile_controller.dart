@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/model/post_model.dart';
-import 'package:hezr/global/constants/app_tokens.dart';
-import 'package:hezr/services/api.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/post_model.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/services/api.dart';
 import 'package:intl/intl.dart';
 
 class DoctorProfileController extends GetxController {

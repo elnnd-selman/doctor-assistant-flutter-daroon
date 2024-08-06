@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/widget/offer_toggle_button.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/offer_toggle_button.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 import 'package:searchbar_animation/searchbar_animation.dart';
 

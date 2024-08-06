@@ -42,6 +42,9 @@ abstract class Routes {
   static const addDoctorAdress = "/addDoctorAdress";
   static const addDoctorAdressDetail = "/addDoctorAdressDetail";
   static const doctorAdressDetail = "/doctorAdressDetail";
+  static const editdoctorAdress = "/editDoctorAdress";
+  static const editdoctorSchedule = "/editDoctorSchedule";
+  static const searchUser = "/searchUser";
 
   //////   User Side///
   static const userdrawerScreen = "/userdrawerScreen";

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 class DoctorProfileHeaderRow extends StatelessWidget {
   const DoctorProfileHeaderRow({super.key});

@@ -5,11 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/controller/add_doctor_address_controller.dart';
-import 'package:hezr/generated/assets.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/google_map_key.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/add_doctor_address_controller.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/google_map_key.dart';
 
 class GoogleMapContainerAddress extends StatefulWidget {
   const GoogleMapContainerAddress({
@@ -30,9 +30,17 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
   Set<Marker> markersList = {};
 
   late GoogleMapController googleMapController;
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
 
   final Mode _mode = Mode.overlay;
   final ctrl = Get.find<AddDoctorAddressController>();
+
+  @override
+  void initState() {
+    super.initState();
+    // changeMarkerIcon();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -49,6 +57,27 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
               initialCameraPosition: initialCameraPosition,
               markers: markersList,
               mapType: MapType.terrain,
+              onTap: (location) {
+                print("ddde");
+
+                final lat = location.latitude;
+                final lng = location.longitude;
+                ctrl.lat.value = location.latitude;
+                ctrl.long.value = location.longitude;
+
+                markersList.clear();
+                markersList.add(Marker(
+                    icon: markerIcon,
+                    markerId: const MarkerId("1"),
+                    position: LatLng(lat, lng),
+                    infoWindow: const InfoWindow(title: "")));
+
+                setState(() {});
+
+                googleMapController.animateCamera(
+                    CameraUpdate.newLatLngZoom(LatLng(lat, lng), 16.5));
+                setState(() {});
+              },
               onMapCreated: (GoogleMapController controller) {
                 googleMapController = controller;
               },
@@ -125,6 +154,16 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
     );
   }
 
+  changeMarkerIcon() {
+    BitmapDescriptor.asset(
+            const ImageConfiguration(), "assets/icons_png/Vector.png")
+        .then((icon) {
+      setState(() {
+        markerIcon = icon;
+      });
+    });
+  }
+
   Future<void> _handlePressButton(BuildContext context) async {
     Prediction? p = await PlacesAutocomplete.show(
       context: context,
@@ -179,8 +218,13 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
     ctrl.lat.value = detail.result.geometry!.location.lat;
     ctrl.long.value = detail.result.geometry!.location.lng;
 
+    setState(() {
+      ctrl.description.text = detail.result.formattedAddress!;
+    });
+
     markersList.clear();
     markersList.add(Marker(
+        icon: markerIcon,
         markerId: const MarkerId("0"),
         position: LatLng(lat, lng),
         infoWindow: InfoWindow(title: detail.result.name)));
@@ -188,6 +232,6 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
     setState(() {});
 
     googleMapController
-        .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14.0));
+        .animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, lng), 16.5));
   }
 }

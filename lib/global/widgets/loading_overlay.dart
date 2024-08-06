@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hezr/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
 
 class LoadingOverlay extends StatelessWidget {
   const LoadingOverlay({

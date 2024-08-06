@@ -1,14 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/widget/custom_optional_toggle_button.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/widget/line_chart_graph.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/widget/upcoming_appointment_container.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/custom_optional_toggle_button.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/line_chart_graph.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/upcoming_appointment_container.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 class DoctorHomeScreen extends GetView<DoctorHomeController> {
   const DoctorHomeScreen({super.key});

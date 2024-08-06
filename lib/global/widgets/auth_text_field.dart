@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
 // ignore: must_be_immutable
 class CommonTextfeild extends StatefulWidget {
@@ -294,9 +294,8 @@ class _AddressTextFieldState extends State<AddressTextField> {
           padding: const EdgeInsets.all(15),
           child: SvgPicture.asset(
             "assets/icons/dollar.svg",
-            color: const Color(0xff535353),
-            colorFilter: ColorFilter.mode(
-              const Color(0xff535353),
+            colorFilter: const ColorFilter.mode(
+              Color(0xff535353),
               BlendMode.srcIn,
             ),
           ),

@@ -1,53 +1,59 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/doctor_detail_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/edit_doctor_address_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/edit_doctor_schedule_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/edit_address_doctor.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/edit_doctor_schedule.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/auth/forget/binding/forget_password_binding.dart';
-import 'package:hezr/app/modules/auth/forget/pages/forget_email.dart';
-import 'package:hezr/app/modules/auth/forget/pages/forget_otp_screen.dart';
-import 'package:hezr/app/modules/auth/forget/pages/forget_password_screen.dart';
-import 'package:hezr/app/modules/auth/forget/pages/forget_phone.dart';
-import 'package:hezr/app/modules/auth/login/binding/login_binding.dart';
-import 'package:hezr/app/modules/auth/login/binding/opt_binding.dart';
-import 'package:hezr/app/modules/auth/login/pages/login_screen.dart';
-import 'package:hezr/app/modules/auth/reset_password/binding/reset_password_binding.dart';
-import 'package:hezr/app/modules/auth/reset_password/pages/reset_password.dart';
-import 'package:hezr/app/modules/auth/signup/pages/email_phone_screen.dart';
-import 'package:hezr/app/modules/auth/signup/pages/first_signup_screen.dart';
-import 'package:hezr/app/modules/auth/signup/pages/otp_screen.dart';
-import 'package:hezr/app/modules/auth/signup/pages/profile_picture_screen.dart';
-import 'package:hezr/app/modules/auth/signup/pages/singup_screen.dart';
-import 'package:hezr/app/modules/auth/signup/pages/welcome_screen.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/binding/doctor_address_binding.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/pages/add_adress_detail.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/pages/add_doctor_address.dart';
-import 'package:hezr/app/modules/doctor/doctor_address/pages/doctor_address_details.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/binding/doctor_appointment_binding.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/appointment_detail_screen.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/cancel_appointment_detail.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/binding/doctor_assistant_binding.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/pages/add_assistant.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/pages/doctor_assistant_detail.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/pages/doctor_assistants.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/pages/edit_address.dart';
-import 'package:hezr/app/modules/doctor/doctor_assistant/pages/edit_assistant.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/binding/doctor_home_binding.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_bottom_navi_bar.dart';
-import 'package:hezr/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_drawer.dart';
-import 'package:hezr/app/modules/doctor/doctor_message/pages/doctor_chat_room.dart';
-import 'package:hezr/app/modules/doctor/doctor_message/pages/doctor_message.dart';
-import 'package:hezr/app/modules/doctor/doctor_notification/pages/doctor_notification.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/binding/doctor_offers_binding.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/pages/add_offer.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/pages/doctor_offer_detail.dart';
-import 'package:hezr/app/modules/doctor/doctor_offers/pages/doctor_offers_page.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/binding/doctor_profile_binding.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_edit_level.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_edit_profile.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_edit_speciality.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_language.dart';
-import 'package:hezr/app/modules/doctor/doctor_profile/pages/doctor_profile.dart';
-import 'package:hezr/app/modules/on_boarding/pages/login_selection_screen.dart';
-import 'package:hezr/app/modules/on_boarding/pages/onboarding_screen.dart';
-import 'package:hezr/app/modules/splash/splash_screen.dart';
-import 'package:hezr/app/routes/app_routes.dart';
+import 'package:daroon_doctor/app/modules/auth/forget/binding/forget_password_binding.dart';
+import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_email.dart';
+import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_otp_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_password_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_phone.dart';
+import 'package:daroon_doctor/app/modules/auth/login/binding/login_binding.dart';
+import 'package:daroon_doctor/app/modules/auth/login/binding/opt_binding.dart';
+import 'package:daroon_doctor/app/modules/auth/login/pages/login_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/reset_password/binding/reset_password_binding.dart';
+import 'package:daroon_doctor/app/modules/auth/reset_password/pages/reset_password.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/pages/email_phone_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/pages/first_signup_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/pages/otp_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/pages/profile_picture_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/pages/singup_screen.dart';
+import 'package:daroon_doctor/app/modules/auth/signup/pages/welcome_screen.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/doctor_address_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/add_adress_detail.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/add_doctor_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/doctor_address_details.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/binding/doctor_appointment_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/appointment_detail_screen.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/cancel_appointment_detail.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/binding/doctor_assistant_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/add_assistant.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/doctor_assistant_detail.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/doctor_assistants.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/edit_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/edit_assistant.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/binding/doctor_home_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_bottom_navi_bar.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/page/doctor_drawer.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/pages/doctor_chat_room.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/pages/doctor_message.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_notification/pages/doctor_notification.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/binding/doctor_offers_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/add_offer.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/doctor_offer_detail.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/doctor_offers_page.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/binding/doctor_profile_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_edit_level.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_edit_profile.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_edit_speciality.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_language.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_profile.dart';
+import 'package:daroon_doctor/app/modules/on_boarding/pages/login_selection_screen.dart';
+import 'package:daroon_doctor/app/modules/on_boarding/pages/onboarding_screen.dart';
+import 'package:daroon_doctor/app/modules/splash/splash_screen.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
 
 class AppPages {
   AppPages._();
@@ -162,11 +168,12 @@ class AppPages {
     ),
     GetPage(
       name: Routes.doctorAssistantDetail,
-      page: () => const DoctorAssistantDetailScreen(),
+      page: () => DoctorAssistantDetailScreen(),
     ),
     GetPage(
       name: Routes.doctorAssistantEditAddress,
       page: () => const DoctorAssistentEditAddress(),
+      binding: DoctorAssistantBinding(),
     ),
     GetPage(
       name: Routes.doctorAssistantEditProfile,
@@ -175,6 +182,11 @@ class AppPages {
     GetPage(
       name: Routes.adddoctorAssistant,
       page: () => const AddAssistantScreen(),
+      binding: DoctorAssistantBinding(),
+    ),
+    GetPage(
+      name: Routes.searchUser,
+      page: () => const SearchUserScreen(),
       binding: DoctorAssistantBinding(),
     ),
     GetPage(
@@ -226,9 +238,18 @@ class AppPages {
     GetPage(
       name: Routes.doctorAdressDetail,
       page: () => const DoctorAddressDetailsScreen(),
-      binding: DoctorAddressBinding(),
+      binding: DoctorDetailBinding(),
     ),
-
+    GetPage(
+      name: Routes.editdoctorAdress,
+      page: () => EditAddressDoctor(),
+      binding: EditDoctorAddressBinding(),
+    ),
+    GetPage(
+      name: Routes.editdoctorSchedule,
+      page: () => EditDoctorSchedule(),
+      binding: EditDoctorScheduleBinding(),
+    ),
     /////////////// User Side Screens///
     // GetPage(
     //   name: Routes.userdrawerScreen,

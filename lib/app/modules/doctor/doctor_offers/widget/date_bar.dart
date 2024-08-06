@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // ignore: must_be_immutable

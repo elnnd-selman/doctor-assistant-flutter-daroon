@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hezr/app/modules/doctor/doctor_home/widget/upcoming_appointment_container.dart';
-import 'package:hezr/app/routes/app_routes.dart';
-import 'package:hezr/global/constants/size_config.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/upcoming_appointment_container.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class UpcomingAppointment extends StatelessWidget {
   const UpcomingAppointment({super.key});

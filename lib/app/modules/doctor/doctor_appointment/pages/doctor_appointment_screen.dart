@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/cancel_appointment.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/complete_appointment.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/confirmed_appointment.dart';
-import 'package:hezr/app/modules/doctor/doctor_appointment/pages/upcoming_appointment.dart';
-import 'package:hezr/global/constants/app_colors.dart';
-import 'package:hezr/global/utils/app_text_style.dart';
-import 'package:hezr/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/cancel_appointment.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/complete_appointment.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/confirmed_appointment.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/upcoming_appointment.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorAppointmentScreen extends StatefulWidget {
   const DoctorAppointmentScreen({super.key});
