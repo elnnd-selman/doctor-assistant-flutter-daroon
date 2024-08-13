@@ -62,14 +62,14 @@ class AddAssistantController extends GetxController {
       for (int i = 0; i < selectedPremissionList.length; i++) {
         tempStringList.add(convertText(selectedPremissionList[i]));
       }
-      print(tempStringList);
+
       final response = await ApiService.postwithOutHeader(
         userToken: {
           'Content-Type': 'application/json',
           'Authorization':
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: 'https://development-api.daroon.krd/api/assistant/create',
+        endPoint: '${AppTokens.apiURl}/assistants',
         body: {
           "userId": selectedUserID.value,
           "office": selectedAddressID.value,
@@ -88,7 +88,8 @@ class AddAssistantController extends GetxController {
 
           print(jsonData);
           Get.back();
-          // Get.back();
+          Get.back();
+          Get.back();
 
           _processing.value = false;
         } else {
@@ -144,7 +145,7 @@ class AddAssistantController extends GetxController {
 
     final response = await ApiService.getwithUserToken(
       endPoint:
-          '${AppTokens.apiURl}/users/get-users?pagination=1&searchQuery=$searchText&limit=10',
+          '${AppTokens.apiURlWithOutApi}/users/list-users?pagination=1&searchQuery=$searchText&limit=10',
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -169,7 +170,7 @@ class AddAssistantController extends GetxController {
     currentPage = currentPage + 1;
     final response = await ApiService.getwithUserToken(
       endPoint:
-          '${AppTokens.apiURl}/users/get-users?pagination=$currentPage&searchQuery=$searchText&limit=10',
+          '${AppTokens.apiURlWithOutApi}/users/list-users?pagination=$currentPage&searchQuery=$searchText&limit=10',
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",

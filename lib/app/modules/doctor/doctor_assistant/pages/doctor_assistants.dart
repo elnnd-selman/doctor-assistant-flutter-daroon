@@ -147,6 +147,7 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
                                 ),
                               )
                             : ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount:
                                     controller.assistantSearchList.length,
@@ -192,6 +193,8 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
                                     ),
                                   )
                                 : ListView.builder(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemCount: controller.assistantModel.value!
                                         .assistants.length,
@@ -203,11 +206,12 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
                                             .assistants[index],
                                         onTap: () {
                                           Get.toNamed(
-                                              Routes.doctorAssistantDetail,
-                                              arguments: [
-                                                controller.assistantModel.value!
-                                                    .assistants[index],
-                                              ]);
+                                            Routes.doctorAssistantDetail,
+                                            arguments: [
+                                              controller.assistantModel.value!
+                                                  .assistants[index],
+                                            ],
+                                          );
                                         },
                                       );
                                     },

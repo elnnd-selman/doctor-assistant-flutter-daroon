@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -119,6 +120,23 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
+                                  print(controller
+                                      .officeAddressModelList[index].id);
+
+                                  print(Get.find<DoctorHomeController>()
+                                      .userModel
+                                      .value!
+                                      .user!
+                                      .id!);
+                                  print(Get.find<DoctorHomeController>()
+                                      .userModel
+                                      .value!
+                                      .user!
+                                      .id!);
+                                  print(Get.find<DoctorHomeController>()
+                                      .userModel
+                                      .value!
+                                      .token);
                                   Get.toNamed(
                                     Routes.doctorAdressDetail,
                                     arguments: [

@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,9 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class UpcomingAppointmentContainer extends StatelessWidget {
-  const UpcomingAppointmentContainer({super.key});
+  final AppointmentModel appointmentModel;
+  const UpcomingAppointmentContainer(
+      {super.key, required this.appointmentModel});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,7 @@ class UpcomingAppointmentContainer extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Patient Name",
+                                    appointmentModel.fullName!,
                                     style: AppTextStyles.medium.copyWith(
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.primaryColor,

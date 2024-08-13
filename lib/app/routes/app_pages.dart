@@ -3,7 +3,10 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/edit_doc
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/edit_doctor_schedule_binding.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/edit_address_doctor.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/edit_doctor_schedule.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/add_assistant_premission.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/change_assistant_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/select_assistant_address.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/binding/forget_password_binding.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_email.dart';
@@ -167,8 +170,14 @@ class AppPages {
       binding: DoctorAssistantBinding(),
     ),
     GetPage(
+      name: Routes.changeAssistantAddress,
+      page: () => ChangeAssistantAddress(),
+      binding: DoctorAssistantBinding(),
+    ),
+    GetPage(
       name: Routes.doctorAssistantDetail,
       page: () => DoctorAssistantDetailScreen(),
+      binding: DoctorAssistantBinding(),
     ),
     GetPage(
       name: Routes.doctorAssistantEditAddress,
@@ -182,6 +191,16 @@ class AppPages {
     GetPage(
       name: Routes.adddoctorAssistant,
       page: () => const AddAssistantScreen(),
+      binding: DoctorAssistantBinding(),
+    ),
+    GetPage(
+      name: Routes.adddoctorAssistantPremission,
+      page: () => const AddAssistantPremission(),
+      binding: DoctorAssistantBinding(),
+    ),
+    GetPage(
+      name: Routes.selectDoctorAssistant,
+      page: () => const SelectAssistantAddress(),
       binding: DoctorAssistantBinding(),
     ),
     GetPage(

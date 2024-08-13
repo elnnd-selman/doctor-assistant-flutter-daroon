@@ -5,7 +5,6 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_h
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/custom_optional_toggle_button.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/line_chart_graph.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/upcoming_appointment_container.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
@@ -61,7 +60,7 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
               ),
             ),
             SizedBox(height: 2 * SizeConfig.heightMultiplier),
-            const UpcomingAppointmentContainer(),
+            // const UpcomingAppointmentContainer(),
             SizedBox(height: 3 * SizeConfig.heightMultiplier),
             Row(
               children: [

@@ -31,6 +31,8 @@ abstract class Routes {
   static const doctorAssistantEditAddress = "/doctorAssistantEditAddress";
   static const doctorAssistantEditProfile = "/doctorAssistantEditProfile";
   static const adddoctorAssistant = "/adddoctorAssistant";
+  static const adddoctorAssistantPremission = "/adddoctorAssistantPremission";
+  static const selectDoctorAssistant = "/selectdoctorAssistant";
   static const doctorProfile = "/doctorProfile";
   static const doctorEditProfile = "/doctorEditProfile";
   static const doctorchangeLanguage = "/doctorchangeLanguage";
@@ -45,6 +47,8 @@ abstract class Routes {
   static const editdoctorAdress = "/editDoctorAdress";
   static const editdoctorSchedule = "/editDoctorSchedule";
   static const searchUser = "/searchUser";
+
+  static const changeAssistantAddress = "/ChangeAssistantAddress";
 
   //////   User Side///
   static const userdrawerScreen = "/userdrawerScreen";

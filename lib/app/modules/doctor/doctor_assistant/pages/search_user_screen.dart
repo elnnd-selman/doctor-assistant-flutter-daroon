@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/user_search_model.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
@@ -179,18 +180,18 @@ class UserTile extends StatelessWidget {
       child: Obx(
         () => Container(
           margin: const EdgeInsets.only(bottom: 10),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
           decoration: BoxDecoration(
-              color: const Color(0xffF7F7F8),
-              borderRadius: BorderRadius.circular(14),
+              // color: const Color(0xffF7F7F8),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: Get.find<AddAssistantController>()
-                            .selectedUserIndex
-                            .value ==
-                        index
-                    ? AppColors.primaryColor
-                    : Colors.transparent,
-              )),
+                  color: Get.find<AddAssistantController>()
+                              .selectedUserIndex
+                              .value ==
+                          index
+                      ? AppColors.primaryColor
+                      : const Color(0xffE8E8E8),
+                  width: .5)),
           child: Row(
             children: [
               Column(
@@ -200,9 +201,10 @@ class UserTile extends StatelessWidget {
                           height: 5 * SizeConfig.heightMultiplier,
                           width: 5 * SizeConfig.heightMultiplier,
                           padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                               color: AppColors.blackBGColor,
-                              shape: BoxShape.circle),
+                              // shape: BoxShape.circle,
+                              borderRadius: BorderRadius.circular(10)),
                           child: Center(
                             child: FittedBox(
                               child: Text(
@@ -215,11 +217,27 @@ class UserTile extends StatelessWidget {
                             ),
                           ),
                         )
-                      : CircleAvatar(
-                          radius: 2.5 * SizeConfig.heightMultiplier,
-                          backgroundImage:
-                              NetworkImage(user.profilePicture!.md!),
-                        ),
+                      : Container(
+                          height: 5 * SizeConfig.heightMultiplier,
+                          width: 5 * SizeConfig.heightMultiplier,
+                          // padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: AppColors.blackBGColor,
+                              // shape: BoxShape.circle,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: FittedBox(
+                                child: CachedNetworkImage(
+                                    width: 5 * SizeConfig.heightMultiplier,
+                                    imageUrl: user.profilePicture!.md!)),
+                          ),
+                        )
+
+                  // CircleAvatar(
+                  //     radius: 2.5 * SizeConfig.heightMultiplier,
+                  //     backgroundImage:
+                  //         NetworkImage(user.profilePicture!.md!),
+                  //   ),
                 ],
               ),
               SizedBox(width: 2 * SizeConfig.widthMultiplier),
@@ -227,7 +245,7 @@ class UserTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.fullName!,
+                    user.fullName!.toUpperCase(),
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColors.blackBGColor,
@@ -243,6 +261,27 @@ class UserTile extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              const Spacer(),
+              Container(
+                height: 3 * SizeConfig.heightMultiplier,
+                width: 3 * SizeConfig.heightMultiplier,
+                decoration: BoxDecoration(
+                    color: Get.find<AddAssistantController>()
+                                .selectedUserIndex
+                                .value ==
+                            index
+                        ? AppColors.primaryColor
+                        : Colors.transparent,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: AppColors.primaryColor,
+                    )),
+                child: Icon(
+                  Icons.check,
+                  size: 2 * SizeConfig.heightMultiplier,
+                  color: Colors.white,
+                ),
               )
             ],
           ),

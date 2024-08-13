@@ -127,8 +127,8 @@ class AddDoctorAddressController extends GetxController {
           endPoint: 'https://development-api.daroon.krd/api/office',
           body: {
             "title": title.text,
-            "doctorId":
-                Get.find<DoctorHomeController>().userModel.value!.user!.id!,
+            // "doctorId":
+            //     Get.find<DoctorHomeController>().userModel.value!.user!.id!,
             "description": description.text,
             "typeOfOffice":
                 officeTypeList[slectedOffice.value].title.toLowerCase(),
@@ -192,6 +192,7 @@ class AddDoctorAddressController extends GetxController {
             icon: Icons.close);
       }
     } catch (e) {
+      print(e.toString());
       _processing.value = false;
       showToastMessage(
           message: "Issue ${e.toString()}",

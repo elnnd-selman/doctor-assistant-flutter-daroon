@@ -1,5 +1,6 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,7 +29,7 @@ class DoctorAssistentEditAddress extends GetView<AddAssistantController> {
         title: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
-            Get.arguments["isEditing"] ? "Edit Address" : "Select Address",
+            "Select Address",
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.blackBGColor,
@@ -188,7 +189,7 @@ class DoctorAssistentEditAddress extends GetView<AddAssistantController> {
                 },
               ),
             ),
-            const Spacer(),
+            // const Spacer(),
             CommonButton(
                 ontap: () {
                   if (controller.selectedIndex.value == -1) {
@@ -198,10 +199,10 @@ class DoctorAssistentEditAddress extends GetView<AddAssistantController> {
                         color: const Color(0xffEC1C24),
                         icon: Icons.close);
                   } else {
-                    Get.back();
+                    Get.toNamed(Routes.adddoctorAssistantPremission);
                   }
                 },
-                name: "Save"),
+                name: "Next"),
           ],
         ),
       ),

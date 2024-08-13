@@ -1,3 +1,5 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/cancel_appointment.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/complete_appointment.dart';
@@ -6,6 +8,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/pages/upcomi
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:get/get.dart';
 
 class DoctorAppointmentScreen extends StatefulWidget {
   const DoctorAppointmentScreen({super.key});
@@ -17,7 +20,7 @@ class DoctorAppointmentScreen extends StatefulWidget {
 
 class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
   TabController? _tabController;
-  // final exploreCtrl = Get.put(ExploreProgramController());
+  final controller = Get.put(DoctorAppointmentController());
 
   List<Widget> appointmentBasetabs = [
     const Tab(text: "Upcoming"),
@@ -56,16 +59,46 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
             ),
           ),
           Expanded(
-            child: TabBarView(
+              child: Obx(
+            () => TabBarView(
               controller: _tabController,
-              children: const [
+              children: [
                 UpcomingAppointment(),
-                ConfirmedAppointment(),
-                CompleteAppointment(),
-                CancelAppointment(),
+                controller.isLoading.value
+                    ? const LoadingWidget()
+                    : controller.confirmedAppointmentList.isEmpty
+                        ? const Text("fffrr")
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                controller.confirmedAppointmentList.length,
+                            itemBuilder: (context, index) {
+                              return const ConfirmedAppointment();
+                            }),
+                controller.isLoading.value
+                    ? const LoadingWidget()
+                    : controller.completedAppointmentList.isEmpty
+                        ? const Text("fffrr")
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount:
+                                controller.completedAppointmentList.length,
+                            itemBuilder: (context, index) {
+                              return CompleteAppointment();
+                            }),
+                controller.isLoading.value
+                    ? const LoadingWidget()
+                    : controller.cancelAppointmentList.isEmpty
+                        ? Text("fffrr")
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: controller.cancelAppointmentList.length,
+                            itemBuilder: (context, index) {
+                              return CancelAppointment();
+                            }),
               ],
             ),
-          ),
+          )),
         ],
       ),
     );

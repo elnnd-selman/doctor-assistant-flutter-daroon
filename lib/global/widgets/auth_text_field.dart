@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
@@ -305,6 +306,105 @@ class _AddressTextFieldState extends State<AddressTextField> {
           fontWeight: FontWeight.w400,
           fontSize: 15,
           color: const Color(0xff535353),
+        ),
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class SearchTextfeild extends StatefulWidget {
+  SearchTextfeild({
+    super.key,
+    required this.obscuretext,
+    required this.hinttext,
+    required this.validations,
+    required this.controller,
+    required this.keyboardType,
+    required this.showicon,
+    required this.scanIcons,
+    this.maxLine = 1,
+    this.onChange,
+    this.borderColor = AppColors.borderColor,
+  });
+  bool obscuretext;
+  final String hinttext;
+  final TextEditingController controller;
+  final bool showicon;
+  final Color borderColor;
+  final bool scanIcons;
+
+  final int? maxLine;
+  Function(String)? onChange;
+  // ignore: prefer_typing_uninitialized_variables
+  final validations;
+
+  // ignore: prefer_typing_uninitialized_variables
+  var keyboardType;
+  @override
+  State<SearchTextfeild> createState() => _SearchTextfeildState();
+}
+
+class _SearchTextfeildState extends State<SearchTextfeild> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      maxLines: widget.maxLine,
+      style: AppTextStyles.medium.copyWith(
+        fontWeight: FontWeight.w400,
+        fontSize: 15,
+        color: AppColors.blackBGColor,
+      ),
+      keyboardType: widget.keyboardType,
+      controller: widget.controller,
+      cursorColor: Colors.black12,
+      validator: widget.validations,
+      cursorWidth: 1,
+      obscureText: widget.obscuretext,
+      onChanged: widget.onChange,
+      decoration: InputDecoration(
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
+        fillColor: const Color(0xffF7F7F8),
+        filled: true,
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: widget.borderColor),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: widget.borderColor),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: widget.borderColor),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: widget.borderColor),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: widget.borderColor),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        isDense: true,
+        prefixIcon: widget.showicon
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    "assets/icons/searchIcon.svg",
+                    height: 2.5 * SizeConfig.heightMultiplier,
+                  ),
+                ],
+              )
+            : null,
+        hintText: widget.hinttext,
+        hintStyle: AppTextStyles.medium.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 15,
+          color: const Color(0xff787B80),
         ),
       ),
     );
