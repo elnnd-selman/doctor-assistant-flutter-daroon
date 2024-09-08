@@ -30,5 +30,6 @@ class DoctorHomeController extends GetxController {
         .daroonBox!
         .get("userModel", defaultValue: UserModel);
     print(userModel.value!.token!);
+    print(userModel.value!.user!.id!);
   }
 }

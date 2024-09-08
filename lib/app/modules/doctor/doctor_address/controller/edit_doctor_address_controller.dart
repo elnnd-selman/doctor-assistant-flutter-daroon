@@ -52,7 +52,7 @@ class EditDoctorAddressController extends GetxController {
       _processing.value = true;
       FocusManager.instance.primaryFocus?.unfocus();
 
-      final response = await ApiService.pustwithOutHeader(
+      final response = await ApiService.putWithHeader(
           userToken: {
             'Content-Type': 'application/json',
             "Authorization":

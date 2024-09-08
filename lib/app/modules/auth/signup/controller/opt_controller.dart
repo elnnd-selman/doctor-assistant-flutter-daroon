@@ -36,7 +36,7 @@ class OptController extends GetxController {
   resendCode(String userToken, BuildContext context) async {
     startDuration.value = 60;
     _startTimer();
-    final response = await ApiService.postwithOutHeader(
+    final response = await ApiService.postWithHeader(
         userToken: {"Authorization": userToken},
         endPoint:
             '${AppTokens.apiURl}/users/send-verification-code-via-phone-number',
@@ -70,7 +70,7 @@ class OptController extends GetxController {
   resendCodebyEmail(String userToken, BuildContext context) async {
     startDuration.value = 60;
     _startTimer();
-    final response = await ApiService.postwithOutHeader(
+    final response = await ApiService.postWithHeader(
         userToken: {"Authorization": userToken},
         endPoint: '${AppTokens.apiURl}/users/send-verification-code-via-email',
         body: {});
@@ -91,12 +91,12 @@ class OptController extends GetxController {
     required String userToken,
   }) async {
     _processing.value = true;
-    final response = await ApiService.postwithOutHeader(
+    final response = await ApiService.postWithHeader(
         userToken: {"Authorization": userToken},
         endPoint: '${AppTokens.apiURl}/users/verify-phone/$code',
         body: {});
 
-    await ApiService.postwithOutHeader(
+    await ApiService.postWithHeader(
         userToken: {"Authorization": userToken},
         endPoint: '${AppTokens.apiURl}/users/verify-email-by-code/$code',
         body: {});

@@ -118,7 +118,7 @@ class AddDoctorAddressController extends GetxController {
       );
       print(Get.find<DoctorHomeController>().userModel.value!.token!);
 
-      final response = await ApiService.postwithOutHeader(
+      final response = await ApiService.putWithHeader(
           userToken: {
             'Content-Type': 'application/json',
             'Authorization':

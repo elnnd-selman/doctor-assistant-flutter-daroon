@@ -12,6 +12,7 @@ class DoctorPost extends GetView<DoctorProfileController> {
     return controller.isLoading.value
         ? const LoadingOverlay()
         : ListView.builder(
+            // padding: EdgeInsets.only(bottom: 6 * SizeConfig.heightMultiplier),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: controller.contentModelList.value!.data.length,

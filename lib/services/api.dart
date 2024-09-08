@@ -7,9 +7,6 @@ class ApiService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ${AppTokens.bearerToken}'
   };
-  // static final Map<String, String> token = {
-  //   'Authorization': AppTokens.bearerToken
-  // };
 
   static Future<http.Response?> post({
     required String endPoint,
@@ -21,17 +18,17 @@ class ApiService {
     return response;
   }
 
-  static Future<http.Response?> postwithoutHeaderAPi({
-    required String endPoint,
-    required Map<String, dynamic>? body,
-  }) async {
-    final response =
-        await http.post(Uri.parse(endPoint), body: jsonEncode(body));
+  // static Future<http.Response?> postwithoutHeaderAPi({
+  //   required String endPoint,
+  //   required Map<String, dynamic>? body,
+  // }) async {
+  //   final response =
+  //       await http.post(Uri.parse(endPoint), body: jsonEncode(body));
 
-    return response;
-  }
+  //   return response;
+  // }
 
-  static Future<http.Response?> postwithOutHeader({
+  static Future<http.Response?> postWithHeader({
     required String endPoint,
     required Map<String, dynamic>? body,
     required Map<String, String>? userToken,
@@ -43,7 +40,7 @@ class ApiService {
     return response;
   }
 
-  static Future<http.Response?> pustwithOutHeader({
+  static Future<http.Response?> putWithHeader({
     required String endPoint,
     required Map<String, dynamic>? body,
     required Map<String, String>? userToken,
@@ -70,8 +67,6 @@ class ApiService {
     required String filepath,
     required String userToken,
   }) async {
-    // url = formater(url);
-    // String token = await storage.read(key: "token");
     var request = http.MultipartRequest('PATCH', Uri.parse(url));
     request.files.add(await http.MultipartFile.fromPath("image", filepath));
     request.headers.addAll(
@@ -116,7 +111,6 @@ class ApiService {
     final response = await http.delete(
       Uri.parse(endPoint),
       headers: userToken,
-      // body: jsonEncode(body),
     );
 
     return response;

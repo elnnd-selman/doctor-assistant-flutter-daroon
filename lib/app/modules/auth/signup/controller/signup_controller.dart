@@ -118,7 +118,7 @@ class SignUpCtrl extends GetxController {
   }
 
   sendOtptoUser(String userToken) async {
-    final response = await ApiService.postwithOutHeader(
+    final response = await ApiService.postWithHeader(
       userToken: {"Authorization": userToken},
       endPoint:
           '${AppTokens.apiURl}/users/send-verification-code-via-phone-number',
@@ -129,7 +129,7 @@ class SignUpCtrl extends GetxController {
   }
 
   sendOtptoUserInEmail(String userToken) async {
-    final response = await ApiService.postwithOutHeader(
+    final response = await ApiService.postWithHeader(
         userToken: {"Authorization": userToken},
         endPoint: '${AppTokens.apiURl}/users/send-verification-code-via-email',
         body: {});

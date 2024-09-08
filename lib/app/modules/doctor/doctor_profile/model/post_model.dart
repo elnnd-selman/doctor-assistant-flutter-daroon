@@ -169,6 +169,7 @@ class ContentData {
     required this.v,
     required this.likes,
     required this.type,
+    required this.imageVideoUrl,
   });
 
   final String? id;
@@ -189,32 +190,40 @@ class ContentData {
   final int? v;
   final int? likes;
   final String? type;
+  final List<ImageVideoUrl> imageVideoUrl;
 
   factory ContentData.fromJson(Map<String, dynamic> json) {
     return ContentData(
-      id: json["_id"],
-      user: json["user"] == null ? null : User.fromJson(json["user"]),
-      titleKu: json["title_ku"],
-      titleEn: json["title_en"],
-      titleAr: json["title_ar"],
-      contentKu: json["content_ku"],
-      contentAr: json["content_ar"],
-      contentEn: json["content_en"],
-      images: json["images"] == null
-          ? []
-          : List<String>.from(json["images"]!.map((x) => x)),
-      videos: json["videos"] == null
-          ? []
-          : List<String>.from(json["videos"]!.map((x) => x)),
-      isPrivate: json["isPrivate"],
-      // sizeOfContents: json["sizeOfContents"],
-      contentType: json["contentType"],
-      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
-      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
-      v: json["__v"],
-      likes: json["likes"],
-      type: json["type"],
-    );
+        id: json["_id"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+        titleKu: json["title_ku"],
+        titleEn: json["title_en"],
+        titleAr: json["title_ar"],
+        contentKu: json["content_ku"],
+        contentAr: json["content_ar"],
+        contentEn: json["content_en"],
+        images: json["images"] == null
+            ? []
+            : List<String>.from(json["images"]!.map((x) => x)),
+        videos: json["videos"] == null
+            ? []
+            : List<String>.from(json["videos"]!.map((x) => x)),
+        isPrivate: json["isPrivate"],
+        // sizeOfContents: json["sizeOfContents"],
+        contentType: json["contentType"],
+        createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+        updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+        v: json["__v"],
+        likes: json["likes"],
+        type: json["type"],
+        imageVideoUrl: getImageAndVideoUrl(
+          json["images"] == null
+              ? []
+              : List<String>.from(json["images"]!.map((x) => x)),
+          json["videos"] == null
+              ? []
+              : List<String>.from(json["videos"]!.map((x) => x)),
+        ));
   }
 
   Map<String, dynamic> toJson() => {
@@ -237,6 +246,25 @@ class ContentData {
         "likes": likes,
         "type": type,
       };
+
+  static List<ImageVideoUrl> getImageAndVideoUrl(
+      List<String> imageUrl, List<String> videoUrl) {
+    List<ImageVideoUrl> imageVideoUrlList = [];
+
+    if (imageUrl.isNotEmpty) {
+      for (int i = 0; i < imageUrl.length; i++) {
+        imageVideoUrlList
+            .add(ImageVideoUrl(url: imageUrl[i], urlType: "imageUrl"));
+      }
+    }
+    if (videoUrl.isNotEmpty) {
+      for (int i = 0; i < videoUrl.length; i++) {
+        imageVideoUrlList
+            .add(ImageVideoUrl(url: videoUrl[i], urlType: "videoUrl"));
+      }
+    }
+    return imageVideoUrlList;
+  }
 }
 
 class User {
@@ -263,4 +291,11 @@ class User {
         "name": name,
         "usePictureAsLink": usePictureAsLink,
       };
+}
+
+class ImageVideoUrl {
+  final String? url;
+  final String? urlType;
+
+  ImageVideoUrl({required this.url, required this.urlType});
 }

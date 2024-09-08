@@ -63,7 +63,7 @@ class AddAssistantController extends GetxController {
         tempStringList.add(convertText(selectedPremissionList[i]));
       }
 
-      final response = await ApiService.postwithOutHeader(
+      final response = await ApiService.postWithHeader(
         userToken: {
           'Content-Type': 'application/json',
           'Authorization':

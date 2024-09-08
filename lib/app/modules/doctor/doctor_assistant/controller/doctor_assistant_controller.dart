@@ -73,7 +73,7 @@ class DoctorAssistantController extends GetxController {
   }) async {
     try {
       addressLoader.value = true;
-      final response = await ApiService.pustwithOutHeader(
+      final response = await ApiService.putWithHeader(
         userToken: {
           'Content-Type': 'application/json',
           "Authorization":
@@ -113,7 +113,7 @@ class DoctorAssistantController extends GetxController {
       for (int i = 0; i < selectedPremissionList.length; i++) {
         tempStringList.add(convertText(selectedPremissionList[i]));
       }
-      final response = await ApiService.pustwithOutHeader(
+      final response = await ApiService.putWithHeader(
         userToken: {
           'Content-Type': 'application/json',
           "Authorization":

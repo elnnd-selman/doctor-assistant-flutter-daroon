@@ -40,6 +40,7 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
                 : controller.selectedTab == 1
                     ? const DoctorPost()
                     : const DoctorReviews()),
+            SizedBox(height: 6 * SizeConfig.heightMultiplier),
           ],
         ),
       ),

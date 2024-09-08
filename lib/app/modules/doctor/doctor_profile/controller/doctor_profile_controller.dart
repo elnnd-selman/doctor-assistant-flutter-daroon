@@ -30,14 +30,13 @@ class DoctorProfileController extends GetxController {
           '${AppTokens.apiURl}/content/my-contents?contentType=post&pagination=1&limit=10',
       userToken: {
         "Authorization":
-            Get.find<DoctorHomeController>().userModel.value!.token!,
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
       },
     );
     if (response!.statusCode == 200 || response.statusCode == 201) {
       final jsonData = jsonDecode(response.body);
       contentModelList.value = ContentModel.fromJson(jsonData);
       totalPages.value = contentModelList.value!.paginationCount!;
-      print(contentModelList.value!.data.length);
     }
     isLoading.value = false;
   }
@@ -45,25 +44,15 @@ class DoctorProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     getDoctorPost();
   }
 
   String convertDateToformat(String date) {
-    // Your input date string
-
-    // Parse the input date string to a DateTime object
     DateTime dateTime = DateTime.parse(date);
-
-    // Define the desired format
     DateFormat formatter = DateFormat('dd-MMM-yyyy');
-
-    // Format the DateTime object to the desired string format
     String formattedDate = formatter.format(dateTime);
-
-    // Print the formatted date
-    print(formattedDate); // Output: 27-Jul-2024
-
     return formattedDate;
   }
+
+  updateLikeOnPost() {}
 }

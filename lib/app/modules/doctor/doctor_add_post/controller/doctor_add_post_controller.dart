@@ -28,7 +28,8 @@ class DoctorAddPostController extends GetxController {
     print(Get.find<DoctorHomeController>().userModel.value!.user!.id!);
     _processing.value = true;
     final response = await ApiService.uploadContentApi(
-      userToken: Get.find<DoctorHomeController>().userModel.value!.token!,
+      userToken:
+          "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
       imageList: imageList,
       videoList: videoList,
       titleKU: titleKU.text,

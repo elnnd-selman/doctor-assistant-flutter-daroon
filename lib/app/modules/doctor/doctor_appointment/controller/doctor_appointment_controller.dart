@@ -31,7 +31,7 @@ class DoctorAppointmentController extends GetxController {
     isLoading.value = true;
 
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/appointment",
+      endPoint: "${AppTokens.apiURl}/appointment/my-appointments",
       userToken: {
         "Authorization": "Bearer ${userModel.value!.token!}",
       },
