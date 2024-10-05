@@ -34,7 +34,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
         title: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
-            assistantData.assistant!.fullName!,
+            assistantData.assistant!.firstName!,
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.blackBGColor,
@@ -62,10 +62,10 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
       body: Padding(
         padding:
             EdgeInsets.symmetric(horizontal: 6 * SizeConfig.widthMultiplier),
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Column(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
                 children: [
                   SizedBox(height: 4 * SizeConfig.heightMultiplier),
                   DoctorAssistantDetailContainer(
@@ -104,14 +104,14 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                   SizedBox(height: 6 * SizeConfig.heightMultiplier),
                 ],
               ),
-              Obx(() {
-                if (controller.deleteLoader.value) {
-                  return const LoadingWidget();
-                }
-                return const SizedBox();
-              }),
-            ],
-          ),
+            ),
+            Obx(() {
+              if (controller.deleteLoader.value) {
+                return const LoadingWidget();
+              }
+              return const SizedBox();
+            }),
+          ],
         ),
       ),
     );
@@ -261,10 +261,12 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
               ),
               4.horizontalSpace,
               GestureDetector(
-                onTap: () =>
-                    Get.toNamed(Routes.changeAssistantAddress, arguments: [
-                  assistantData,
-                ]),
+                onTap: () => Get.toNamed(
+                  Routes.changeAssistantAddress,
+                  arguments: [
+                    assistantData,
+                  ],
+                ),
                 child: Text(
                   "Edit Address",
                   style: AppTextStyles.medium.copyWith(
@@ -365,7 +367,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 20 * SizeConfig.heightMultiplier),
-                                child: Center(
+                                child: const Center(
                                   child: LoadingWidget(),
                                 ),
                               ),
@@ -429,8 +431,6 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                                                         DoctorAssistantController>()
                                                     .premissionList[index]);
                                           }
-                                          print(controller
-                                              .selectedPremissionList);
                                         },
                                         child: Padding(
                                           padding: EdgeInsets.only(

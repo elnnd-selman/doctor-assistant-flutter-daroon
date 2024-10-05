@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +94,7 @@ class EditDoctorScheduleController extends GetxController {
     feeClinic.text = office.fee!.feeClinic!.toString();
     feeVideo.text = office.fee!.feeVideoCall!.toString();
 
-    selectedWeekDays.value = office.daysOpen!;
+    selectedWeekDays.value = office.daysOpen;
 
     isEndWithTime.value = true;
 
@@ -124,21 +124,19 @@ class EditDoctorScheduleController extends GetxController {
     try {
       _processing.value = true;
       FocusManager.instance.primaryFocus?.unfocus();
-
       final response = await ApiService.putWithHeader(
           userToken: {
             'Content-Type': 'application/json',
             "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint:
-              'https://development-api.daroon.krd/api/office/update-my-office/${office.id}',
+          endPoint: '${AppTokens.apiURl}/office/${office.id}/update',
           body: {
             "title": office.title,
             "doctorId":
                 Get.find<DoctorHomeController>().userModel.value!.user!.id!,
             "description": office.description!,
-            "typeOfOffice": office.typeOfOffice,
+            "types-of-offices": "office",
             "daysOpen": selectedWeekDays,
             "startTime":
                 "${startWithTime.value.hour.toString()}:${startWithTime.value.minute.toString()}",
@@ -152,17 +150,18 @@ class EditDoctorScheduleController extends GetxController {
               "feeCall": feeCall.text,
               "feeVideoCall": feeVideo.text
             },
-            "typeOfCurrency": "usd",
+            "typeOfCurrency": "66ea99e6c7a88efd35724531",
             "phoneNumbers": ["07500132", "075016132"],
             "address": {
               "coordinate": {
                 "latitude": "${office.address!.coordinate!.latitude!}",
                 "longitude": "${office.address!.coordinate!.longitude!}",
               },
-              "country": office.address!.country!,
+              "country": office.address!.country!.id!,
               "city": office.address!.city!,
               "town": office.address!.town!,
-              "street": office.address!.street!
+              "street": office.address!.street!,
+              "typeOfOffice": "66e04d4b15b32e335a665792"
             }
           });
 
@@ -173,14 +172,15 @@ class EditDoctorScheduleController extends GetxController {
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
-          final jsonData = jsonDecode(response.body)['data'];
-          Get.find<DoctorAddressController>()
-              .officeAddressModelList
-              .removeWhere((item) => item.id == office.id);
-          Get.find<DoctorAddressController>()
-              .officeAddressModelList
-              .add(OfficeAddreesModel.fromJson(jsonData));
-          print(jsonData);
+          // final jsonData = jsonDecode(response.body)['data'];
+          Get.find<DoctorAddressController>().getDoctorOfficeAddress();
+          // Get.find<DoctorAddressController>()
+          //     .officeAddressModelList
+          //     .removeWhere((item) => item.id == office.id);
+          // Get.find<DoctorAddressController>()
+          //     .officeAddressModelList
+          //     .add(OfficeAddreesModel.fromJson(jsonData));
+          // print(jsonData);
           Get.back();
           Get.back();
 

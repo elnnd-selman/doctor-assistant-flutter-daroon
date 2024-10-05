@@ -51,7 +51,7 @@ class DoctorImagePostContainer extends StatelessWidget {
                       child: Center(
                         child: FittedBox(
                           child: Text(
-                            '${Get.find<DoctorHomeController>().userModel.value!.user!.username![0].toUpperCase()}${Get.find<DoctorHomeController>().userModel.value!.user!.name![0].toUpperCase()}',
+                            '${Get.find<DoctorHomeController>().userModel.value!.user!.username![0].toUpperCase()}${Get.find<DoctorHomeController>().userModel.value!.user!.firstName![0].toUpperCase()}',
                             style: AppTextStyles.bold.copyWith(
                               color: Colors.white,
                               fontSize: Spaces.fontSize(fontSize: 18),
@@ -102,11 +102,28 @@ class DoctorImagePostContainer extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              SvgPicture.asset(
-                "assets/icons/circlurDot.svg",
-                colorFilter: const ColorFilter.mode(
-                    AppColors.primaryColor, BlendMode.srcIn),
-                height: 20,
+              PopupMenuButton(
+                // iconSize: 20,
+                padding: EdgeInsets.zero,
+                elevation: 0,
+
+                // shadowColor: Colors.red,
+                color: AppColors.whiteBGColor,
+                child: SvgPicture.asset(
+                  "assets/icons/circlurDot.svg",
+                  colorFilter: const ColorFilter.mode(
+                      AppColors.primaryColor, BlendMode.srcIn),
+                  height: 20,
+                ),
+                onSelected: (value) {
+                  _onMenuItemSelected(value as int);
+                },
+                itemBuilder: (ctx) => [
+                  _buildPopupMenuItem(
+                      'Edit', true, Options.edit.index, AppColors.blackBGColor),
+                  _buildPopupMenuItem('Delete', false, Options.delete.index,
+                      const Color(0xffEC1C24)),
+                ],
               ),
             ],
           ),
@@ -191,9 +208,9 @@ class DoctorImagePostContainer extends StatelessWidget {
                       () => PostCommentController(postID: contentData.id!));
 
                   Get.bottomSheet(
-                    const CommentBottomSheet(),
+                    CommentBottomSheet(contentData: contentData),
                     isScrollControlled: true,
-                    isDismissible: false,
+                    isDismissible: true,
                     enableDrag: false,
                   );
                   // showModalBottomSheet(
@@ -236,6 +253,38 @@ class DoctorImagePostContainer extends StatelessWidget {
       ),
     );
   }
+
+  PopupMenuItem _buildPopupMenuItem(
+      String title, bool showDivider, int position, Color textColor) {
+    return PopupMenuItem(
+      padding: EdgeInsets.zero,
+      value: position,
+      child: Column(
+        children: [
+          showDivider ? 0.verticalSpace : 10.verticalSpace,
+          Center(
+            child: Text(
+              title,
+              style:
+                  AppTextStyles.normal.copyWith(fontSize: 16, color: textColor),
+            ),
+          ),
+          15.verticalSpace,
+          showDivider
+              ? Container(height: .5, color: const Color(0xffC4C4C4))
+              : const SizedBox(),
+        ],
+      ),
+    );
+  }
+
+  _onMenuItemSelected(int value) {
+    // _popupMenuItemIndex = value;
+
+    if (value == Options.edit.index) {
+      // _changeColorAccordingToMenuItem = Colors.red;
+    } else if (value == Options.delete.index) {}
+  }
 }
 
 List<String> videoList = [
@@ -243,3 +292,5 @@ List<String> videoList = [
   "https://firebasestorage.googleapis.com/v0/b/the-fittest.appspot.com/o/Exercise-Videos%2Fbiceps%2FBand_Concentration_Curl_female.mp4?alt=media&token=d37813c7-a816-4852-a08c-6512ca8e5757",
   "https://firebasestorage.googleapis.com/v0/b/the-fittest.appspot.com/o/Exercise-Videos%2Fbiceps%2FBand_Concentration_Curl_female.mp4?alt=media&token=d37813c7-a816-4852-a08c-6512ca8e5757",
 ];
+
+enum Options { edit, delete }

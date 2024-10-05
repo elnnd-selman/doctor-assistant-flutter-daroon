@@ -24,8 +24,6 @@ class DoctorAddPostController extends GetxController {
   TextEditingController descAR = TextEditingController();
 
   uploadContent(BuildContext context) async {
-    print(Get.find<DoctorHomeController>().userModel.value!.token!);
-    print(Get.find<DoctorHomeController>().userModel.value!.user!.id!);
     _processing.value = true;
     final response = await ApiService.uploadContentApi(
       userToken:

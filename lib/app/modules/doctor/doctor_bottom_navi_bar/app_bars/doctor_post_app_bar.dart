@@ -40,7 +40,7 @@ class DoctorPostAppBar extends GetView<DoctorCustomNaviController> {
                   child: Center(
                     child: FittedBox(
                       child: Text(
-                        '${Get.find<DoctorHomeController>().userModel.value!.user!.username![0].toUpperCase()}${Get.find<DoctorHomeController>().userModel.value!.user!.name![0].toUpperCase()}',
+                        '${Get.find<DoctorHomeController>().userModel.value!.user!.username![0].toUpperCase()}${Get.find<DoctorHomeController>().userModel.value!.user!.firstName![0].toUpperCase()}',
                         style: AppTextStyles.bold.copyWith(
                           color: Colors.white,
                           fontSize: Spaces.fontSize(fontSize: 18),
@@ -73,7 +73,7 @@ class DoctorPostAppBar extends GetView<DoctorCustomNaviController> {
                     .userModel
                     .value!
                     .user!
-                    .fullName!,
+                    .username!,
                 style: AppTextStyles.medium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.blackBGColor,

@@ -145,7 +145,7 @@ class AddAssistantScreen extends GetView<AddAssistantController> {
                                               .userSearchModelList[index].id!;
                                       controller.selectedUserName.value =
                                           controller.userSearchModelList[index]
-                                              .fullName!;
+                                              .firstName!;
                                     },
                                     borderColor:
                                         controller.selectedUserIndex.value ==

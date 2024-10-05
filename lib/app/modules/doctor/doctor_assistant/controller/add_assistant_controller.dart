@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/doctor_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/user_search_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
@@ -55,9 +56,7 @@ class AddAssistantController extends GetxController {
     try {
       _processing.value = true;
       FocusManager.instance.primaryFocus?.unfocus();
-      print(selectedAddressID);
-      print(selectedUserID);
-      print(selectedPremissionList);
+
       final tempStringList = [];
       for (int i = 0; i < selectedPremissionList.length; i++) {
         tempStringList.add(convertText(selectedPremissionList[i]));
@@ -84,9 +83,9 @@ class AddAssistantController extends GetxController {
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
-          final jsonData = jsonDecode(response.body)['data'];
+          jsonDecode(response.body)['data'];
+          Get.find<DoctorAssistantController>().getAssistantData();
 
-          print(jsonData);
           Get.back();
           Get.back();
           Get.back();
@@ -109,7 +108,6 @@ class AddAssistantController extends GetxController {
             icon: Icons.close);
       }
     } catch (e) {
-      print(e.toString());
       _processing.value = false;
       showToastMessage(
           message: "Issue ${e.toString()}",

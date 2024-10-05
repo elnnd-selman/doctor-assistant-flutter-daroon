@@ -98,6 +98,7 @@ class LinkifyText extends StatelessWidget {
   /// the specified font size.
   ///
   /// The value given to the constructor as textScaleFactor. If null, will
+  // ignore: deprecated_member_use
   /// use the [MediaQueryData.textScaleFactor] obtained from the ambient
   /// [MediaQuery], or 1.0 if there is no [MediaQuery] in scope.
   final double? textScaleFactor;
@@ -148,6 +149,7 @@ class LinkifyText extends StatelessWidget {
       strutStyle: strutStyle,
       textAlign: textAlign,
       textDirection: textDirection,
+      // ignore: deprecated_member_use
       textScaleFactor: textScaleFactor,
       textWidthBasis: textWidthBasis,
       semanticsLabel: semanticsLabel,

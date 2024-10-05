@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/post_model.dart';
@@ -22,21 +23,34 @@ class DoctorProfileController extends GetxController {
 
   getDoctorPost() async {
     isLoading.value = true;
-    print(Get.find<DoctorHomeController>().userModel.value!.token!);
-    print(Get.find<DoctorHomeController>().userModel.value!.user!.id);
 
-    final response = await ApiService.getwithUserToken(
-      endPoint:
-          '${AppTokens.apiURl}/content/my-contents?contentType=post&pagination=1&limit=10',
-      userToken: {
-        "Authorization":
-            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
-      },
-    );
-    if (response!.statusCode == 200 || response.statusCode == 201) {
-      final jsonData = jsonDecode(response.body);
-      contentModelList.value = ContentModel.fromJson(jsonData);
-      totalPages.value = contentModelList.value!.paginationCount!;
+    try {
+      if (kDebugMode) {
+        print(Get.find<DoctorHomeController>().userModel.value!.user!.id);
+        print(Get.find<DoctorHomeController>().userModel.value!.token!);
+      }
+
+      final response = await ApiService.getwithUserToken(
+        endPoint:
+            '${AppTokens.apiURl}/content/my-contents?pagination=1&limit=10&contentType=post',
+        userToken: {
+          "Authorization":
+              "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+        },
+      );
+      if (response!.statusCode == 200 || response.statusCode == 201) {
+        final jsonData = jsonDecode(response.body);
+        print(jsonData);
+        contentModelList.value = ContentModel.fromJson(jsonData);
+        totalPages.value = contentModelList.value!.paginationCount!;
+      } else {
+        printError(info: response.body);
+      }
+
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      printInfo(info: e.toString());
     }
     isLoading.value = false;
   }

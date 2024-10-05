@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/user_search_model.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
@@ -6,6 +5,7 @@ import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
@@ -134,7 +134,7 @@ class SearchUserScreen extends GetView<AddAssistantController> {
                                               .userSearchModelList[index].id!;
                                       controller.selectedUserName.value =
                                           controller.userSearchModelList[index]
-                                              .fullName!;
+                                              .firstName!;
                                     },
                                     borderColor:
                                         controller.selectedUserIndex.value ==
@@ -208,7 +208,7 @@ class UserTile extends StatelessWidget {
                           child: Center(
                             child: FittedBox(
                               child: Text(
-                                '${user.name![0].toUpperCase()}${user.name![0].toUpperCase()}',
+                                '${user.firstName![0].toUpperCase()}${user.lastNameEn![0].toUpperCase()}',
                                 style: AppTextStyles.bold.copyWith(
                                   color: Colors.white,
                                   fontSize: Spaces.fontSize(fontSize: 18),
@@ -222,22 +222,23 @@ class UserTile extends StatelessWidget {
                           width: 5 * SizeConfig.heightMultiplier,
                           // padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                              color: AppColors.blackBGColor,
-                              // shape: BoxShape.circle,
-                              borderRadius: BorderRadius.circular(10)),
+                            // color: AppColors.blackBGColor,
+                            // shape: BoxShape.circle,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Center(
                             child: FittedBox(
-                                child: CachedNetworkImage(
-                                    width: 5 * SizeConfig.heightMultiplier,
-                                    imageUrl: user.profilePicture!.md!)),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: NetWorkImageLoader(
+                                    containerColor: Colors.black54,
+                                    imageURL: user.profilePicture!.md!,
+                                    height: 5 * SizeConfig.heightMultiplier,
+                                    width: 5 * SizeConfig.heightMultiplier),
+                              ),
+                            ),
                           ),
                         )
-
-                  // CircleAvatar(
-                  //     radius: 2.5 * SizeConfig.heightMultiplier,
-                  //     backgroundImage:
-                  //         NetworkImage(user.profilePicture!.md!),
-                  //   ),
                 ],
               ),
               SizedBox(width: 2 * SizeConfig.widthMultiplier),
@@ -245,7 +246,7 @@ class UserTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    user.fullName!.toUpperCase(),
+                    '${user.firstName!.toUpperCase()} ${user.lastNameEn!.toUpperCase()}',
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColors.blackBGColor,

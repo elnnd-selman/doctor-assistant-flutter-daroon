@@ -1,22 +1,20 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/doctor_assistant_controller.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/add_offer_controller.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
-import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
-import 'package:daroon_doctor/global/widgets/toast_message.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
-class ChangeAssistantAddress extends GetView<DoctorAssistantController> {
-  ChangeAssistantAddress({super.key});
+class AddOfferAddress extends GetView<AddOfferController> {
+  const AddOfferAddress({super.key});
 
-  final assistantData = Get.arguments[0] as AssistantElement;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +29,7 @@ class ChangeAssistantAddress extends GetView<DoctorAssistantController> {
         title: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
-            "Choose Address",
+            "Select Address",
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w600,
               color: AppColors.blackBGColor,
@@ -40,18 +38,18 @@ class ChangeAssistantAddress extends GetView<DoctorAssistantController> {
           ),
         ),
       ),
-      body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 6 * SizeConfig.widthMultiplier),
-        child: Stack(
-          children: [
-            Column(
+      body: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: 6 * SizeConfig.widthMultiplier),
+            child: Column(
               children: [
                 SizedBox(
                   height: 4 * SizeConfig.heightMultiplier,
                 ),
                 Text(
-                  "You can select the address where you want the assistant to assist you, for better patient service.",
+                  "You can select you want assistant assist you in which address, for better servece patient.",
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: AppColors.blackBGColor.withOpacity(0.5),
@@ -210,21 +208,20 @@ class ChangeAssistantAddress extends GetView<DoctorAssistantController> {
                             color: const Color(0xffEC1C24),
                             icon: Icons.close);
                       } else {
-                        controller.updateAssistantAddress(
-                            context: context, assistantData: assistantData);
+                        controller.registerDoctorOffer(context);
                       }
                     },
                     name: "Save"),
               ],
             ),
-            Obx(() {
-              if (controller.addressLoader.value) {
-                return const Center(child: LoadingWidget());
-              }
-              return const SizedBox();
-            }),
-          ],
-        ),
+          ),
+          Obx(() {
+            if (controller.processing) {
+              return const LoadingWidget();
+            }
+            return const SizedBox();
+          }),
+        ],
       ),
     );
   }

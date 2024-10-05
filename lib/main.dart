@@ -20,7 +20,7 @@ Future<void> main() async {
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(UserModelAdapter());
   Hive.registerAdapter(UserAdapter());
-  Hive.registerAdapter(EducationAdapter());
+  // Hive.registerAdapter(EducationAdapter());
   Hive.registerAdapter(PhoneAdapter());
 
   await Hive.openBox('DaroonBox');

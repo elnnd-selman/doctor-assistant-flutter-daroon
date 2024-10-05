@@ -7,6 +7,8 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/add_assi
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/change_assistant_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/select_assistant_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/add_offer_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/offer_add_succesfully.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/binding/forget_password_binding.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_email.dart';
@@ -149,7 +151,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.doctorOffersDetails,
-      page: () => const DoctorOfferDetailScreen(),
+      page: () => DoctorOfferDetailScreen(),
     ),
     GetPage(
       name: Routes.doctorAppointmentDetail,
@@ -158,6 +160,16 @@ class AppPages {
     GetPage(
       name: Routes.doctorAddOffers,
       page: () => const DoctorAddOfferScreen(),
+      binding: DoctorOffersBinding(),
+    ),
+    GetPage(
+      name: Routes.addOfferAddress,
+      page: () => const AddOfferAddress(),
+      binding: DoctorOffersBinding(),
+    ),
+    GetPage(
+      name: Routes.addOfferSuccessfully,
+      page: () => const OfferAddSuccesfully(),
     ),
     GetPage(
       name: Routes.cancelAppointment,

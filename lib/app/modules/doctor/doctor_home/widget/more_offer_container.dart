@@ -1,3 +1,5 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/model/doctor_offer_model.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,12 +11,18 @@ import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 class MoreOfferContainer extends StatelessWidget {
   final Color statusColor;
   final String statusText;
-  const MoreOfferContainer(
-      {super.key, required this.statusColor, required this.statusText});
+  final DoctorOffersData offersData;
+  const MoreOfferContainer({
+    super.key,
+    required this.statusColor,
+    required this.statusText,
+    required this.offersData,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
@@ -28,15 +36,25 @@ class MoreOfferContainer extends StatelessWidget {
               height: 24 * SizeConfig.heightMultiplier,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/circlurDot.png"),
-                    fit: BoxFit.fill,
-                  ),
+                  // image: DecorationImage(
+                  //   image: AssetImage("assets/images/circlurDot.png"),
+                  //   fit: BoxFit.fill,
+                  // ),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
               child: Stack(
                 children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20)),
+                    child: NetWorkImageLoader(
+                      height: 24 * SizeConfig.heightMultiplier,
+                      width: MediaQuery.of(context).size.width,
+                      imageURL: offersData.image!.bg!,
+                    ),
+                  ),
                   Positioned(
                     top: 0,
                     right: 14,
@@ -116,7 +134,7 @@ class MoreOfferContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Offer Title",
+                  offersData.titleEn!,
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackBGColor,
@@ -124,7 +142,7 @@ class MoreOfferContainer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "In publishing and graphic design...",
+                  offersData.descriptionEn!,
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: AppColors.greyBGColor.withOpacity(0.6),
@@ -153,7 +171,7 @@ class MoreOfferContainer extends StatelessWidget {
                         MediaQuery.of(context).size.width * 0.35),
                     _moreOfferContainer(
                         "assets/icons/newoffer.svg",
-                        "• 40% Off",
+                        "• ${offersData.discountPercentage!.toString()}% Off",
                         Colors.red,
                         MediaQuery.of(context).size.width * 0.35),
                   ],

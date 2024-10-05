@@ -90,7 +90,11 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
                 children: [
                   Obx(
                     () => Text(
-                      "${controller.isLoading.value ? '--' : controller.isSearch.value ? controller.assistantSearchList.length : controller.assistantModel.value!.assistants.length} Assistants",
+                      controller.isLoading.value
+                          ? '--'
+                          : controller.assistantModel.value == null
+                              ? '0 Assistants'
+                              : "${controller.isLoading.value ? '--' : controller.isSearch.value ? controller.assistantSearchList.length : controller.assistantModel.value!.assistants.length} Assistants",
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
                         color: const Color(0xff979797),

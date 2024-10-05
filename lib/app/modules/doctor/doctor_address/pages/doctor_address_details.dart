@@ -446,12 +446,12 @@ class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
                 margin: EdgeInsets.only(right: index == 7 ? 0 : 10),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: office.daysOpen!
+                    color: office.daysOpen
                             .contains(controller.weekDaysListFull[index])
                         ? AppColors.primaryColor
                         : const Color(0xffE0E0E0),
                   ),
-                  color: office.daysOpen!
+                  color: office.daysOpen
                           .contains(controller.weekDaysListFull[index])
                       ? AppColors.primaryColor
                       : Colors.transparent,
@@ -462,7 +462,7 @@ class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
                     controller.weekDaysList[index],
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: office.daysOpen!
+                      color: office.daysOpen
                               .contains(controller.weekDaysListFull[index])
                           ? AppColors.whiteBGColor
                           : AppColors.blackBGColor,

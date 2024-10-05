@@ -24,6 +24,8 @@ abstract class Routes {
   static const doctorOffers = "/doctorOffers";
   static const doctorOffersDetails = "/doctorOffersDetails";
   static const doctorAddOffers = "/doctorAddOffers";
+  static const addOfferAddress = "/addOfferAddress";
+  static const addOfferSuccessfully = "/addOfferSuccessfully";
   static const doctorAppointmentDetail = "/doctorAppointmentDetail";
   static const cancelAppointment = "/cancelAppointment";
   static const doctorAssistant = "/doctorAssistant";

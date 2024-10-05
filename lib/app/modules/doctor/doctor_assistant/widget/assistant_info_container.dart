@@ -52,7 +52,7 @@ class AssistantInfoContainer extends StatelessWidget {
                           ? Center(
                               child: FittedBox(
                                 child: Text(
-                                  '${assistantElement.assistant!.name![0].toUpperCase()}${assistantElement.assistant!.fullName![1].toUpperCase()}',
+                                  '${assistantElement.assistant!.firstName![0].toUpperCase()}${assistantElement.assistant!.lastNameAr![1].toUpperCase()}',
                                   style: AppTextStyles.bold.copyWith(
                                     color: Colors.white,
                                     fontSize: Spaces.fontSize(fontSize: 18),
@@ -82,7 +82,7 @@ class AssistantInfoContainer extends StatelessWidget {
                                 return Center(
                                   child: FittedBox(
                                     child: Text(
-                                      '${assistantElement.assistant!.name![0].toUpperCase()}${assistantElement.assistant!.fullName![1].toUpperCase()}',
+                                      '${assistantElement.assistant!.firstName![0].toUpperCase()}${assistantElement.assistant!.lastNameAr![1].toUpperCase()}',
                                       style: AppTextStyles.bold.copyWith(
                                         color: Colors.white,
                                         fontSize: Spaces.fontSize(fontSize: 18),
@@ -111,7 +111,7 @@ class AssistantInfoContainer extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(width: 2 * SizeConfig.widthMultiplier),
+                SizedBox(width: 4 * SizeConfig.widthMultiplier),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -124,7 +124,7 @@ class AssistantInfoContainer extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            assistantElement.assistant!.fullName!,
+                            assistantElement.assistant!.firstName!,
                             style: AppTextStyles.medium.copyWith(
                               fontWeight: FontWeight.w500,
                               color: AppColors.blackBGColor,

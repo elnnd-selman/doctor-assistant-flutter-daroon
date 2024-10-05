@@ -31,7 +31,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    assistantElement.assistant!.fullName!,
+                    assistantElement.assistant!.firstName!,
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
                       color: AppColors.blackBGColor,
@@ -92,7 +92,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
                   ? Center(
                       child: FittedBox(
                         child: Text(
-                          '${assistantElement.assistant!.name![0].toUpperCase()}${assistantElement.assistant!.fullName![1].toUpperCase()}',
+                          '${assistantElement.assistant!.firstName![0].toUpperCase()}${assistantElement.assistant!.lastNameEn![1].toUpperCase()}',
                           style: AppTextStyles.bold.copyWith(
                             color: Colors.white,
                             fontSize: Spaces.fontSize(fontSize: 18),
@@ -120,7 +120,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
                         return Center(
                           child: FittedBox(
                             child: Text(
-                              '${assistantElement.assistant!.name![0].toUpperCase()}${assistantElement.assistant!.fullName![1].toUpperCase()}',
+                              '${assistantElement.assistant!.firstName![0].toUpperCase()}${assistantElement.assistant!.lastNameEn![1].toUpperCase()}',
                               style: AppTextStyles.bold.copyWith(
                                 color: Colors.white,
                                 fontSize: Spaces.fontSize(fontSize: 18),

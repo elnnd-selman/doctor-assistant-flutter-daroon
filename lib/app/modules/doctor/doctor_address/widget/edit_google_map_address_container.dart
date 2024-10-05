@@ -212,7 +212,6 @@ class _EditGoogleMapContainerAddressState
   }
 
   void onError(PlacesAutocompleteResponse response) {
-    print(response.errorMessage);
     // ScaffoldMessenger.of(Get.context!).showSnackBar(
     //   SnackBar(
     //     elevation: 0,

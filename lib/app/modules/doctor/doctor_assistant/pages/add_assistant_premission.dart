@@ -6,7 +6,6 @@ import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:multi_dropdown/models/value_item.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 class AddAssistantPremission extends GetView<AddAssistantController> {
@@ -173,7 +172,6 @@ class AddAssistantPremission extends GetView<AddAssistantController> {
                   onOptionRemoved: (index, option) {
                     controller.selectedPremissionList
                         .removeWhere((val) => val == option.label);
-                    print(controller.selectedPremissionList.length);
                   },
                   optionBuilder: (context, valueItem, isSelected) {
                     return ListTile(

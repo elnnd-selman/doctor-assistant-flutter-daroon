@@ -21,13 +21,14 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       token: fields[1] as String?,
       success: fields[2] as bool?,
       message: fields[3] as String?,
+      status: fields[4] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.user)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class UserModelAdapter extends TypeAdapter<UserModel> {
       ..writeByte(2)
       ..write(obj.success)
       ..writeByte(3)
-      ..write(obj.message);
+      ..write(obj.message)
+      ..writeByte(4)
+      ..write(obj.status);
   }
 
   @override
@@ -61,77 +64,107 @@ class UserAdapter extends TypeAdapter<User> {
     };
     return User(
       id: fields[0] as String?,
-      name: fields[1] as String?,
-      username: fields[2] as String?,
-      fullName: fields[3] as String?,
-      email: fields[4] as String?,
-      isEmailVerified: fields[5] as bool?,
-      level: fields[6] as String?,
-      password: fields[7] as String?,
-      isActive: fields[8] as bool?,
-      gender: fields[9] as String?,
-      phone: fields[10] as Phone?,
-      bio: fields[11] as String?,
-      education: (fields[12] as List).cast<Education>(),
-      experienceByYear: fields[13] as int?,
-      typeOfUser: fields[14] as String?,
-      listOfAssistants: (fields[15] as List).cast<dynamic>(),
-      language: fields[16] as String?,
-      createdAt: fields[17] as DateTime?,
-      updatedAt: fields[18] as DateTime?,
-      v: fields[19] as int?,
-      sessionToken: fields[20] as String?,
-      profilePicture: fields[21] as dynamic,
+      firstName: fields[1] as String?,
+      firstNameKu: fields[2] as String?,
+      firstNameEn: fields[3] as String?,
+      firstNameAr: fields[4] as String?,
+      username: fields[5] as String?,
+      email: fields[6] as String?,
+      isEmailVerified: fields[7] as bool?,
+      gender: fields[8] as String?,
+      biographyKu: fields[9] as String?,
+      biographyAr: fields[10] as String?,
+      biographyEn: fields[11] as String?,
+      isActive: fields[12] as bool?,
+      phone: fields[13] as Phone?,
+      level: fields[14] as String?,
+      speciality: fields[15] as String?,
+      education: (fields[16] as List).cast<String>(),
+      lastNameKu: fields[17] as String?,
+      lastNameAr: fields[18] as String?,
+      lastNameEn: fields[19] as String?,
+      experienceByYear: fields[20] as int?,
+      typeOfUser: fields[21] as String?,
+      languages: (fields[22] as List).cast<String>(),
+      appLang: fields[23] as String?,
+      isThirdParty: fields[24] as bool?,
+      usePictureAsLink: fields[25] as bool?,
+      dateOfBirth: fields[26] as DateTime?,
+      createdAt: fields[27] as DateTime?,
+      updatedAt: fields[28] as DateTime?,
+      v: fields[29] as int?,
+      sessionToken: fields[30] as String?,
+      profilePicture: fields[31] as dynamic,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(22)
+      ..writeByte(32)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.firstName)
       ..writeByte(2)
-      ..write(obj.username)
+      ..write(obj.firstNameKu)
       ..writeByte(3)
-      ..write(obj.fullName)
+      ..write(obj.firstNameEn)
       ..writeByte(4)
-      ..write(obj.email)
+      ..write(obj.firstNameAr)
       ..writeByte(5)
-      ..write(obj.isEmailVerified)
+      ..write(obj.username)
       ..writeByte(6)
-      ..write(obj.level)
+      ..write(obj.email)
       ..writeByte(7)
-      ..write(obj.password)
+      ..write(obj.isEmailVerified)
       ..writeByte(8)
-      ..write(obj.isActive)
-      ..writeByte(9)
       ..write(obj.gender)
+      ..writeByte(9)
+      ..write(obj.biographyKu)
       ..writeByte(10)
-      ..write(obj.phone)
+      ..write(obj.biographyAr)
       ..writeByte(11)
-      ..write(obj.bio)
+      ..write(obj.biographyEn)
       ..writeByte(12)
-      ..write(obj.education)
+      ..write(obj.isActive)
       ..writeByte(13)
-      ..write(obj.experienceByYear)
+      ..write(obj.phone)
       ..writeByte(14)
-      ..write(obj.typeOfUser)
+      ..write(obj.level)
       ..writeByte(15)
-      ..write(obj.listOfAssistants)
+      ..write(obj.speciality)
       ..writeByte(16)
-      ..write(obj.language)
+      ..write(obj.education)
       ..writeByte(17)
-      ..write(obj.createdAt)
+      ..write(obj.lastNameKu)
       ..writeByte(18)
-      ..write(obj.updatedAt)
+      ..write(obj.lastNameAr)
       ..writeByte(19)
-      ..write(obj.v)
+      ..write(obj.lastNameEn)
       ..writeByte(20)
-      ..write(obj.sessionToken)
+      ..write(obj.experienceByYear)
       ..writeByte(21)
+      ..write(obj.typeOfUser)
+      ..writeByte(22)
+      ..write(obj.languages)
+      ..writeByte(23)
+      ..write(obj.appLang)
+      ..writeByte(24)
+      ..write(obj.isThirdParty)
+      ..writeByte(25)
+      ..write(obj.usePictureAsLink)
+      ..writeByte(26)
+      ..write(obj.dateOfBirth)
+      ..writeByte(27)
+      ..write(obj.createdAt)
+      ..writeByte(28)
+      ..write(obj.updatedAt)
+      ..writeByte(29)
+      ..write(obj.v)
+      ..writeByte(30)
+      ..write(obj.sessionToken)
+      ..writeByte(31)
       ..write(obj.profilePicture);
   }
 
@@ -146,55 +179,9 @@ class UserAdapter extends TypeAdapter<User> {
           typeId == other.typeId;
 }
 
-class EducationAdapter extends TypeAdapter<Education> {
-  @override
-  final int typeId = 3;
-
-  @override
-  Education read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return Education(
-      degree: fields[0] as String?,
-      fromYear: fields[1] as String?,
-      toYear: fields[2] as String?,
-      institute: fields[3] as String?,
-      id: fields[4] as String?,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, Education obj) {
-    writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.degree)
-      ..writeByte(1)
-      ..write(obj.fromYear)
-      ..writeByte(2)
-      ..write(obj.toYear)
-      ..writeByte(3)
-      ..write(obj.institute)
-      ..writeByte(4)
-      ..write(obj.id);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is EducationAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
 class PhoneAdapter extends TypeAdapter<Phone> {
   @override
-  final int typeId = 4;
+  final int typeId = 3;
 
   @override
   Phone read(BinaryReader reader) {

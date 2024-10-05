@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -33,7 +35,9 @@ class ApiService {
     required Map<String, dynamic>? body,
     required Map<String, String>? userToken,
   }) async {
-    print(endPoint);
+    if (kDebugMode) {
+      print(endPoint);
+    }
     final response = await http.post(Uri.parse(endPoint),
         headers: userToken, body: jsonEncode(body));
 
@@ -45,7 +49,9 @@ class ApiService {
     required Map<String, dynamic>? body,
     required Map<String, String>? userToken,
   }) async {
-    print(endPoint);
+    if (kDebugMode) {
+      print(endPoint);
+    }
     final response = await http.put(Uri.parse(endPoint),
         headers: userToken, body: jsonEncode(body));
 
@@ -87,7 +93,9 @@ class ApiService {
     required String endPoint,
     required Map<String, String>? userToken,
   }) async {
-    print(endPoint);
+    if (kDebugMode) {
+      print(endPoint);
+    }
     final response = await http.get(Uri.parse(endPoint), headers: userToken);
 
     return response;
@@ -146,9 +154,36 @@ class ApiService {
         request.files.add(multipartFile);
       }
     }
+
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
 
+    return response;
+  }
+
+  static Future<http.Response> uploadImageInDataBase({
+    required String url,
+    required Map<String, String> headers,
+    required String imageURL,
+    required String fieldName,
+  }) async {
+    if (kDebugMode) {
+      print(url);
+    }
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+
+    request.files.add(
+      http.MultipartFile(
+        fieldName,
+        File(imageURL).readAsBytes().asStream(),
+        File(imageURL).lengthSync(),
+        filename: DateTime.now().toString(),
+      ),
+    );
+    request.headers.addAll(headers);
+    var streamedResponse = await request.send();
+
+    var response = await http.Response.fromStream(streamedResponse);
     return response;
   }
 }

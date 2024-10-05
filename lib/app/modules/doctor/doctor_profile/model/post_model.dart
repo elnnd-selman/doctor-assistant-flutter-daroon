@@ -270,25 +270,37 @@ class ContentData {
 class User {
   User({
     required this.id,
-    required this.name,
+    required this.firstName,
+    required this.firstNameKu,
+    required this.firstNameEn,
+    required this.firstNameAr,
     required this.usePictureAsLink,
   });
 
   final String? id;
-  final String? name;
+  final String? firstName;
+  final String? firstNameKu;
+  final String? firstNameEn;
+  final String? firstNameAr;
   final bool? usePictureAsLink;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json["_id"],
-      name: json["name"],
+      firstName: json["firstName"],
+      firstNameKu: json["firstName_ku"],
+      firstNameEn: json["firstName_en"],
+      firstNameAr: json["firstName_ar"],
       usePictureAsLink: json["usePictureAsLink"],
     );
   }
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "name": name,
+        "firstName": firstName,
+        "firstName_ku": firstNameKu,
+        "firstName_en": firstNameEn,
+        "firstName_ar": firstNameAr,
         "usePictureAsLink": usePictureAsLink,
       };
 }

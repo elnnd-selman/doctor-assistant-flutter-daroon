@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -168,15 +169,15 @@ class _DcotorOfferDateTimeState extends State<DcotorOfferDateTime> {
                   width: MediaQuery.of(Get.context!).size.width * 0.9,
                   child: CommonButton(
                     ontap: () {
-                      Get.back();
-                      // final scheduledTime = DateTime(
-                      //   selectedDayTimeStamp.year,
-                      //   selectedDayTimeStamp.month,
-                      //   selectedDayTimeStamp.day,
-                      //   _timeStamp.hour,
-                      //   _timeStamp.minute,
-                      // );
-                      // Get.back(result: Timestamp.fromDate(scheduledTime));
+                      // Get.back();
+                      final scheduledTime = DateTime(
+                        selectedDayTimeStamp.year,
+                        selectedDayTimeStamp.month,
+                        selectedDayTimeStamp.day,
+                        timeStamp.hour,
+                        timeStamp.minute,
+                      );
+                      Get.back(result: Timestamp.fromDate(scheduledTime));
                       // NotificationService.scheduleWorkoutNotification(
                       //   scheduledTime.millisecondsSinceEpoch,
                       // );

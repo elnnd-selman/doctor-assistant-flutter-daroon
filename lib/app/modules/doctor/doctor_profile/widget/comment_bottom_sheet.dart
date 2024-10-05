@@ -1,15 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/post_comment_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/post_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/comment_setion.dart';
 import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class CommentBottomSheet extends GetView<PostCommentController> {
-  const CommentBottomSheet({super.key});
+  final ContentData contentData;
+  const CommentBottomSheet({
+    super.key,
+    required this.contentData,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +57,41 @@ class CommentBottomSheet extends GetView<PostCommentController> {
                   Column(
                     children: [
                       Container(
-                        height: 6 * SizeConfig.heightMultiplier,
-                        width: 6 * SizeConfig.heightMultiplier,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: Colors.red,
                         ),
                       ),
+                      contentData.user!.usePictureAsLink == false
+                          ? Container(
+                              height: 6 * SizeConfig.heightMultiplier,
+                              width: 6 * SizeConfig.heightMultiplier,
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                  color: AppColors.blackBGColor,
+                                  shape: BoxShape.circle),
+                              child: Center(
+                                child: FittedBox(
+                                  child: Text(
+                                    '${contentData.user!.firstName![0].toUpperCase()}${contentData.user!.firstName![0].toUpperCase()}',
+                                    style: AppTextStyles.bold.copyWith(
+                                      color: Colors.white,
+                                      fontSize: Spaces.fontSize(fontSize: 18),
+                                    ),
+                                  ),
+                                ),
+                              ))
+                          : CircleAvatar(
+                              radius: 14,
+                              child: ClipOval(
+                                child: CachedNetworkImage(
+                                  imageUrl: contentData.user!.firstName!,
+                                  fit: BoxFit.cover,
+                                  height: 3.5 * SizeConfig.heightMultiplier,
+                                  width: 3.5 * SizeConfig.heightMultiplier,
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                   SizedBox(width: 2 * SizeConfig.widthMultiplier),
@@ -70,15 +105,14 @@ class CommentBottomSheet extends GetView<PostCommentController> {
                             TextSpan(
                               children: [
                                 TextSpan(
-                                    text: "Melvin Joseph",
+                                    text: contentData.user!.firstName!,
                                     style: AppTextStyles.medium.copyWith(
                                       color: const Color(0xff11142D),
                                       fontWeight: FontWeight.w600,
                                     )),
-                                const TextSpan(
-                                    text:
-                                        " it's never too late to start something new. Start easy. Because needs a process. We can not imArticletely get the best results. At least, let's get started.",
-                                    style: TextStyle(
+                                TextSpan(
+                                    text: "   ${contentData.contentEn!}",
+                                    style: const TextStyle(
                                       color: Color(0xff11142D),
                                       fontWeight: FontWeight.w400,
                                     )),
@@ -156,7 +190,7 @@ class CommentBottomSheet extends GetView<PostCommentController> {
                               if (controller.selectedCommentIndex.value == -1) {
                                 controller.sendCommentOnPost();
                               } else {
-                                // controller.sendReply();
+                                controller.replyOnComment();
                               }
                             },
                             child: Padding(

@@ -19,6 +19,7 @@ class DoctorAddressController extends GetxController {
   List<Marker> markers = [];
   getDoctorOfficeAddress() async {
     isLoading.value = true;
+    officeAddressModelList.value = [];
 
     final response = await ApiService.getwithUserToken(
       endPoint: "${AppTokens.apiURl}/office/my-offices",
@@ -54,7 +55,7 @@ class DoctorAddressController extends GetxController {
         );
       }
       officeAddressModelList
-          .sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
+          .sort((a, b) => b.updatedAt!.compareTo(a.updatedAt!));
       isLoading.value = false;
     } else {
       isLoading.value = false;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
@@ -7,7 +8,6 @@ import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class DoctorAssistantController extends GetxController {
@@ -32,14 +32,12 @@ class DoctorAssistantController extends GetxController {
 
       if (response!.statusCode == 200 || response.statusCode == 201) {
         final jsonData = jsonDecode(response.body);
+        log(response.body);
         assistantModel.value = AssistantModel.fromJson(jsonData);
-      } else {
-        print(response.body);
-      }
+      } else {}
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;
-      print(e.toString());
     }
   }
 
@@ -57,7 +55,7 @@ class DoctorAssistantController extends GetxController {
     if (assistantModel.value!.assistants.isNotEmpty) {
       assistantSearchList.value =
           assistantModel.value!.assistants.where((item) {
-        return item.assistant!.fullName!
+        return item.assistant!.firstName!
             .toLowerCase()
             .contains(query.toLowerCase());
       }).toList();
@@ -68,9 +66,9 @@ class DoctorAssistantController extends GetxController {
   RxString selectedAddress = "".obs;
   RxString selectedAddressID = "".obs;
   RxBool addressLoader = false.obs;
-  updateAssistantAddress({
-    required AssistantElement assistantData,
-  }) async {
+  updateAssistantAddress(
+      {required AssistantElement assistantData,
+      required BuildContext context}) async {
     try {
       addressLoader.value = true;
       final response = await ApiService.putWithHeader(
@@ -79,7 +77,9 @@ class DoctorAssistantController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/assistants/${assistantData.id!}/update',
+        // https://development-api.daroon.krd/assistants/:assistantId/:officeId/update
+        endPoint:
+            '${AppTokens.apiURl}/assistants/${assistantData.id!}/${selectedAddressID.value}/update',
         body: {
           "permissions": assistantData.permissions,
           "office": selectedAddressID.value,
@@ -89,8 +89,21 @@ class DoctorAssistantController extends GetxController {
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
           final jsonData = jsonDecode(response.body);
+          Get.back();
+          Get.back();
           printError(info: "Update Assistant Address $jsonData");
+          getAssistantData();
+          showToastMessage(
+              message: "Update Assistant Address.",
+              context: context,
+              color: const Color(0xff5BA66B),
+              icon: Icons.check);
         } else {
+          showToastMessage(
+              message: response.body,
+              context: context,
+              color: const Color(0xffEC1C24),
+              icon: Icons.close);
           printInfo(
               info: "Error While Updating Assistant Address ${response.body}");
         }
@@ -131,6 +144,9 @@ class DoctorAssistantController extends GetxController {
           final jsonData = jsonDecode(response.body);
           printError(info: "Update Assistant Premiison $jsonData");
           Get.back();
+          Get.back();
+
+          getAssistantData();
           showToastMessage(
               message: "Successfully Premission Updated.",
               context: context,
@@ -172,15 +188,31 @@ class DoctorAssistantController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/assistants/:${assistantData.id}/delete',
+
+        // https://development-api.daroon.krd/assistants/:assistantId/:officeId/delete
+        endPoint:
+            '${AppTokens.apiURl}/assistants/${assistantData.id}/${assistantData.office!.id}/delete',
         body: {},
       );
 
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
           printInfo(info: "Suucessfull Delete Assistant");
+          assistantModel.value!.assistants
+              .removeWhere((item) => item.id == assistantData.id);
+          Get.back();
+          showToastMessage(
+              message: "Suucessfull Delete Assistant",
+              context: context,
+              color: const Color(0xff5BA66B),
+              icon: Icons.check);
         } else {
           printInfo(info: "Error While Deleting Assistant ${response.body}");
+          showToastMessage(
+              message: response.body,
+              context: context,
+              color: const Color(0xffEC1C24),
+              icon: Icons.close);
         }
       }
       deleteLoader.value = false;

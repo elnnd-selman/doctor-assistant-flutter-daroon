@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/office_type_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +29,20 @@ class EditDoctorAddressController extends GetxController {
     streetNumber.text = ofiices.address!.street!;
     townName.text = ofiices.address!.town!;
     cityName.text = ofiices.address!.city!;
-    countryName.text = ofiices.address!.country!;
+    // countryName.text = ofiices.address!.country!;
 
     long.value = ofiices.address!.coordinate!.longitude!;
     lat.value = ofiices.address!.coordinate!.latitude!;
 
-    if (ofiices.typeOfOffice == "house") {
-      slectedOffice.value = 0;
-    } else if (ofiices.typeOfOffice == "building") {
-      slectedOffice.value = 1;
-    } else if (ofiices.typeOfOffice == "office") {
-      slectedOffice.value = 2;
-    } else {
-      slectedOffice.value = 3;
-    }
+    // if (ofiices.typeOfOffice == "house") {
+    //   slectedOffice.value = 0;
+    // } else if (ofiices.typeOfOffice == "building") {
+    //   slectedOffice.value = 1;
+    // } else if (ofiices.typeOfOffice == "office") {
+    //   slectedOffice.value = 2;
+    // } else {
+    //   slectedOffice.value = 3;
+    // }
   }
 
   Future<void> updateOffice(
@@ -58,14 +58,13 @@ class EditDoctorAddressController extends GetxController {
             "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint:
-              'https://development-api.daroon.krd/api/office/update-my-office/${office.id}',
+          endPoint: '${AppTokens.apiURl}/office/${office.id}/update',
           body: {
             "title": title.text,
             "doctorId":
                 Get.find<DoctorHomeController>().userModel.value!.user!.id!,
             "description": description.text,
-            "typeOfOffice":
+            "types-of-offices":
                 officeTypeList[slectedOffice.value].title.toLowerCase(),
             "daysOpen": office.daysOpen,
             "startTime": office.startTime,
@@ -78,17 +77,18 @@ class EditDoctorAddressController extends GetxController {
               "feeCall": office.fee!.feeCall!,
               "feeVideoCall": office.fee!.feeVideoCall!
             },
-            "typeOfCurrency": "usd",
+            "typeOfCurrency": "66eb2753c7a88efd35724db7",
             "phoneNumbers": ["07500132", "075016132"],
             "address": {
               "coordinate": {
                 "latitude": "${lat.value}",
                 "longitude": "${long.value}",
               },
-              "country": countryName.text,
+              "country": office.address!.country!.id!,
               "city": cityName.text,
               "town": townName.text,
-              "street": streetNumber.text
+              "street": streetNumber.text,
+              "typeOfOffice": "66eb272dc7a88efd35724db3",
             }
           });
 
@@ -99,14 +99,21 @@ class EditDoctorAddressController extends GetxController {
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
-          final jsonData = jsonDecode(response.body)['data'];
-          Get.find<DoctorAddressController>()
-              .officeAddressModelList
-              .removeWhere((item) => item.id == office.id);
-          Get.find<DoctorAddressController>()
-              .officeAddressModelList
-              .add(OfficeAddreesModel.fromJson(jsonData));
-
+          // final jsonData = jsonDecode(response.body)['data'];
+          Get.find<DoctorAddressController>().getDoctorOfficeAddress();
+          // print("Data");
+          // print(jsonData);
+          // Get.find<DoctorAddressController>()
+          //     .officeAddressModelList
+          //     .removeWhere((item) => item.id == office.id);
+          // print("Addin");
+          // Get.find<DoctorAddressController>()
+          //     .officeAddressModelList
+          //     .add(OfficeAddreesModel.fromJson(jsonData));
+          // print(Get.find<DoctorAddressController>()
+          //     .officeAddressModelList
+          //     .length);
+          // print("Data");
           Get.back();
           Get.back();
 

@@ -29,6 +29,7 @@ class LoginCtrl extends GetxController {
           });
 
       if (response != null) {
+        // prin
         if (response.statusCode == 201 || response.statusCode == 200) {
           showToastMessage(
               message: "Successfully login.",
@@ -40,11 +41,11 @@ class LoginCtrl extends GetxController {
           Get.find<LocalStorageController>().daroonBox!.put("isLogin", true);
 
           final userModel = UserModel.fromJson(jsonData);
-          print(jsonData);
+
           Get.find<LocalStorageController>()
               .daroonBox!
               .put("userModel", userModel);
-          print("Checkin ${jsonData["typeOfUser"]}");
+
           Get.find<LocalStorageController>()
               .daroonBox!
               .put("userRole", userModel.user!.typeOfUser!);
@@ -74,7 +75,7 @@ class LoginCtrl extends GetxController {
     } catch (e) {
       _processing.value = false;
       showToastMessage(
-          message: "Issue",
+          message: "Issue ${e.toString()}",
           context: context,
           color: const Color(0xffEC1C24),
           icon: Icons.close);

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
@@ -29,7 +30,9 @@ class DoctorHomeController extends GetxController {
     userModel.value = await Get.find<LocalStorageController>()
         .daroonBox!
         .get("userModel", defaultValue: UserModel);
-    print(userModel.value!.token!);
-    print(userModel.value!.user!.id!);
+    if (kDebugMode) {
+      print(userModel.value!.token!);
+      print(userModel.value!.user!.id!);
+    }
   }
 }

@@ -38,39 +38,48 @@ class UserSearchModel {
 class UserSearchDataModel {
   UserSearchDataModel({
     required this.id,
-    required this.name,
-    required this.fullName,
+    required this.firstName,
+    required this.firstNameKu,
+    required this.firstNameEn,
+    required this.firstNameAr,
     required this.gender,
     required this.isActive,
+    required this.education,
     required this.lastNameKu,
     required this.lastNameAr,
     required this.lastNameEn,
     required this.languages,
     required this.profilePicture,
     required this.dateOfBirth,
-    required this.education,
   });
 
   final String? id;
-  final String? name;
-  final String? fullName;
+  final String? firstName;
+  final String? firstNameKu;
+  final String? firstNameEn;
+  final String? firstNameAr;
   final String? gender;
   final bool? isActive;
+  final List<dynamic> education;
   final String? lastNameKu;
   final String? lastNameAr;
   final String? lastNameEn;
   final List<dynamic> languages;
   final ProfilePicture? profilePicture;
   final DateTime? dateOfBirth;
-  final List<dynamic> education;
 
   factory UserSearchDataModel.fromJson(Map<String, dynamic> json) {
     return UserSearchDataModel(
       id: json["_id"],
-      name: json["name"],
-      fullName: json["fullName"],
+      firstName: json["firstName"],
+      firstNameKu: json["firstName_ku"],
+      firstNameEn: json["firstName_en"],
+      firstNameAr: json["firstName_ar"],
       gender: json["gender"],
       isActive: json["isActive"],
+      education: json["education"] == null
+          ? []
+          : List<dynamic>.from(json["education"]!.map((x) => x)),
       lastNameKu: json["lastName_ku"],
       lastNameAr: json["lastName_ar"],
       lastNameEn: json["lastName_en"],
@@ -81,25 +90,24 @@ class UserSearchDataModel {
           ? null
           : ProfilePicture.fromJson(json["profilePicture"]),
       dateOfBirth: DateTime.tryParse(json["dateOfBirth"] ?? ""),
-      education: json["education"] == null
-          ? []
-          : List<dynamic>.from(json["education"]!.map((x) => x)),
     );
   }
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "name": name,
-        "fullName": fullName,
+        "firstName": firstName,
+        "firstName_ku": firstNameKu,
+        "firstName_en": firstNameEn,
+        "firstName_ar": firstNameAr,
         "gender": gender,
         "isActive": isActive,
+        "education": education.map((x) => x).toList(),
         "lastName_ku": lastNameKu,
         "lastName_ar": lastNameAr,
         "lastName_en": lastNameEn,
         "languages": languages.map((x) => x).toList(),
         "profilePicture": profilePicture?.toJson(),
         "dateOfBirth": dateOfBirth?.toIso8601String(),
-        "education": education.map((x) => x).toList(),
       };
 }
 

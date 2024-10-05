@@ -472,7 +472,6 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                   controller.selectedWeekDays
                       .add(controller.weekDaysListFull[index]);
                 }
-                print(controller.selectedWeekDays);
               },
               child: Obx(
                 () => Container(

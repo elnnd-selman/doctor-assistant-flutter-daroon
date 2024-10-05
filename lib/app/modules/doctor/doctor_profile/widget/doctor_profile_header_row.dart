@@ -65,8 +65,10 @@ class DoctorProfileHeaderRow extends StatelessWidget {
 }
 
 class HorizontalDivider extends StatelessWidget {
+  final Color? dividerColor;
   const HorizontalDivider({
     super.key,
+    this.dividerColor = const Color(0xffE4E4E4),
   });
 
   @override
@@ -74,7 +76,7 @@ class HorizontalDivider extends StatelessWidget {
     return Container(
       // margin: EdgeInsets.symmetric(horizontal: 12.responsiveWidth),
       width: 1,
-      color: const Color(0xffE4E4E4),
+      color: dividerColor,
     );
   }
 }

@@ -58,8 +58,6 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
               markers: markersList,
               mapType: MapType.terrain,
               onTap: (location) {
-                print("ddde");
-
                 final lat = location.latitude;
                 final lng = location.longitude;
                 ctrl.lat.value = location.latitude;
@@ -188,7 +186,6 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
   }
 
   void onError(PlacesAutocompleteResponse response) {
-    print(response.errorMessage);
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(
     //     elevation: 0,

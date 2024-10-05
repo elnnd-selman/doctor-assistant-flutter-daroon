@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -338,7 +340,10 @@ final List<Message> messages = [
 ];
 
 class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChatPageState createState() => _ChatPageState();
 }
 
@@ -577,7 +582,11 @@ class Avatar extends StatelessWidget {
   final double size;
   final image;
   final EdgeInsets margin;
-  Avatar({this.image, this.size = 50, this.margin = const EdgeInsets.all(0)});
+  const Avatar(
+      {super.key,
+      this.image,
+      this.size = 50,
+      this.margin = const EdgeInsets.all(0)});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -585,9 +594,9 @@ class Avatar extends StatelessWidget {
       child: Container(
         width: size,
         height: size,
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
-          image: new DecorationImage(
+          image: DecorationImage(
             image: AssetImage(image),
           ),
         ),

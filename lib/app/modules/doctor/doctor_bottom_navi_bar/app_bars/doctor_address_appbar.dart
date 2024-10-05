@@ -14,7 +14,7 @@ class DoctorLocationAppBar extends GetView<DoctorCustomNaviController> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.14,
       width: MediaQuery.of(context).size.width * 1,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.primaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),

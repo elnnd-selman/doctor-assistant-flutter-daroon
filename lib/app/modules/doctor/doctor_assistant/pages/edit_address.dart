@@ -101,7 +101,7 @@ class DoctorAssistentEditAddress extends GetView<AddAssistantController> {
                                 ),
                                 10.horizontalSpace,
                                 Text(
-                                  "${Get.find<DoctorAddressController>().officeAddressModelList[index].daysOpen!.length} days per week",
+                                  "${Get.find<DoctorAddressController>().officeAddressModelList[index].daysOpen.length} days per week",
                                   style: AppTextStyles.medium.copyWith(
                                     fontWeight: FontWeight.w400,
                                     color: const Color(0xff898A8D),

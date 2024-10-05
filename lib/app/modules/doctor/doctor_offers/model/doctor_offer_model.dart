@@ -1,68 +1,97 @@
-class AssistantModel {
-  AssistantModel({
-    required this.assistants,
+class DoctorOfferModel {
+  DoctorOfferModel({
+    required this.message,
     required this.success,
     required this.status,
     required this.data,
   });
 
-  final List<AssistantElement> assistants;
+  final String? message;
   final bool? success;
   final int? status;
-  final Data? data;
+  final List<DoctorOffersData> data;
 
-  factory AssistantModel.fromJson(Map<String, dynamic> json) {
-    return AssistantModel(
-      assistants: json["assistants"] == null
-          ? []
-          : List<AssistantElement>.from(
-              json["assistants"]!.map((x) => AssistantElement.fromJson(x))),
+  factory DoctorOfferModel.fromJson(Map<String, dynamic> json) {
+    return DoctorOfferModel(
+      message: json["message"],
       success: json["success"],
       status: json["status"],
-      data: json["data"] == null ? null : Data.fromJson(json["data"]),
+      data: json["data"] == null
+          ? []
+          : List<DoctorOffersData>.from(
+              json["data"]!.map((x) => DoctorOffersData.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "assistants": assistants.map((x) => x.toJson()).toList(),
+        "message": message,
         "success": success,
         "status": status,
-        "data": data?.toJson(),
+        "data": data.map((x) => x.toJson()).toList(),
       };
 }
 
-class AssistantElement {
-  AssistantElement({
+class DoctorOffersData {
+  DoctorOffersData({
     required this.id,
-    required this.assistant,
+    required this.doctor,
+    required this.titleKu,
+    required this.titleAr,
+    required this.titleEn,
+    required this.descriptionKu,
+    required this.descriptionAr,
+    required this.descriptionEn,
+    required this.discountPercentage,
+    required this.status,
+    required this.currentPrice,
+    required this.currency,
+    required this.image,
     required this.office,
-    required this.disable,
-    required this.permissions,
+    required this.discountedPrice,
+    required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
   });
 
   final String? id;
-  final AssistantAssistant? assistant;
+  final Doctor? doctor;
+  final String? titleKu;
+  final String? titleAr;
+  final String? titleEn;
+  final String? descriptionKu;
+  final String? descriptionAr;
+  final String? descriptionEn;
+  final int? discountPercentage;
+  final String? status;
+  final int? currentPrice;
+  final String? currency;
+  final Image? image;
   final Office? office;
-  final bool? disable;
-  final List<String> permissions;
+  final int? discountedPrice;
+  final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
 
-  factory AssistantElement.fromJson(Map<String, dynamic> json) {
-    return AssistantElement(
+  factory DoctorOffersData.fromJson(Map<String, dynamic> json) {
+    return DoctorOffersData(
       id: json["_id"],
-      assistant: json["assistant"] == null
-          ? null
-          : AssistantAssistant.fromJson(json["assistant"]),
+      doctor: json["doctor"] == null ? null : Doctor.fromJson(json["doctor"]),
+      titleKu: json["title_ku"],
+      titleAr: json["title_ar"],
+      titleEn: json["title_en"],
+      descriptionKu: json["description_ku"],
+      descriptionAr: json["description_ar"],
+      descriptionEn: json["description_en"],
+      discountPercentage: json["discountPercentage"],
+      status: json["status"],
+      currentPrice: json["currentPrice"],
+      currency: json["currency"],
+      image: json["image"] == null ? null : Image.fromJson(json["image"]),
       office: json["office"] == null ? null : Office.fromJson(json["office"]),
-      disable: json["disable"],
-      permissions: json["permissions"] == null
-          ? []
-          : List<String>.from(json["permissions"]!.map((x) => x)),
+      discountedPrice: json["discountedPrice"],
+      isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
@@ -71,31 +100,49 @@ class AssistantElement {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "assistant": assistant?.toJson(),
+        "doctor": doctor?.toJson(),
+        "title_ku": titleKu,
+        "title_ar": titleAr,
+        "title_en": titleEn,
+        "description_ku": descriptionKu,
+        "description_ar": descriptionAr,
+        "description_en": descriptionEn,
+        "discountPercentage": discountPercentage,
+        "status": status,
+        "currentPrice": currentPrice,
+        "currency": currency,
+        "image": image?.toJson(),
         "office": office?.toJson(),
-        "disable": disable,
-        "permissions": permissions.map((x) => x).toList(),
+        "discountedPrice": discountedPrice,
+        "isDeleted": isDeleted,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
       };
 }
 
-class AssistantAssistant {
-  AssistantAssistant({
+class Doctor {
+  Doctor({
     required this.id,
     required this.firstName,
     required this.firstNameKu,
     required this.firstNameEn,
     required this.firstNameAr,
     required this.username,
-    required this.email,
     required this.gender,
-    required this.phone,
+    required this.biographyKu,
+    required this.biographyAr,
+    required this.biographyEn,
+    required this.level,
+    required this.speciality,
+    required this.education,
     required this.lastNameKu,
     required this.lastNameAr,
     required this.lastNameEn,
-    required this.profilePicture,
+    required this.experienceByYear,
+    required this.typeOfUser,
+    required this.languages,
+    required this.usePictureAsLink,
     required this.dateOfBirth,
   });
 
@@ -105,32 +152,48 @@ class AssistantAssistant {
   final String? firstNameEn;
   final String? firstNameAr;
   final String? username;
-  final String? email;
   final String? gender;
-  final Phone? phone;
+  final String? biographyKu;
+  final String? biographyAr;
+  final String? biographyEn;
+  final String? level;
+  final String? speciality;
+  final List<String> education;
   final String? lastNameKu;
   final String? lastNameAr;
   final String? lastNameEn;
-  final ProfilePicture? profilePicture;
+  final int? experienceByYear;
+  final String? typeOfUser;
+  final List<String> languages;
+  final bool? usePictureAsLink;
   final DateTime? dateOfBirth;
 
-  factory AssistantAssistant.fromJson(Map<String, dynamic> json) {
-    return AssistantAssistant(
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
       id: json["_id"],
       firstName: json["firstName"],
       firstNameKu: json["firstName_ku"],
       firstNameEn: json["firstName_en"],
       firstNameAr: json["firstName_ar"],
       username: json["username"],
-      email: json["email"],
       gender: json["gender"],
-      phone: json["phone"] == null ? null : Phone.fromJson(json["phone"]),
+      biographyKu: json["biography_ku"],
+      biographyAr: json["biography_ar"],
+      biographyEn: json["biography_en"],
+      level: json["level"],
+      speciality: json["speciality"],
+      education: json["education"] == null
+          ? []
+          : List<String>.from(json["education"]!.map((x) => x)),
       lastNameKu: json["lastName_ku"],
       lastNameAr: json["lastName_ar"],
       lastNameEn: json["lastName_en"],
-      profilePicture: json["profilePicture"] == null
-          ? null
-          : ProfilePicture.fromJson(json["profilePicture"]),
+      experienceByYear: json["experienceByYear"],
+      typeOfUser: json["typeOfUser"],
+      languages: json["languages"] == null
+          ? []
+          : List<String>.from(json["languages"]!.map((x) => x)),
+      usePictureAsLink: json["usePictureAsLink"],
       dateOfBirth: DateTime.tryParse(json["dateOfBirth"] ?? ""),
     );
   }
@@ -142,41 +205,26 @@ class AssistantAssistant {
         "firstName_en": firstNameEn,
         "firstName_ar": firstNameAr,
         "username": username,
-        "email": email,
         "gender": gender,
-        "phone": phone?.toJson(),
+        "biography_ku": biographyKu,
+        "biography_ar": biographyAr,
+        "biography_en": biographyEn,
+        "level": level,
+        "speciality": speciality,
+        "education": education.map((x) => x).toList(),
         "lastName_ku": lastNameKu,
         "lastName_ar": lastNameAr,
         "lastName_en": lastNameEn,
-        "profilePicture": profilePicture?.toJson(),
+        "experienceByYear": experienceByYear,
+        "typeOfUser": typeOfUser,
+        "languages": languages.map((x) => x).toList(),
+        "usePictureAsLink": usePictureAsLink,
         "dateOfBirth": dateOfBirth?.toIso8601String(),
       };
 }
 
-class Phone {
-  Phone({
-    required this.number,
-    required this.isVerified,
-  });
-
-  final String? number;
-  final bool? isVerified;
-
-  factory Phone.fromJson(Map<String, dynamic> json) {
-    return Phone(
-      number: json["number"],
-      isVerified: json["isVerified"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "number": number,
-        "isVerified": isVerified,
-      };
-}
-
-class ProfilePicture {
-  ProfilePicture({
+class Image {
+  Image({
     required this.bg,
     required this.md,
     required this.sm,
@@ -186,8 +234,8 @@ class ProfilePicture {
   final String? md;
   final String? sm;
 
-  factory ProfilePicture.fromJson(Map<String, dynamic> json) {
-    return ProfilePicture(
+  factory Image.fromJson(Map<String, dynamic> json) {
+    return Image(
       bg: json["bg"],
       md: json["md"],
       sm: json["sm"],
@@ -204,7 +252,6 @@ class ProfilePicture {
 class Office {
   Office({
     required this.id,
-    required this.doctor,
     required this.title,
     required this.description,
     required this.daysOpen,
@@ -220,7 +267,6 @@ class Office {
   });
 
   final String? id;
-  final Doctor? doctor;
   final String? title;
   final String? description;
   final List<String> daysOpen;
@@ -237,7 +283,6 @@ class Office {
   factory Office.fromJson(Map<String, dynamic> json) {
     return Office(
       id: json["_id"],
-      doctor: json["doctor"] == null ? null : Doctor.fromJson(json["doctor"]),
       title: json["title"],
       description: json["description"],
       daysOpen: json["daysOpen"] == null
@@ -262,7 +307,6 @@ class Office {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "doctor": doctor?.toJson(),
         "title": title,
         "description": description,
         "daysOpen": daysOpen.map((x) => x).toList(),
@@ -418,48 +462,6 @@ class Day {
       };
 }
 
-class Doctor {
-  Doctor({
-    required this.id,
-    required this.firstName,
-    required this.firstNameKu,
-    required this.firstNameEn,
-    required this.firstNameAr,
-    required this.email,
-    required this.phone,
-  });
-
-  final String? id;
-  final String? firstName;
-  final String? firstNameKu;
-  final String? firstNameEn;
-  final String? firstNameAr;
-  final String? email;
-  final Phone? phone;
-
-  factory Doctor.fromJson(Map<String, dynamic> json) {
-    return Doctor(
-      id: json["_id"],
-      firstName: json["firstName"],
-      firstNameKu: json["firstName_ku"],
-      firstNameEn: json["firstName_en"],
-      firstNameAr: json["firstName_ar"],
-      email: json["email"],
-      phone: json["phone"] == null ? null : Phone.fromJson(json["phone"]),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "firstName": firstName,
-        "firstName_ku": firstNameKu,
-        "firstName_en": firstNameEn,
-        "firstName_ar": firstNameAr,
-        "email": email,
-        "phone": phone?.toJson(),
-      };
-}
-
 class Fee {
   Fee({
     required this.feeClinic,
@@ -488,15 +490,4 @@ class Fee {
         "feeCall": feeCall,
         "feeVideoCall": feeVideoCall,
       };
-}
-
-class Data {
-  Data({required this.json});
-  final Map<String, dynamic> json;
-
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(json: json);
-  }
-
-  Map<String, dynamic> toJson() => {};
 }

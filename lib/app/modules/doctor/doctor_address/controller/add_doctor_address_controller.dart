@@ -1,9 +1,7 @@
-import 'dart:convert';
-
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/office_type_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
@@ -110,27 +108,20 @@ class AddDoctorAddressController extends GetxController {
     try {
       _processing.value = true;
       FocusManager.instance.primaryFocus?.unfocus();
-      print(
-        "${startWithTime.value.hour.toString()}:${startWithTime.value.minute.toString()}",
-      );
-      print(
-        "${endWithTime.value.hour.toString()}:${endWithTime.value.minute.toString()}",
-      );
-      print(Get.find<DoctorHomeController>().userModel.value!.token!);
 
-      final response = await ApiService.putWithHeader(
+      final response = await ApiService.postWithHeader(
           userToken: {
             'Content-Type': 'application/json',
             'Authorization':
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: 'https://development-api.daroon.krd/api/office',
+          endPoint: '${AppTokens.apiURl}/office',
           body: {
             "title": title.text,
             // "doctorId":
             //     Get.find<DoctorHomeController>().userModel.value!.user!.id!,
             "description": description.text,
-            "typeOfOffice":
+            "types-of-offices":
                 officeTypeList[slectedOffice.value].title.toLowerCase(),
             "daysOpen": selectedWeekDays,
             "startTime":
@@ -145,17 +136,20 @@ class AddDoctorAddressController extends GetxController {
               "feeCall": feeCall.text,
               "feeVideoCall": feeVideo.text
             },
-            "typeOfCurrency": "usd",
+            "typeOfCurrency": "66ea99e6c7a88efd35724531",
+
+            // 'typeOfOffice':'dd',
             "phoneNumbers": ["07500132", "075016132"],
             "address": {
               "coordinate": {
                 "latitude": "${lat.value}",
                 "longitude": "${long.value}",
               },
-              "country": countryName.text,
+              "country": "66eb276fc7a88efd35724dba",
               "city": cityName.text,
               "town": townName.text,
-              "street": streetNumber.text
+              "street": streetNumber.text,
+              "typeOfOffice": "66e04d4b15b32e335a665792",
             }
           });
 
@@ -166,11 +160,13 @@ class AddDoctorAddressController extends GetxController {
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
-          final jsonData = jsonDecode(response.body)['data'];
-          Get.find<DoctorAddressController>()
-              .officeAddressModelList
-              .add(OfficeAddreesModel.fromJson(jsonData));
-          print(jsonData);
+          // final jsonData = jsonDecode(response.body)['data'];
+
+          Get.find<DoctorAddressController>().getDoctorOfficeAddress();
+          // Get.find<DoctorAddressController>()
+          //     .officeAddressModelList
+          //     .add(OfficeAddreesModel.fromJson(jsonData));
+          // print(jsonData);
           Get.back();
           Get.back();
 
@@ -192,7 +188,6 @@ class AddDoctorAddressController extends GetxController {
             icon: Icons.close);
       }
     } catch (e) {
-      print(e.toString());
       _processing.value = false;
       showToastMessage(
           message: "Issue ${e.toString()}",

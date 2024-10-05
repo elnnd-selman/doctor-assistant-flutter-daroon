@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -120,23 +118,6 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  print(controller
-                                      .officeAddressModelList[index].id);
-
-                                  print(Get.find<DoctorHomeController>()
-                                      .userModel
-                                      .value!
-                                      .user!
-                                      .id!);
-                                  print(Get.find<DoctorHomeController>()
-                                      .userModel
-                                      .value!
-                                      .user!
-                                      .id!);
-                                  print(Get.find<DoctorHomeController>()
-                                      .userModel
-                                      .value!
-                                      .token);
                                   Get.toNamed(
                                     Routes.doctorAdressDetail,
                                     arguments: [
@@ -150,7 +131,7 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                                 ),
                               );
                             }),
-                    SizedBox(height: 2 * SizeConfig.heightMultiplier),
+                    SizedBox(height: 6 * SizeConfig.heightMultiplier),
                   ],
                 ),
               ),
@@ -172,7 +153,7 @@ class AddressContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.symmetric(
           vertical: 2 * SizeConfig.heightMultiplier,
           horizontal: 5 * SizeConfig.widthMultiplier),
@@ -193,7 +174,7 @@ class AddressContainer extends StatelessWidget {
               ),
               10.horizontalSpace,
               Text(
-                "${officeAddreesModel.daysOpen!.length} days per week",
+                "${officeAddreesModel.daysOpen.length} days per week",
                 style: AppTextStyles.medium.copyWith(
                   fontWeight: FontWeight.w400,
                   color: const Color(0xff898A8D),

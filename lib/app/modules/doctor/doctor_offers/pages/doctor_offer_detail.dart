@@ -1,3 +1,6 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/model/doctor_offer_model.dart';
+import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -8,13 +11,16 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 
 class DoctorOfferDetailScreen extends StatelessWidget {
-  const DoctorOfferDetailScreen({super.key});
+  DoctorOfferDetailScreen({super.key});
+
+  final offerData = Get.arguments[0] as DoctorOffersData;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: Stack(
           alignment: AlignmentDirectional.topCenter,
           children: <Widget>[
@@ -28,12 +34,17 @@ class DoctorOfferDetailScreen extends StatelessWidget {
                   image: AssetImage("assets/images/temp1.png"),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
+                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 5 * SizeConfig.heightMultiplier),
+                  // SizedBox(height: 5 * SizeConfig.heightMultiplier),
+                  NetWorkImageLoader(
+                      imageURL: offerData.image!.bg!,
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      width: MediaQuery.of(context).size.width),
                   Padding(
                     padding: EdgeInsets.symmetric(
+                        vertical: 5 * SizeConfig.heightMultiplier,
                         horizontal: 4 * SizeConfig.widthMultiplier),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,8 +85,9 @@ class DoctorOfferDetailScreen extends StatelessWidget {
                   ),
                   Container(
                       padding: const EdgeInsets.symmetric(vertical: 5),
-                      margin:
-                          EdgeInsets.only(left: 4 * SizeConfig.widthMultiplier),
+                      margin: EdgeInsets.only(
+                          left: 4 * SizeConfig.widthMultiplier,
+                          top: 13 * SizeConfig.heightMultiplier),
                       width: 24 * SizeConfig.widthMultiplier,
                       decoration: BoxDecoration(
                           color: const Color(0xff5BA66B),
@@ -95,67 +107,181 @@ class DoctorOfferDetailScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * .41,
+              bottom: MediaQuery.of(context).size.height * 0,
               child: Container(
+                height: MediaQuery.of(context).size.height * .54,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
                       topRight: Radius.circular(40)),
-                  color: AppColors.whiteBGColor,
+                  color: Colors.white,
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8 * SizeConfig.widthMultiplier),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 6 * SizeConfig.heightMultiplier),
-                      Text(
-                        "Offer Title",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.blackBGColor,
-                          fontSize: SizeConfig.heightMultiplier * 2.4,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      // padding: EdgeInsets.zero,
+                      // shrinkWrap: true,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 6 * SizeConfig.heightMultiplier),
+                        Text(
+                          offerData.titleEn!,
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.blackBGColor,
+                            fontSize: SizeConfig.heightMultiplier * 2.4,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
-                      Wrap(
-                        children: [
-                          _moreOfferContainer(
-                              "assets/icons/calendar.svg",
-                              "• 31 Oct - 15 Nov",
-                              AppColors.primaryColor,
-                              MediaQuery.of(context).size.width * 0.47),
-                          5.horizontalSpace,
-                          _moreOfferContainer(
-                              "assets/icons/key.svg",
-                              "• 12BC4",
-                              AppColors.primaryColor,
-                              MediaQuery.of(context).size.width * 0.35),
-                          _moreOfferContainer(
-                              "assets/icons/newoffer.svg",
-                              "• 40% Off",
-                              Colors.red,
-                              MediaQuery.of(context).size.width * 0.35),
-                        ],
-                      ),
-                      SizedBox(height: 3 * SizeConfig.heightMultiplier),
-                      Container(
-                        // margin: EdgeInsets.symmetric(horizontal: 4),
-                        height: 0.5,
-                        color: const Color(0xffC4C4C4),
-                      ),
-                      SizedBox(height: 3 * SizeConfig.heightMultiplier),
-                      Text(
-                        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to the visual form of a form of a   form of a  document In publishing and graphic desi",
-                        style: AppTextStyles.medium.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xff484848),
-                          fontSize: SizeConfig.heightMultiplier * 1.6,
+                        SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                        Wrap(
+                          children: [
+                            _moreOfferContainer(
+                                "assets/icons/calendar.svg",
+                                "• 31 Oct - 15 Nov",
+                                AppColors.primaryColor,
+                                MediaQuery.of(context).size.width * 0.47),
+                            5.horizontalSpace,
+                            _moreOfferContainer(
+                                "assets/icons/key.svg",
+                                "• 12BC4",
+                                AppColors.primaryColor,
+                                MediaQuery.of(context).size.width * 0.35),
+                            _moreOfferContainer(
+                                "assets/icons/newoffer.svg",
+                                "• ${offerData.discountPercentage}% Off",
+                                Colors.red,
+                                MediaQuery.of(context).size.width * 0.35),
+                          ],
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                        Container(
+                          // margin: EdgeInsets.symmetric(horizontal: 4),
+                          height: 0.5,
+                          color: const Color(0xffC4C4C4),
+                        ),
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                        Text(
+                          offerData.descriptionEn!,
+                          style: AppTextStyles.medium.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xff484848),
+                            fontSize: SizeConfig.heightMultiplier * 1.6,
+                          ),
+                        ),
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                        Container(
+                          // margin: EdgeInsets.symmetric(horizontal: 4),
+                          height: 0.5,
+                          color: const Color(0xffC4C4C4),
+                        ),
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                        Text(
+                          'Available addresses',
+                          style: AppTextStyles.medium.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xff898A8D),
+                            fontSize: SizeConfig.heightMultiplier * 2,
+                          ),
+                        ),
+                        SizedBox(height: 2 * SizeConfig.heightMultiplier),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 20),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2 * SizeConfig.heightMultiplier,
+                              horizontal: 5 * SizeConfig.widthMultiplier),
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: const Color(0xffE8E8E8), width: 0.5)),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 12,
+                                    width: 12,
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xff6FCF84)),
+                                  ),
+                                  10.horizontalSpace,
+                                  Text(
+                                    "${offerData.office!.daysOpen.length} days per week",
+                                    style: AppTextStyles.medium.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xff898A8D),
+                                      fontSize:
+                                          1.4 * SizeConfig.heightMultiplier,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 2 * SizeConfig.heightMultiplier),
+                              Container(
+                                height: 0.5,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color(0xffE8E8E8),
+                                    width: .5,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 2 * SizeConfig.heightMultiplier),
+                              Row(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Container(
+                                        height: 40,
+                                        width: 42,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                          color: AppColors.primaryColor,
+                                          border: Border.all(
+                                              color: AppColors.primaryColor),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SvgPicture.asset(
+                                            Assets.locationIcon,
+                                            colorFilter: const ColorFilter.mode(
+                                                AppColors.whiteBGColor,
+                                                BlendMode.srcIn),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                      width: 2 * SizeConfig.heightMultiplier),
+                                  Flexible(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          offerData.office!.description!,
+                                          maxLines: 2,
+                                          style: AppTextStyles.black.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.blackBGColor,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                      ],
+                    ),
                   ),
                 ),
               ),

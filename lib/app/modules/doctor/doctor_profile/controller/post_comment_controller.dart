@@ -7,6 +7,7 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/services/api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rich_text_controller/rich_text_controller.dart';
@@ -16,7 +17,7 @@ class PostCommentController extends GetxController {
   PostCommentController({this.postID});
 
   RxBool commentsLoading = false.obs;
-  Rxn<CommentModel> commetnModelList = Rxn();
+  RxList<CommentReplyModel> commetnModelList = <CommentReplyModel>[].obs;
   final selectedCommentIndex = RxInt(-1);
   final commentTextController = RichTextController(
     targetMatches: [
@@ -41,8 +42,9 @@ class PostCommentController extends GetxController {
 
   getPostComment() async {
     commentsLoading.value = true;
+    // content/66fc53279a950595e01369de/comments
     final response = await ApiService.getwithUserToken(
-      endPoint: '${AppTokens.apiURl}/comments/$postID',
+      endPoint: '${AppTokens.apiURl}/content/$postID/comments',
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -50,7 +52,8 @@ class PostCommentController extends GetxController {
     );
     if (response!.statusCode == 200 || response.statusCode == 201) {
       final jsonData = jsonDecode(response.body);
-      commetnModelList.value = CommentModel.fromJson(jsonData);
+      commetnModelList.value = List<CommentReplyModel>.from(
+          jsonData["data"]!.map((x) => CommentReplyModel.fromJson(x)));
     }
     commentsLoading.value = false;
   }
@@ -66,21 +69,61 @@ class PostCommentController extends GetxController {
         endPoint: '${AppTokens.apiURl}/comments/$postID',
         body: {
           "comment": commentTextController.text.trim(),
-          "parentComment": ""
         },
       );
 
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
           final jsonData = jsonDecode(response.body);
-          print(response.statusCode);
+
+          commetnModelList.add(CommentReplyModel.fromJson(jsonData['data']));
+          commetnModelList.refresh();
+          commentTextController.clear();
         } else {
           printInfo(
               info: "Error While Updating Assistant Address ${response.body}");
         }
       }
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
+    }
+  }
+
+  replyOnComment() async {
+    try {
+      final response = await ApiService.postWithHeader(
+        userToken: {
+          'Content-Type': 'application/json',
+          "Authorization":
+              "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+        },
+        endPoint:
+            '${AppTokens.apiURl}/content/$postID/comments/${commetnModelList[selectedCommentIndex.value].id}/replay',
+        body: {
+          "comment": commentTextController.text.trim(),
+        },
+      );
+
+      if (response != null) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          final jsonData = jsonDecode(response.body);
+
+          commetnModelList[selectedCommentIndex.value]
+              .replies
+              .add(ReplyModel.fromJson(jsonData['data']));
+          commetnModelList.refresh();
+          commentTextController.clear();
+        } else {
+          printInfo(
+              info: "Error While Updating Assistant Address ${response.body}");
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
@@ -92,10 +135,10 @@ class PostCommentController extends GetxController {
     if (replyIndex == -1) {
       // CChnage Commetn To your Name
       commentTextController.text =
-          '@${commetnModelList.value!.data[selectedCommentIndex.value].comment} ';
+          '@${commetnModelList[selectedCommentIndex.value].user!.username!} ';
     } else {
       commentTextController.text =
-          '@${commetnModelList.value!.data[selectedCommentIndex.value].replies[replyIndex].comment} ';
+          '@${commetnModelList[selectedCommentIndex.value].replies[replyIndex].user!.username!} ';
     }
     commentTextController.selection = TextSelection.fromPosition(
       TextPosition(offset: commentTextController.value.text.length),
@@ -105,7 +148,7 @@ class PostCommentController extends GetxController {
   }
 
   String getCommentTimeDifference({required int commentIndex}) {
-    final creationTime = commetnModelList.value!.data[commentIndex].createdAt!;
+    final creationTime = commetnModelList[commentIndex].createdAt!;
     final now = Timestamp.now().toDate();
     final years = (now.difference(creationTime).inMinutes / 525600).round();
     final months = (now.difference(creationTime).inMinutes / 43800).round();
@@ -155,7 +198,7 @@ class PostCommentController extends GetxController {
     required int replyID,
   }) {
     final creationTime =
-        commetnModelList.value!.data[commentIndex].replies[replyID].createdAt!;
+        commetnModelList[commentIndex].replies[replyID].createdAt!;
     final now = Timestamp.now().toDate();
     final years = (now.difference(creationTime).inMinutes / 525600).round();
     final months = (now.difference(creationTime).inMinutes / 43800).round();

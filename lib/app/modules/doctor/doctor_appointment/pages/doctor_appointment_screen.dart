@@ -63,7 +63,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
             () => TabBarView(
               controller: _tabController,
               children: [
-                UpcomingAppointment(),
+                const UpcomingAppointment(),
                 controller.isLoading.value
                     ? const LoadingWidget()
                     : controller.confirmedAppointmentList.isEmpty
@@ -84,17 +84,17 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                             itemCount:
                                 controller.completedAppointmentList.length,
                             itemBuilder: (context, index) {
-                              return CompleteAppointment();
+                              return const CompleteAppointment();
                             }),
                 controller.isLoading.value
                     ? const LoadingWidget()
                     : controller.cancelAppointmentList.isEmpty
-                        ? Text("fffrr")
+                        ? const Text("fffrr")
                         : ListView.builder(
                             shrinkWrap: true,
                             itemCount: controller.cancelAppointmentList.length,
                             itemBuilder: (context, index) {
-                              return CancelAppointment();
+                              return const CancelAppointment();
                             }),
               ],
             ),

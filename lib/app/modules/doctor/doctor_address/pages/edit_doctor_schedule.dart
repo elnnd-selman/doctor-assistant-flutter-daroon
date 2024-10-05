@@ -480,7 +480,6 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
                   controller.selectedWeekDays
                       .add(controller.weekDaysListFull[index]);
                 }
-                print(controller.selectedWeekDays);
               },
               child: Obx(
                 () => Container(

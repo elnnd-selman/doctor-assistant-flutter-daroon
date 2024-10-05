@@ -90,6 +90,82 @@ class AddDoctorAddressScreen extends GetView<AddDoctorAddressController> {
                         },
                       ),
                       const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CommonTextfeild(
+                              scanIcons: false,
+                              obscuretext: false,
+                              hinttext: "Country Name",
+                              controller: controller.countryName,
+                              keyboardType: TextInputType.streetAddress,
+                              showicon: false,
+                              validations: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Country Name";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: CommonTextfeild(
+                              scanIcons: false,
+                              obscuretext: false,
+                              hinttext: "City Name",
+                              controller: controller.cityName,
+                              keyboardType: TextInputType.streetAddress,
+                              showicon: false,
+                              validations: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter City Name";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CommonTextfeild(
+                              scanIcons: false,
+                              obscuretext: false,
+                              hinttext: "Street Number",
+                              controller: controller.streetNumber,
+                              keyboardType: TextInputType.streetAddress,
+                              showicon: false,
+                              validations: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Street";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: CommonTextfeild(
+                              scanIcons: false,
+                              obscuretext: false,
+                              hinttext: "Town Name",
+                              controller: controller.townName,
+                              keyboardType: TextInputType.streetAddress,
+                              showicon: false,
+                              validations: (value) {
+                                if (value!.isEmpty) {
+                                  return "Enter Town Name";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
                       CommonTextfeild(
                         scanIcons: false,
                         obscuretext: false,
@@ -105,65 +181,6 @@ class AddDoctorAddressScreen extends GetView<AddDoctorAddressController> {
                         },
                       ),
                       const SizedBox(height: 20),
-                      CommonTextfeild(
-                        scanIcons: false,
-                        obscuretext: false,
-                        hinttext: "Street Number",
-                        controller: controller.streetNumber,
-                        keyboardType: TextInputType.streetAddress,
-                        showicon: false,
-                        validations: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter Street";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      CommonTextfeild(
-                        scanIcons: false,
-                        obscuretext: false,
-                        hinttext: "Town Name",
-                        controller: controller.townName,
-                        keyboardType: TextInputType.streetAddress,
-                        showicon: false,
-                        validations: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter Town Name";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      CommonTextfeild(
-                        scanIcons: false,
-                        obscuretext: false,
-                        hinttext: "City Name",
-                        controller: controller.cityName,
-                        keyboardType: TextInputType.streetAddress,
-                        showicon: false,
-                        validations: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter City Name";
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      CommonTextfeild(
-                        scanIcons: false,
-                        obscuretext: false,
-                        hinttext: "Country Name",
-                        controller: controller.countryName,
-                        keyboardType: TextInputType.streetAddress,
-                        showicon: false,
-                        validations: (value) {
-                          if (value!.isEmpty) {
-                            return "Enter Country Name";
-                          }
-                          return null;
-                        },
-                      ),
                       SizedBox(height: 2 * SizeConfig.heightMultiplier),
                       CommonButton(
                           ontap: () {

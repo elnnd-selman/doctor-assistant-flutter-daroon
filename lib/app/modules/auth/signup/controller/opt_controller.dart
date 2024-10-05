@@ -76,13 +76,8 @@ class OptController extends GetxController {
         body: {});
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 200) {
-        print(response.body);
-      } else {
-        print(response.body);
-      }
-    } else {
-      print("isiie");
-    }
+      } else {}
+    } else {}
   }
 
   verifyOtpCode({
