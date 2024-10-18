@@ -35,7 +35,7 @@ class DoctorChangeUserNameController extends GetxController {
           },
           endPoint: '${AppTokens.apiURl}/users',
           body: {
-            "firstName": userName.value.text,
+            "username": userName.value.text,
           });
 
       if (response != null) {

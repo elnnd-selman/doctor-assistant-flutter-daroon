@@ -40,12 +40,15 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                           ),
                         ),
                         const Spacer(),
-                        Text(
-                          "See On Map",
-                          style: AppTextStyles.medium.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.primaryColor,
-                            fontSize: 14,
+                        InkWell(
+                          onTap: () => Get.toNamed(Routes.seeOnMapOffices),
+                          child: Text(
+                            "See On Map",
+                            style: AppTextStyles.medium.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primaryColor,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
                         10.horizontalSpace,

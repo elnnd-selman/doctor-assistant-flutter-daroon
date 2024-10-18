@@ -1,8 +1,12 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_add_post/binding/doctor_post_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_add_post/pages/doctor_update_post.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/doctor_detail_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/doctor_office_binding.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/edit_doctor_address_binding.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/binding/edit_doctor_schedule_binding.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/edit_address_doctor.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/edit_doctor_schedule.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/pages/see_on_map_offices.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/add_assistant_premission.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/change_assistant_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
@@ -12,8 +16,10 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/edit_offer.
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/edit_offer_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/offer_add_succesfully.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/binding/doctor_edit_profile_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/add_doctor_education.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_change_email.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_change_username.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/post_like_user_detail.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/binding/forget_password_binding.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_email.dart';
@@ -310,6 +316,26 @@ class AppPages {
       page: () => EditDoctorSchedule(),
       binding: EditDoctorScheduleBinding(),
     ),
+    GetPage(
+      name: Routes.postUpdate,
+      page: () => DoctorUpdatePost(),
+      binding: DoctorPostBinding(),
+    ),
+    GetPage(
+        name: Routes.addEducation,
+        page: () => const AddDoctorEducation(),
+        binding: DoctorEditProfileBinding()),
+    GetPage(
+      name: Routes.seeOnMapOffices,
+      page: () => const SeeOnMapOffices(),
+      binding: DoctorOfficeBinding(),
+    ),
+    GetPage(
+      name: Routes.postLikeUserDetail,
+      page: () => const PostLikeUserDetail(),
+    ),
+
+    ///
     /////////////// User Side Screens///
     // GetPage(
     //   name: Routes.userdrawerScreen,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/user_profile_model.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -90,5 +91,55 @@ class DoctorEditProfileController extends GetxController {
         uploadProfilePic(image: imageUrl.value, context: context);
       }
     });
+  }
+
+  RxBool processing = false.obs;
+
+  RxList<String> genderList = ['Male', 'Female'].obs;
+
+  RxInt selectedGender = RxInt(-1);
+
+  updateDoctorGender({
+    required BuildContext context,
+  }) async {
+    try {
+      processing.value = true;
+      final response = await ApiService.putWithHeader(
+          userToken: {
+            'Content-Type': 'application/json',
+            "Authorization":
+                "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+          },
+          endPoint: '${AppTokens.apiURl}/users',
+          body: {
+            "gender": genderList[selectedGender.value].toLowerCase(),
+          });
+
+      if (response != null) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          Get.back();
+          Get.find<DoctorEditProfileController>().getUserProfileData();
+          Get.find<DoctorEditProfileController>().imageUrl.value = '';
+          showToastMessage(
+              message: "Update Gender Successfully",
+              context: context,
+              color: const Color(0xff5BA66B),
+              icon: Icons.check);
+
+          update();
+        } else {
+          showToastMessage(
+              message: response.body,
+              context: context,
+              color: const Color(0xffEC1C24),
+              icon: Icons.close);
+          printInfo(info: "Error While Updating  Gender  ${response.body}");
+        }
+      }
+      processing.value = false;
+    } catch (e) {
+      processing.value = false;
+      printInfo(info: e.toString());
+    }
   }
 }

@@ -11,39 +11,43 @@ class DoctorPost extends GetView<DoctorProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.isLoading.value
-        ? Padding(
-            padding: EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
-            child: const LoadingWidget(),
-          )
-        : controller.contentModelList.value == null
-            ? Padding(
-                padding: EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
-                child: const Text(
-                  "No Post Found",
-                  style: AppTextStyles.bold,
-                ),
-              )
-            : controller.contentModelList.value!.data.isEmpty
-                ? Padding(
-                    padding:
-                        EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
-                    child: const Text(
-                      "No Post Found",
-                      style: AppTextStyles.bold,
-                    ),
-                  )
-                : ListView.builder(
-                    // padding: EdgeInsets.only(bottom: 6 * SizeConfig.heightMultiplier),
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: controller.contentModelList.value!.data.length,
-                    itemBuilder: (context, index) {
-                      return DoctorImagePostContainer(
-                        contentData:
-                            controller.contentModelList.value!.data[index],
-                      );
-                    });
+    return Obx(
+      () => controller.isLoading.value
+          ? Padding(
+              padding: EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
+              child: const LoadingWidget(),
+            )
+          : controller.contentModelList.value == null
+              ? Padding(
+                  padding:
+                      EdgeInsets.only(top: 20 * SizeConfig.heightMultiplier),
+                  child: const Text(
+                    "No Post Found",
+                    style: AppTextStyles.bold,
+                  ),
+                )
+              : controller.contentModelList.value!.data.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          top: 20 * SizeConfig.heightMultiplier),
+                      child: const Text(
+                        "No Post Found",
+                        style: AppTextStyles.bold,
+                      ),
+                    )
+                  : ListView.builder(
+                      // padding: EdgeInsets.only(bottom: 6 * SizeConfig.heightMultiplier),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: controller.contentModelList.value!.data.length,
+                      itemBuilder: (context, index) {
+                        return DoctorImagePostContainer(
+                          index: index,
+                          contentData:
+                              controller.contentModelList.value!.data[index],
+                        );
+                      }),
+    );
 
     // const
   }

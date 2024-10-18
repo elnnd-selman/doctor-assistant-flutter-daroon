@@ -1,4 +1,5 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:get/get.dart';
 
-class DoctorProfileHeadrer extends StatelessWidget {
+class DoctorProfileHeadrer extends GetView<DoctorProfileController> {
   const DoctorProfileHeadrer({
     super.key,
   });
@@ -61,15 +62,6 @@ class DoctorProfileHeadrer extends StatelessWidget {
                   ),
                 ),
               ),
-        // Container(
-        //   height: 10 * SizeConfig.heightMultiplier,
-        //   width: 10 * SizeConfig.heightMultiplier,
-        //   decoration: const BoxDecoration(
-        //       image: DecorationImage(
-        //         image: AssetImage("assets/images/tempImages.png"),
-        //       ),
-        //       shape: BoxShape.circle),
-        // ),
         14.horizontalSpace,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,16 +76,17 @@ class DoctorProfileHeadrer extends StatelessWidget {
               ),
             ),
             4.verticalSpace,
-            Text(
-              "Specialist",
-              style: AppTextStyles.medium.copyWith(
-                fontWeight: FontWeight.w500,
-                color: AppColors.lighttextColor,
-                fontSize: SizeConfig.heightMultiplier * 1.6,
+            Obx(
+              () => Text(
+                "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.speciality!.specialityEn}",
+                style: AppTextStyles.medium.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.lighttextColor,
+                  fontSize: SizeConfig.heightMultiplier * 1.6,
+                ),
               ),
             ),
             4.verticalSpace,
-            // SizedBox(height: 0.5 * SizeConfig.heightMultiplier),
             Row(
               children: [
                 SvgPicture.asset(
@@ -101,14 +94,16 @@ class DoctorProfileHeadrer extends StatelessWidget {
                   height: 15,
                 ),
                 10.horizontalSpace,
-                Text(
-                  "Level name",
-                  style: AppTextStyles.medium.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.lighttextColor,
-                    fontSize: SizeConfig.heightMultiplier * 1.6,
+                Obx(
+                  () => Text(
+                    "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.level!.levelEn}",
+                    style: AppTextStyles.medium.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.lighttextColor,
+                      fontSize: SizeConfig.heightMultiplier * 1.6,
+                    ),
                   ),
-                ),
+                )
               ],
             )
           ],

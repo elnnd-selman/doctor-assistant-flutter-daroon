@@ -1,4 +1,7 @@
-import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/user_profile_model.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
@@ -6,24 +9,52 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:get/get.dart';
 
-class DoctorAboutMe extends StatelessWidget {
+class DoctorAboutMe extends GetView<DoctorProfileController> {
   const DoctorAboutMe({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListView.builder(
-            shrinkWrap: true,
-            itemCount: Get.find<DoctorHomeController>()
-                .userModel
-                .value!
-                .user!
-                .education
-                .length,
-            itemBuilder: (context, index) {
-              return _buildEducationContainer(context);
-            }),
+        Obx(
+          () => controller.processing.value
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.17,
+                  width: MediaQuery.of(context).size.width,
+                  child: const Center(child: LoadingWidget()),
+                )
+              : controller.userProfileModel.value!.userProfile == null
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.17,
+                      width: MediaQuery.of(context).size.width,
+                      child: const Text("No Education available "))
+                  : controller.userProfileModel.value!.userProfile!.education
+                          .isEmpty
+                      ? SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width,
+                          child: const Text("No Education available "))
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.width,
+                          child: CarouselSlider.builder(
+                              options: CarouselOptions(
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                enableInfiniteScroll: false,
+                                viewportFraction: 1,
+                              ),
+                              itemCount: controller.userProfileModel.value!
+                                  .userProfile!.education.length,
+                              itemBuilder: (BuildContext context, int itemIndex,
+                                  int pageViewIndex) {
+                                return _buildEducationContainer(
+                                    context,
+                                    controller.userProfileModel.value!
+                                        .userProfile!.education[itemIndex]);
+                              }),
+                        ),
+        ),
         SizedBox(height: 3 * SizeConfig.heightMultiplier),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -43,14 +74,22 @@ class DoctorAboutMe extends StatelessWidget {
                 ),
               ),
               10.verticalSpace,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _languageContainer("English"),
-                  _languageContainer("Arabic"),
-                  _languageContainer("Kurdish"),
-                ],
-              )
+              Obx(() => controller.processing.value
+                  ? const LoadingWidget()
+                  : Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        controller.checkLanguageExist("en")
+                            ? _languageContainer("English")
+                            : const SizedBox(),
+                        controller.checkLanguageExist("ar")
+                            ? _languageContainer("Arabic")
+                            : const SizedBox(),
+                        controller.checkLanguageExist("ku")
+                            ? _languageContainer("Kurdish")
+                            : const SizedBox(),
+                      ],
+                    ))
             ],
           ),
         ),
@@ -73,14 +112,16 @@ class DoctorAboutMe extends StatelessWidget {
                 ),
               ),
               10.verticalSpace,
-              Text(
-                "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a form of a   form of a  document In publishing and graphic design form of a  document ...",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.lighttextColor,
-                  fontSize: SizeConfig.heightMultiplier * 1.6,
+              Obx(
+                () => Text(
+                  "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.biographyEn}",
+                  style: AppTextStyles.medium.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.lighttextColor,
+                    fontSize: SizeConfig.heightMultiplier * 1.6,
+                  ),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -89,10 +130,14 @@ class DoctorAboutMe extends StatelessWidget {
     );
   }
 
-  Container _buildEducationContainer(BuildContext context) {
+  Container _buildEducationContainer(
+      BuildContext context, Education education) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      // margin: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(
+          horizontal: MediaQuery.of(context).size.width * 0.045,
+          vertical: MediaQuery.of(context).size.height * 0.018),
       decoration: BoxDecoration(
           color: const Color(0xffE8E8E8).withOpacity(.24),
           borderRadius: BorderRadius.circular(12)),
@@ -109,7 +154,7 @@ class DoctorAboutMe extends StatelessWidget {
           ),
           10.verticalSpace,
           Text(
-            "Science of Psychiatrist",
+            education.degreeNameEn!,
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w500,
               color: AppColors.blackBGColor,
@@ -118,7 +163,7 @@ class DoctorAboutMe extends StatelessWidget {
           ),
           7.verticalSpace,
           Text(
-            "Koya University",
+            education.instituteEn!,
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w500,
               color: AppColors.lighttextColor,
@@ -126,7 +171,7 @@ class DoctorAboutMe extends StatelessWidget {
             ),
           ),
           Text(
-            "2020",
+            "${education.fromYear} - ${education.toYear}",
             style: AppTextStyles.medium.copyWith(
               fontWeight: FontWeight.w500,
               color: AppColors.lighttextColor,
@@ -140,6 +185,7 @@ class DoctorAboutMe extends StatelessWidget {
 
   Container _languageContainer(String language) {
     return Container(
+      margin: EdgeInsets.only(right: 4 * SizeConfig.widthMultiplier),
       padding: EdgeInsets.symmetric(
           horizontal: 5 * SizeConfig.widthMultiplier, vertical: 8),
       decoration: BoxDecoration(

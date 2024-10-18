@@ -19,7 +19,7 @@ class LoadingOverlay extends StatelessWidget {
       child: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Colors.transparent,
+        color: Colors.black.withOpacity(.1),
         child: const SpinKitSpinningLines(
           color: AppColors.primaryColor,
         ),

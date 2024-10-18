@@ -53,6 +53,10 @@ abstract class Routes {
   static const editdoctorAdress = "/editDoctorAdress";
   static const editdoctorSchedule = "/editDoctorSchedule";
   static const searchUser = "/searchUser";
+  static const postUpdate = "/postUpdate";
+  static const addEducation = "/addEducation";
+  static const seeOnMapOffices = "/seeOnMapOffices";
+  static const postLikeUserDetail = "/postLikeUserDetail";
 
   static const changeAssistantAddress = "/ChangeAssistantAddress";
 

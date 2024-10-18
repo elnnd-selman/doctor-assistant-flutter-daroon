@@ -73,7 +73,7 @@ class UserProfileData {
   final String? username;
   final String? email;
   final bool? isEmailVerified;
-  final String? gender;
+  String? gender;
   final String? biographyKu;
   final String? biographyAr;
   final String? biographyEn;
@@ -81,7 +81,7 @@ class UserProfileData {
   final Phone? phone;
   final Level? level;
   final Speciality? speciality;
-  final List<dynamic> education;
+  final List<Education> education;
   final String? lastNameKu;
   final String? lastNameAr;
   final String? lastNameEn;
@@ -120,7 +120,8 @@ class UserProfileData {
           : Speciality.fromJson(json["speciality"]),
       education: json["education"] == null
           ? []
-          : List<dynamic>.from(json["education"]!.map((x) => x)),
+          : List<Education>.from(
+              json["education"]!.map((x) => Education.fromJson(x))),
       lastNameKu: json["lastName_ku"],
       lastNameAr: json["lastName_ar"],
       lastNameEn: json["lastName_en"],
@@ -160,7 +161,7 @@ class UserProfileData {
         "phone": phone?.toJson(),
         "level": level?.toJson(),
         "speciality": speciality?.toJson(),
-        "education": education.map((x) => x).toList(),
+        "education": education.map((x) => x.toJson()).toList(),
         "lastName_ku": lastNameKu,
         "lastName_ar": lastNameAr,
         "lastName_en": lastNameEn,
@@ -176,6 +177,72 @@ class UserProfileData {
         "__v": v,
         "sessionToken": sessionToken,
         "profilePicture": profilePicture?.toJson(),
+      };
+}
+
+class Education {
+  Education({
+    required this.id,
+    required this.degree,
+    required this.fromYear,
+    required this.toYear,
+    required this.instituteAr,
+    required this.instituteEn,
+    required this.instituteKu,
+    required this.degreeNameAr,
+    required this.degreeNameEn,
+    required this.degreeNameKu,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
+  });
+
+  final String? id;
+  final String? degree;
+  final String? fromYear;
+  final String? toYear;
+  final String? instituteAr;
+  final String? instituteEn;
+  final String? instituteKu;
+  final String? degreeNameAr;
+  final String? degreeNameEn;
+  final String? degreeNameKu;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
+
+  factory Education.fromJson(Map<String, dynamic> json) {
+    return Education(
+      id: json["_id"],
+      degree: json["degree"],
+      fromYear: json["fromYear"],
+      toYear: json["toYear"],
+      instituteAr: json["institute_ar"],
+      instituteEn: json["institute_en"],
+      instituteKu: json["institute_ku"],
+      degreeNameAr: json["degreeName_ar"],
+      degreeNameEn: json["degreeName_en"],
+      degreeNameKu: json["degreeName_ku"],
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      v: json["__v"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "degree": degree,
+        "fromYear": fromYear,
+        "toYear": toYear,
+        "institute_ar": instituteAr,
+        "institute_en": instituteEn,
+        "institute_ku": instituteKu,
+        "degreeName_ar": degreeNameAr,
+        "degreeName_en": degreeNameEn,
+        "degreeName_ku": degreeNameKu,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
       };
 }
 
@@ -227,6 +294,32 @@ class Phone {
       };
 }
 
+class ProfilePicture {
+  ProfilePicture({
+    required this.bg,
+    required this.md,
+    required this.sm,
+  });
+
+  final String? bg;
+  final String? md;
+  final String? sm;
+
+  factory ProfilePicture.fromJson(Map<String, dynamic> json) {
+    return ProfilePicture(
+      bg: json["bg"],
+      md: json["md"],
+      sm: json["sm"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "bg": bg,
+        "md": md,
+        "sm": sm,
+      };
+}
+
 class Speciality {
   Speciality({
     required this.id,
@@ -266,31 +359,5 @@ class Speciality {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-      };
-}
-
-class ProfilePicture {
-  ProfilePicture({
-    required this.bg,
-    required this.md,
-    required this.sm,
-  });
-
-  final String? bg;
-  final String? md;
-  final String? sm;
-
-  factory ProfilePicture.fromJson(Map<String, dynamic> json) {
-    return ProfilePicture(
-      bg: json["bg"],
-      md: json["md"],
-      sm: json["sm"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "bg": bg,
-        "md": md,
-        "sm": sm,
       };
 }

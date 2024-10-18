@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/add_education_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_change_email_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_change_username_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_edit_level_controller.dart';
@@ -11,5 +12,6 @@ class DoctorEditProfileBinding extends Bindings {
     Get.lazyPut(() => DoctorEditLevelCtrl());
     Get.lazyPut(() => DoctorChangeEmailController());
     Get.lazyPut(() => DoctorChangeUserNameController());
+    Get.lazyPut(() => AddEducationController());
   }
 }

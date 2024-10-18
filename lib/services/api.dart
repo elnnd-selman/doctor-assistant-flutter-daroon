@@ -165,6 +165,44 @@ class ApiService {
     return response;
   }
 
+  static Future<http.Response> upadteContentApi({
+    required String userToken,
+    required List<String> imageList,
+    required String contentID,
+    required List<String> videoList,
+    required String titleKU,
+    required String titleEN,
+    required String titleAR,
+    required String descriptionKU,
+    required String descriptionEN,
+    required String descriptionAR,
+  }) async {
+    var uri = Uri.parse(
+      '${AppTokens.apiURl}/content/$contentID/update?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false&contentType=post',
+    );
+    var request = http.MultipartRequest('PUT', uri)
+      ..headers['Content-Type'] = 'multipart/form-data'
+      ..headers["Authorization"] = userToken;
+    if (imageList.isNotEmpty) {
+      for (var image in imageList) {
+        var multipartFile = await http.MultipartFile.fromPath('images', image);
+        request.files.add(multipartFile);
+      }
+    }
+
+    if (videoList.isNotEmpty) {
+      for (var video in videoList) {
+        var multipartFile = await http.MultipartFile.fromPath('videos', video);
+        request.files.add(multipartFile);
+      }
+    }
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    return response;
+  }
+
   static Future<http.Response> uploadImageInDataBase({
     required String url,
     required Map<String, String> headers,

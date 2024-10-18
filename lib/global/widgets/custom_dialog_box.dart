@@ -18,6 +18,7 @@ class CustomDialogBox extends StatelessWidget {
   final String? confirmButtonText;
   final Function()? onPressedCancel;
   final Function() onPressedConfirm;
+  final bool? isloading;
 
   const CustomDialogBox({
     super.key,
@@ -30,6 +31,7 @@ class CustomDialogBox extends StatelessWidget {
     this.confirmButtonColor,
     this.cancelButtonText,
     this.confirmButtonText,
+    this.isloading = false,
   });
 
   @override
@@ -76,7 +78,7 @@ class CustomDialogBox extends StatelessWidget {
         TextButton(
           onPressed: onPressedConfirm,
           child: Text(
-            confirmButtonText ?? 'Yes!',
+            confirmButtonText ?? 'Yes !',
             style: AppTextStyles.bold.copyWith(
               fontSize: 15,
               fontWeight: FontWeight.w600,

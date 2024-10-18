@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,6 +15,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_pro
 import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:get/get.dart';
 
 class DoctorBottomNaviBar extends StatefulWidget {
   const DoctorBottomNaviBar({super.key});
@@ -248,6 +250,11 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           ? AppColors.primaryColor
                           : const Color(0xff979797),
                       ontap: () {
+                        if (Get.find<DoctorProfileController>().initialized) {
+                          Get.find<DoctorProfileController>().getDoctorPost();
+                          Get.find<DoctorProfileController>()
+                              .getUserProfileData();
+                        }
                         setState(() {
                           currentValue = 4;
                           _controller5!.forward();

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_edit_profile_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/gender_dialog_box.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/uplaod_profile_pic_dialog.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
@@ -37,19 +38,19 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
             ),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 24),
-            child: Text(
-              "Save",
-              style: AppTextStyles.medium.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.primaryColor,
-                fontSize: 1.4 * SizeConfig.heightMultiplier,
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 24),
+        //     child: Text(
+        //       "Save",
+        //       style: AppTextStyles.medium.copyWith(
+        //         fontWeight: FontWeight.w600,
+        //         color: AppColors.primaryColor,
+        //         fontSize: 1.4 * SizeConfig.heightMultiplier,
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -196,6 +197,23 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
                         hintText: "Level",
                         onTap: () => Get.toNamed(Routes.doctorEditLevel),
                       ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Education",
+                        subtitle: controller.userProfileModel.value!
+                                    .userProfile!.level ==
+                                null
+                            ? '--'
+                            : controller.userProfileModel.value!.userProfile!
+                                    .education.isEmpty
+                                ? "--"
+                                : controller.userProfileModel.value!
+                                    .userProfile!.education[0].degreeNameEn!,
+                        showIcon: true,
+                        hintText: "Level",
+                        onTap: () => Get.toNamed(Routes.addEducation),
+                      ),
                       // SizedBox(height: 1 * SizeConfig.heightMultiplier),
                       // _profileTextField(
                       //   context: context,
@@ -262,16 +280,36 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
                         onTap: () => Get.toNamed(Routes.doctorChangeUserName),
                       ),
                       SizedBox(height: 1 * SizeConfig.heightMultiplier),
-                      _profileTextField(
-                        context: context,
-                        title: "Gender",
-                        subtitle: controller
-                            .userProfileModel.value!.userProfile!.gender!
-                            .toUpperCase(),
-                        showIcon: true,
-                        hintText: "Gender",
-                        onTap: () {},
-                      ),
+
+                      GetBuilder<DoctorEditProfileController>(
+                          initState: (ctrl) {},
+                          builder: (ctrl) {
+                            return _profileTextField(
+                              context: context,
+                              title: "Gender",
+                              subtitle: ctrl
+                                  .userProfileModel.value!.userProfile!.gender!
+                                  .toUpperCase(),
+                              showIcon: true,
+                              hintText: "Gender",
+                              onTap: () {
+                                if (ctrl.userProfileModel.value!.userProfile!
+                                        .gender ==
+                                    "male") {
+                                  ctrl.selectedGender.value = 0;
+                                } else {
+                                  ctrl.selectedGender.value = 1;
+                                }
+
+                                Get.dialog(
+                                  barrierDismissible: false,
+                                  const GenderDialogBox(),
+                                  barrierColor:
+                                      AppColors.blackBGColor.withOpacity(0.5),
+                                );
+                              },
+                            );
+                          }),
                     ],
                   ),
                 ),

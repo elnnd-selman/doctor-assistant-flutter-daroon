@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/user_profile_model.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/post_model.dart';
@@ -14,6 +17,7 @@ class DoctorProfileController extends GetxController {
   RxInt currentPage = 0.obs;
   RxInt totalPages = 1.obs;
   RxBool isLoading = false.obs;
+  RxBool processing = false.obs;
 
   void selectTab(int value) {
     _selectedTab.value = value;
@@ -55,12 +59,6 @@ class DoctorProfileController extends GetxController {
     isLoading.value = false;
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-    getDoctorPost();
-  }
-
   String convertDateToformat(String date) {
     DateTime dateTime = DateTime.parse(date);
     DateFormat formatter = DateFormat('dd-MMM-yyyy');
@@ -68,5 +66,91 @@ class DoctorProfileController extends GetxController {
     return formattedDate;
   }
 
-  updateLikeOnPost() {}
+  updateLikeOnPost({
+    required ContentData contentData,
+    required int index,
+  }) async {
+    final response = await ApiService.postWithHeader(
+        userToken: {
+          "Authorization":
+              "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}"
+        },
+        endPoint: '${AppTokens.apiURl}/likes/${contentData.id}',
+        body: {});
+    if (response != null) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        if (contentModelList.value!.data[index].isLiked!) {
+          contentModelList.value!.data[index].isLiked = false;
+          contentModelList.value!.data[index].likes =
+              contentModelList.value!.data[index].likes! - 1;
+        } else {
+          contentModelList.value!.data[index].isLiked = true;
+          contentModelList.value!.data[index].likes =
+              contentModelList.value!.data[index].likes! + 1;
+        }
+        contentModelList.refresh();
+      } else {
+        printInfo(info: "Not Like${response.body}");
+      }
+    }
+  }
+
+  Rxn<UserProfileModel> userProfileModel = Rxn();
+  getUserProfileData() async {
+    processing.value = true;
+    final response = await ApiService.getwithUserToken(
+      endPoint: '${AppTokens.apiURl}/users/profile',
+      userToken: {
+        "Authorization":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
+    );
+
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      final jsonData = jsonDecode(response.body);
+      userProfileModel.value = UserProfileModel.fromJson(jsonData);
+    } else if (response.statusCode == 401) {
+      final jsonData = jsonDecode(response.body);
+      if (jsonData["message"] == "unauthorized") {
+        Get.find<DoctorHomeController>().signOutUser();
+      }
+    }
+    processing.value = false;
+  }
+
+  checkLanguageExist(String langName) {
+    bool langExist = false;
+    langExist =
+        userProfileModel.value!.userProfile!.languages.contains(langName);
+    return langExist;
+  }
+
+  deletePost(
+      {required ContentData contentData,
+      required int index,
+      required BuildContext context}) async {
+    final response = await ApiService.deleteWithHeader(
+      userToken: {
+        'Content-Type': 'application/json',
+        "Authorization":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
+      endPoint: '${AppTokens.apiURl}/content/${contentData.id}/delete',
+      body: {},
+    );
+
+    if (response != null) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        contentModelList.value!.data
+            .removeWhere((val) => val.id == contentData.id);
+        contentModelList.refresh();
+        showToastMessage(
+            message:
+                "You send a request for admin to delete this post successfully.",
+            context: context,
+            color: const Color(0xff5BA66B),
+            icon: Icons.check);
+      }
+    }
+  }
 }
