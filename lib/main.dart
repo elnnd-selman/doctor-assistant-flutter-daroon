@@ -1,5 +1,4 @@
 import 'package:daroon_doctor/app/model/user_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -28,7 +27,7 @@ Future<void> main() async {
   // runApp(const MyApp());
   runApp(
     DevicePreview(
-      enabled: !kReleaseMode,
+      enabled: false,
       builder: (context) => const MyApp(),
     ),
   );

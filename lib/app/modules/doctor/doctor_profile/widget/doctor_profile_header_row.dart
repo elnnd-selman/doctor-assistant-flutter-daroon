@@ -1,6 +1,8 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:get/get.dart';
 
 class DoctorProfileHeaderRow extends StatelessWidget {
   const DoctorProfileHeaderRow({super.key});
@@ -19,7 +21,8 @@ class DoctorProfileHeaderRow extends StatelessWidget {
           const HorizontalDivider(),
           const Expanded(child: SizedBox()),
           _headerText(
-            title: "+5",
+            title:
+                "+${Get.find<DoctorHomeController>().userModel.value!.user!.experienceByYear!}",
             subTitle: "Year Exp.",
           ),
           const Expanded(child: SizedBox()),

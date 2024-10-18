@@ -1,9 +1,9 @@
-import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/doctor_offer_pending_container.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/doctor_offer_published_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/offer_toggle_button.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
@@ -98,17 +98,22 @@ class DoctorOffersPage extends GetView<DoctorOffersController> {
               SizedBox(height: 3 * SizeConfig.heightMultiplier),
               Row(
                 children: [
-                  Text(
-                    // "21 Published offers",
-                    controller.isLoading.value
-                        ? '--'
-                        : controller.doctorOfferModel.value == null
-                            ? '0 Published offers'
-                            : "${controller.isLoading.value ? '--' : controller.isSearch.value ? controller.offerSearchList.length : controller.doctorOfferModel.value!.data.length} Published offers",
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xff979797),
-                      fontSize: 13,
+                  Obx(
+                    () => Text(
+                      controller.isLoading.value
+                          ? '--'
+                          : controller.selectedTab == 0
+                              ? controller.isSearch.value
+                                  ? '${controller.offerSearchList.length} Published offers'
+                                  : '${controller.doctorOfferPublishedModel.length} Published offers'
+                              : controller.isSearch.value
+                                  ? '${controller.offerSearchList.length} Published offers'
+                                  : '${controller.doctorOfferPendingModel.length} Published offers',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        color: const Color(0xff979797),
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -134,139 +139,13 @@ class DoctorOffersPage extends GetView<DoctorOffersController> {
                 ],
               ),
               SizedBox(height: 3 * SizeConfig.heightMultiplier),
-              Obx(
-                () => controller.selectedTab == 0
-                    ? const DoctorOfferPublishedContainer()
-                    //  GestureDetector(
-                    //     onTap: () => Get.toNamed(Routes.doctorOffersDetails),
-                    //     child: const MoreOfferContainer(
-                    //         statusColor: Color(0xff5BA66B),
-                    //         statusText: "Published"),
-                    //   )
-                    : const SizedBox(),
-                // const MoreOfferContainer(
-                //     statusColor: Color(0xffFFC000), statusText: "Pending"))
-              ),
+              Obx(() => controller.selectedTab == 0
+                  ? const DoctorOfferPublishedContainer()
+                  : const DoctorOfferPendingContainer()),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class DoctorOfferPublishedContainer extends GetView<DoctorOffersController> {
-  const DoctorOfferPublishedContainer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => controller.isLoading.value
-          ? Padding(
-              padding: EdgeInsets.only(top: 30 * SizeConfig.heightMultiplier),
-              child: const Center(child: LoadingWidget()),
-            )
-          : controller.isSearch.value
-              ? controller.offerSearchList.isEmpty
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                          top: 30 * SizeConfig.heightMultiplier),
-                      child: Text(
-                        "No Offer found",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.blackBGColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
-                  : ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: controller.offerSearchList.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () => Get.toNamed(Routes.doctorOffersDetails,
-                              arguments: [
-                                controller.offerSearchList[index],
-                              ]),
-                          child: MoreOfferContainer(
-                              offersData: controller.offerSearchList[index],
-                              statusColor: const Color(0xff5BA66B),
-                              statusText: "Published"),
-                        );
-                        // return AssistantInfoContainer(
-                        //   assistantElement:
-                        //       controller.assistantSearchList[index],
-                        //   onTap: () {
-                        //     Get.toNamed(Routes.doctorAssistantDetail,
-                        //         arguments: [
-                        //           controller.assistantSearchList[index],
-                        //         ]);
-                        //   },
-                        // );
-                      },
-                    )
-              : controller.doctorOfferModel.value == null
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                          top: 30 * SizeConfig.heightMultiplier),
-                      child: Text(
-                        "No Offer available",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.blackBGColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                    )
-                  : controller.doctorOfferModel.value!.data.isEmpty
-                      ? Padding(
-                          padding: EdgeInsets.only(
-                              top: 30 * SizeConfig.heightMultiplier),
-                          child: Text(
-                            "No Offer available",
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.blackBGColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              controller.doctorOfferModel.value!.data.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () => Get.toNamed(
-                                  Routes.doctorOffersDetails,
-                                  arguments: [
-                                    controller
-                                        .doctorOfferModel.value!.data[index],
-                                  ]),
-                              child: MoreOfferContainer(
-                                  offersData: controller
-                                      .doctorOfferModel.value!.data[index],
-                                  statusColor: const Color(0xff5BA66B),
-                                  statusText: "Published"),
-                            );
-                            // return AssistantInfoContainer(
-                            //   assistantElement: controller
-                            //       .assistantModel.value!.assistants[index],
-                            //   onTap: () {
-                            //     Get.toNamed(
-                            //       Routes.doctorAssistantDetail,
-                            //       arguments: [
-                            //         controller.assistantModel.value!
-                            //             .assistants[index],
-                            //       ],
-                            //     );
-                            //   },
-                            // );
-                          },
-                        ),
     );
   }
 }

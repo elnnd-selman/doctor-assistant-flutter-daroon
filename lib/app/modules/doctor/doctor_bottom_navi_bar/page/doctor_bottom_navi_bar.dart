@@ -132,7 +132,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
     const DoctorHomeScreen(),
     const DoctorAppointmentScreen(),
     DoctorAddPostScreen(),
-    DoctorAdressScreen(),
+    const DoctorAdressScreen(),
     const DoctorProfileScreen(),
   ];
 

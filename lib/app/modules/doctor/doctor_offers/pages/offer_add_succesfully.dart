@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OfferAddSuccesfully extends StatelessWidget {
-  const OfferAddSuccesfully({super.key});
+  OfferAddSuccesfully({super.key});
 
+  final titleText = Get.arguments[0] as String;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +28,7 @@ class OfferAddSuccesfully extends StatelessWidget {
           ),
           SizedBox(height: 4 * SizeConfig.heightMultiplier),
           Text(
-            "Great! you add new offer\nsuccessfully.",
+            titleText,
             textAlign: TextAlign.center,
             style: AppTextStyles.bold.copyWith(
               fontSize: 22,

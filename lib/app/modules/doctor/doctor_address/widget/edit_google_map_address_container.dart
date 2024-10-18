@@ -1,6 +1,14 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ui' as ui;
+
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/edit_doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_office_address_model.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,7 +42,7 @@ class _EditGoogleMapContainerAddressState
   Set<Marker> markersList = {};
 
   late GoogleMapController googleMapController;
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  Uint8List markerIcon = Uint8List(8);
 
   final Mode _mode = Mode.overlay;
   final ctrl = Get.find<EditDoctorAddressController>();
@@ -43,14 +51,13 @@ class _EditGoogleMapContainerAddressState
   void initState() {
     super.initState();
 
-    // changeMarkerIcon();
-    setData();
+    changeMarkerIcon();
   }
 
   setData() async {
     markersList.clear();
     markersList.add(Marker(
-        icon: markerIcon,
+        icon: BitmapDescriptor.fromBytes(markerIcon),
         markerId: const MarkerId("1"),
         position: LatLng(
             widget.officeAddreesModel.address!.coordinate!.latitude!,
@@ -72,40 +79,42 @@ class _EditGoogleMapContainerAddressState
         children: [
           SizedBox(
             height: MediaQuery.of(Get.context!).size.height * 0.5,
-            child: GoogleMap(
-              initialCameraPosition: initialCameraPosition,
-              markers: markersList,
-              mapType: MapType.terrain,
-              onTap: (location) {
-                final lat = location.latitude;
-                final lng = location.longitude;
-                ctrl.lat.value = location.latitude;
-                ctrl.long.value = location.longitude;
+            child: isLoading
+                ? const Center(child: LoadingWidget())
+                : GoogleMap(
+                    initialCameraPosition: initialCameraPosition,
+                    markers: markersList,
+                    mapType: MapType.terrain,
+                    onTap: (location) {
+                      final lat = location.latitude;
+                      final lng = location.longitude;
+                      ctrl.lat.value = location.latitude;
+                      ctrl.long.value = location.longitude;
 
-                markersList.clear();
-                markersList.add(Marker(
-                    icon: markerIcon,
-                    markerId: const MarkerId("1"),
-                    position: LatLng(lat, lng),
-                    infoWindow: const InfoWindow(title: "")));
+                      markersList.clear();
+                      markersList.add(Marker(
+                          icon: BitmapDescriptor.fromBytes(markerIcon),
+                          markerId: const MarkerId("1"),
+                          position: LatLng(lat, lng),
+                          infoWindow: const InfoWindow(title: "")));
 
-                googleMapController.animateCamera(
-                    CameraUpdate.newLatLngZoom(LatLng(lat, lng), 16.5));
-                setState(() {});
-              },
-              onMapCreated: (GoogleMapController controller) async {
-                googleMapController = controller;
-                await googleMapController.animateCamera(
-                    CameraUpdate.newLatLngZoom(
-                        LatLng(
-                            widget.officeAddreesModel.address!.coordinate!
-                                .latitude!,
-                            widget.officeAddreesModel.address!.coordinate!
-                                .longitude!),
-                        16.5));
-                setState(() {});
-              },
-            ),
+                      googleMapController.animateCamera(
+                          CameraUpdate.newLatLngZoom(LatLng(lat, lng), 16.5));
+                      setState(() {});
+                    },
+                    onMapCreated: (GoogleMapController controller) async {
+                      googleMapController = controller;
+                      await googleMapController.animateCamera(
+                          CameraUpdate.newLatLngZoom(
+                              LatLng(
+                                  widget.officeAddreesModel.address!.coordinate!
+                                      .latitude!,
+                                  widget.officeAddreesModel.address!.coordinate!
+                                      .longitude!),
+                              16.5));
+                      setState(() {});
+                    },
+                  ),
           ),
 
           Positioned(
@@ -116,13 +125,27 @@ class _EditGoogleMapContainerAddressState
               // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () => Get.back(),
-                  child: SvgPicture.asset(
-                    "assets/icons/Arrow Left-Outline.svg",
-                    height: MediaQuery.of(Get.context!).size.height * 0.025,
-                  ),
-                ),
+                IconButton(
+                    onPressed: () {
+                      Get.dialog(
+                        CustomDialogBox(
+                          title: 'Save change',
+                          confirmButtonText: 'Save',
+                          onPressedCancel: () {
+                            Get.back();
+                            Get.back();
+                          },
+                          onPressedConfirm: () {
+                            ctrl.checkValition(
+                                context, widget.officeAddreesModel, false);
+                          },
+                          subTitle:
+                              'Are you sure you want to\ndiscard the change?',
+                        ),
+                        barrierColor: AppColors.blackBGColor.withOpacity(0.5),
+                      );
+                    },
+                    icon: const Icon(Icons.arrow_back)),
                 Text(
                   "Edit Address",
                   style: AppTextStyles.medium.copyWith(
@@ -178,13 +201,30 @@ class _EditGoogleMapContainerAddressState
     );
   }
 
-  changeMarkerIcon() {
-    BitmapDescriptor.asset(
-            const ImageConfiguration(), "assets/icons_png/Vector.png")
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  bool isLoading = false;
+  changeMarkerIcon() async {
+    setState(() {
+      isLoading = true;
+    });
+    final Uint8List icons =
+        await getBytesFromAsset('assets/icons_png/location_icon.png', 80);
+    setState(() {
+      markerIcon = icons;
+    });
+    await setData();
+
+    setState(() {
+      isLoading = false;
     });
   }
 
@@ -247,7 +287,7 @@ class _EditGoogleMapContainerAddressState
 
     markersList.clear();
     markersList.add(Marker(
-        icon: markerIcon,
+        icon: BitmapDescriptor.fromBytes(markerIcon),
         markerId: const MarkerId("0"),
         position: LatLng(lat, lng),
         infoWindow: InfoWindow(title: detail.result.name)));

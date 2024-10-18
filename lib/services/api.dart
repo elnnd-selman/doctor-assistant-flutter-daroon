@@ -68,16 +68,20 @@ class ApiService {
     return response;
   }
 
-  static Future<http.StreamedResponse> patchImage({
+  static Future<http.Response> patchImage({
     required String url,
     required String filepath,
     required String userToken,
   }) async {
     var request = http.MultipartRequest('PATCH', Uri.parse(url));
     request.files.add(await http.MultipartFile.fromPath("image", filepath));
-    request.headers.addAll(
-        {"Content-type": "multipart/form-data", "Authorization": userToken});
-    var response = request.send();
+    request.headers.addAll({
+      "Content-type": "multipart/form-data",
+      "Authorization": 'Bearer $userToken'
+    });
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
     return response;
   }
 

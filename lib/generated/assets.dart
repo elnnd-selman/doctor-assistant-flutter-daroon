@@ -54,4 +54,7 @@ class Assets {
   static const filterIcon = "assets/icons/filterIcon.svg";
 
   static const ophthalIcon = "assets/icons/ophthalIcon.svg";
+  static const deleteIcon = "assets/icons/delete_icon.svg";
+  static const infoIcon = "assets/icons/info_icon.svg";
+  static const doneIcon = "assets/icons/done_icon.svg";
 }

@@ -158,6 +158,10 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                   if (assistantData.permissions.contains("managePosts")) {
                     controller.selectedPremissionList.add("Manage Posts");
                   }
+                  controller.selectedAddress.value =
+                      assistantData.office!.description!;
+                  controller.selectedAddressID.value =
+                      assistantData.office!.id!;
 
                   updatePremissionDialogBox(context: context);
                 },
@@ -261,12 +265,18 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
               ),
               4.horizontalSpace,
               GestureDetector(
-                onTap: () => Get.toNamed(
-                  Routes.changeAssistantAddress,
-                  arguments: [
-                    assistantData,
-                  ],
-                ),
+                onTap: () {
+                  controller.selectedAddress.value =
+                      assistantData.office!.description!;
+                  controller.selectedAddressID.value =
+                      assistantData.office!.id!;
+                  Get.toNamed(
+                    Routes.changeAssistantAddress,
+                    arguments: [
+                      assistantData,
+                    ],
+                  );
+                },
                 child: Text(
                   "Edit Address",
                   style: AppTextStyles.medium.copyWith(

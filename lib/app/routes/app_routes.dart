@@ -24,7 +24,9 @@ abstract class Routes {
   static const doctorOffers = "/doctorOffers";
   static const doctorOffersDetails = "/doctorOffersDetails";
   static const doctorAddOffers = "/doctorAddOffers";
+  static const doctorEditOffers = "/doctorEditOffers";
   static const addOfferAddress = "/addOfferAddress";
+  static const editOfferAddress = "/editOfferAddress";
   static const addOfferSuccessfully = "/addOfferSuccessfully";
   static const doctorAppointmentDetail = "/doctorAppointmentDetail";
   static const cancelAppointment = "/cancelAppointment";
@@ -40,6 +42,8 @@ abstract class Routes {
   static const doctorchangeLanguage = "/doctorchangeLanguage";
   static const doctorEditSpeciality = "/doctorEditSpeciality";
   static const doctorEditLevel = "/doctorEditLevel";
+  static const doctorChangeEmail = "/doctorChangeEmail";
+  static const doctorChangeUserName = "/doctorChangeUserName";
   static const doctorMessage = "/doctorMessage";
   static const doctorChatRoom = "/doctorChatRoom";
   static const doctorNotification = "/doctorNotification";

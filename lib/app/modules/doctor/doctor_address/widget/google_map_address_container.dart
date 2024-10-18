@@ -1,4 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
 import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +35,7 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
   Set<Marker> markersList = {};
 
   late GoogleMapController googleMapController;
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  Uint8List markerIcon = Uint8List(8);
 
   final Mode _mode = Mode.overlay;
   final ctrl = Get.find<AddDoctorAddressController>();
@@ -38,7 +43,7 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
   @override
   void initState() {
     super.initState();
-    // changeMarkerIcon();
+    changeMarkerIcon();
   }
 
   @override
@@ -46,7 +51,7 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
     return SizedBox(
       // padding: EdgeInsets.only(
       //     top: MediaQuery.of(context).size.height * 0.06, left: 10, right: 10),
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.4,
       width: MediaQuery.of(context).size.width,
 
       child: Stack(
@@ -65,7 +70,7 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
 
                 markersList.clear();
                 markersList.add(Marker(
-                    icon: markerIcon,
+                    icon: BitmapDescriptor.fromBytes(markerIcon),
                     markerId: const MarkerId("1"),
                     position: LatLng(lat, lng),
                     infoWindow: const InfoWindow(title: "")));
@@ -152,13 +157,21 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
     );
   }
 
-  changeMarkerIcon() {
-    BitmapDescriptor.asset(
-            const ImageConfiguration(), "assets/icons_png/Vector.png")
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  changeMarkerIcon() async {
+    final Uint8List icons =
+        await getBytesFromAsset('assets/icons_png/location_icon.png', 80);
+    setState(() {
+      markerIcon = icons;
     });
   }
 
@@ -221,7 +234,7 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
 
     markersList.clear();
     markersList.add(Marker(
-        icon: markerIcon,
+        icon: BitmapDescriptor.fromBytes(markerIcon),
         markerId: const MarkerId("0"),
         position: LatLng(lat, lng),
         infoWindow: InfoWindow(title: detail.result.name)));

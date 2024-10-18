@@ -113,6 +113,7 @@ class PostCommentController extends GetxController {
           commetnModelList[selectedCommentIndex.value]
               .replies
               .add(ReplyModel.fromJson(jsonData['data']));
+          selectedCommentIndex.value = -1;
           commetnModelList.refresh();
           commentTextController.clear();
         } else {

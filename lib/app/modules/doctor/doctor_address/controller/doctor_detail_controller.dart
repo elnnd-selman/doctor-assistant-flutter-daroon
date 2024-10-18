@@ -1,7 +1,16 @@
+import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'dart:ui' as ui;
 
 class DoctorDetailController extends GetxController {
+  CustomPopupMenuController customPopupMenuController =
+      CustomPopupMenuController();
+
+  RxList<String> menuList = [
+    "Delete",
+  ].obs;
   RxList<String> weekDaysList = [
     "Sun",
     "Mon",
@@ -58,5 +67,26 @@ class DoctorDetailController extends GetxController {
     int minutes = totalMinutes % 60;
 
     return minutes;
+  }
+
+  Uint8List markerIcon = Uint8List(8);
+  RxBool isGoogleMapLoading = false.obs;
+  setGoogleMapIcon() async {
+    isGoogleMapLoading.value = true;
+    final Uint8List icons =
+        await getBytesFromAsset('assets/icons_png/location_icon.png', 80);
+    markerIcon = icons;
+    isGoogleMapLoading.value = false;
+    update();
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 }

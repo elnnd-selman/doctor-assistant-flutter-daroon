@@ -169,6 +169,7 @@ class _DcotorOfferDateTimeState extends State<DcotorOfferDateTime> {
                   width: MediaQuery.of(Get.context!).size.width * 0.9,
                   child: CommonButton(
                     ontap: () {
+                      FocusScope.of(context).unfocus();
                       // Get.back();
                       final scheduledTime = DateTime(
                         selectedDayTimeStamp.year,

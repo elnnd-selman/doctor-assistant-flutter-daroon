@@ -34,13 +34,13 @@ class DoctorLanguageScreen extends GetView<DoctorLanguageController> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 14),
+            padding: const EdgeInsets.only(right: 24),
             child: Text(
               "Save",
               style: AppTextStyles.medium.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppColors.primaryColor,
-                fontSize: 1.4 * SizeConfig.heightMultiplier,
+                fontSize: 1.5 * SizeConfig.heightMultiplier,
               ),
             ),
           )

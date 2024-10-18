@@ -207,6 +207,11 @@ class CommentBottomSheet extends GetView<PostCommentController> {
                             color: const Color(0xff535353),
                           ),
                         ),
+                        onChanged: (val) {
+                          if (val.isEmpty) {
+                            controller.selectedCommentIndex.value = -1;
+                          }
+                        },
                       ),
                     ),
                   ),

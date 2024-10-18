@@ -27,6 +27,15 @@ class NetWorkImageLoader extends StatelessWidget {
       imageUrl: imageURL,
       fit: BoxFit.cover,
       width: width,
+      imageBuilder: (context, imageProvider) {
+        return Container(
+          height: height,
+          width: width,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: imageProvider, fit: boxFit),
+          ),
+        );
+      },
       errorWidget: (context, url, error) {
         return Container(
           height: height,
@@ -39,7 +48,14 @@ class NetWorkImageLoader extends StatelessWidget {
         );
       },
       placeholder: (context, url) {
-        return const Center(child: LoadingWidget());
+        return Container(
+            height: height,
+            width: width,
+            decoration: BoxDecoration(
+              color: containerColor,
+              shape: shape!,
+            ),
+            child: const Center(child: LoadingWidget()));
       },
       placeholderFadeInDuration: 0.75.seconds,
     );

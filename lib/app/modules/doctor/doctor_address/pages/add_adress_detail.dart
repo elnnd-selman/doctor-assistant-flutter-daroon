@@ -412,7 +412,7 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
           title,
           style: AppTextStyles.medium.copyWith(
             fontWeight: FontWeight.w500,
-            color: const Color(0xff898A8D),
+            color: AppColors.blackBGColor,
             fontSize: SizeConfig.heightMultiplier * 1.8,
           ),
         ),

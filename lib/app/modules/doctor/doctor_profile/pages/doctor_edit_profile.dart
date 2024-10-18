@@ -1,3 +1,10 @@
+import 'dart:io';
+
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_edit_profile_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/uplaod_profile_pic_dialog.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
@@ -5,7 +12,7 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 
-class DoctorEditProfile extends StatelessWidget {
+class DoctorEditProfile extends GetView<DoctorEditProfileController> {
   const DoctorEditProfile({super.key});
 
   @override
@@ -32,7 +39,7 @@ class DoctorEditProfile extends StatelessWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 14),
+            padding: const EdgeInsets.only(right: 24),
             child: Text(
               "Save",
               style: AppTextStyles.medium.copyWith(
@@ -44,162 +51,231 @@ class DoctorEditProfile extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: 6 * SizeConfig.widthMultiplier),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 4 * SizeConfig.heightMultiplier),
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      height: 12 * SizeConfig.heightMultiplier,
-                      width: 12 * SizeConfig.heightMultiplier,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black.withOpacity(0.17),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/images/tempImages.png"),
-                          )),
-                      // child: Obx(
-                      //   () => controller.isNoPhoto.value
-                      //       ? Padding(
-                      //           padding: const EdgeInsets.all(50),
-                      //           child: Image.asset(
-                      //             "assets/images/noProfile.png",
-                      //           ),
-                      //         )
-                      //       : Padding(
-                      //           padding: const EdgeInsets.all(25),
-                      //           child: Image.file(
-                      //             File(controller.selectedimageName!.value),
-                      //             fit: BoxFit.cover,
-                      //           ),
-                      //         ),
-                      // ),
-                    ),
-                    Positioned(
-                      bottom: 3,
-                      right: 8,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 3 * SizeConfig.heightMultiplier,
-                        width: 3 * SizeConfig.heightMultiplier,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
-                            border: Border.all(
-                                color: AppColors.whiteBGColor, width: 2.5)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.edit,
-                            color: AppColors.whiteBGColor,
-                            size: 1.5 * SizeConfig.heightMultiplier,
-                          ),
+      body: Obx(
+        () => controller.isLoading.value
+            ? const LoadingWidget()
+            : Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: 6 * SizeConfig.widthMultiplier),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 4 * SizeConfig.heightMultiplier),
+                      Center(
+                        child: Stack(
+                          children: [
+                            controller.imageUrl.value != ""
+                                ? Container(
+                                    alignment: Alignment.center,
+                                    height: 10 * SizeConfig.heightMultiplier,
+                                    width: 10 * SizeConfig.heightMultiplier,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.black.withOpacity(0.7),
+                                      image: controller.imageUrl.value == ''
+                                          ? null
+                                          : DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: FileImage(
+                                                File(controller.imageUrl.value),
+                                              )),
+                                      border: Border.all(
+                                        color: const Color(0xffE7E8EA),
+                                      ),
+                                    ),
+                                  )
+                                : controller.userProfileModel.value!
+                                            .userProfile!.profilePicture ==
+                                        null
+                                    ? Container(
+                                        alignment: Alignment.center,
+                                        height:
+                                            10 * SizeConfig.heightMultiplier,
+                                        width: 10 * SizeConfig.heightMultiplier,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black.withOpacity(0.7),
+                                        ),
+                                        child: Center(
+                                          child: FittedBox(
+                                            child: Text(
+                                              '${controller.userProfileModel.value!.userProfile!.username![0].toUpperCase()}${controller.userProfileModel.value!.userProfile!.firstName![0].toUpperCase()}',
+                                              style:
+                                                  AppTextStyles.bold.copyWith(
+                                                color: Colors.white,
+                                                fontSize: Spaces.fontSize(
+                                                    fontSize: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ))
+                                    : ClipOval(
+                                        child: NetWorkImageLoader(
+                                          imageURL: controller
+                                              .userProfileModel
+                                              .value!
+                                              .userProfile!
+                                              .profilePicture!
+                                              .bg!,
+                                          height:
+                                              10 * SizeConfig.heightMultiplier,
+                                          width:
+                                              10 * SizeConfig.heightMultiplier,
+                                          shape: BoxShape.circle,
+                                          boxFit: BoxFit.cover,
+                                          containerColor:
+                                              Colors.black.withOpacity(0.7),
+                                        ),
+                                      ),
+                            Positioned(
+                              bottom: 3,
+                              right: 8,
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                onTap: () => updateProfilePhoto(context),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 3 * SizeConfig.heightMultiplier,
+                                  width: 3 * SizeConfig.heightMultiplier,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: AppColors.primaryColor,
+                                      border: Border.all(
+                                          color: AppColors.whiteBGColor,
+                                          width: 2.5)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: Icon(
+                                      Icons.edit,
+                                      color: AppColors.whiteBGColor,
+                                      size: 1.5 * SizeConfig.heightMultiplier,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Name",
+                        subtitle: controller
+                            .userProfileModel.value!.userProfile!.username!,
+                        showIcon: false,
+                        hintText: "UserName",
+                        onTap: () {},
+                      ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Specialist",
+                        subtitle: controller.userProfileModel.value!
+                                    .userProfile!.speciality ==
+                                null
+                            ? '--'
+                            : controller.userProfileModel.value!.userProfile!
+                                .speciality!.specialityEn!,
+                        showIcon: true,
+                        hintText: "Specialist Name",
+                        onTap: () => Get.toNamed(Routes.doctorEditSpeciality),
+                      ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Level",
+                        subtitle: controller.userProfileModel.value!
+                                    .userProfile!.level ==
+                                null
+                            ? '--'
+                            : controller.userProfileModel.value!.userProfile!
+                                .level!.levelEn!,
+                        showIcon: true,
+                        hintText: "Level",
+                        onTap: () => Get.toNamed(Routes.doctorEditLevel),
+                      ),
+                      // SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      // _profileTextField(
+                      //   context: context,
+                      //   title: "Language",
+                      //   subtitle: controller.userProfileModel.value!
+                      //           .userProfile!.languages.isEmpty
+                      //       ? '--'
+                      //       : controller.splitAppLanguage(controller
+                      //           .userProfileModel
+                      //           .value!
+                      //           .userProfile!
+                      //           .languages),
+                      //   showIcon: true,
+                      //   hintText: "Language",
+                      //   onTap: () => Get.toNamed(Routes.doctorchangeLanguage),
+                      // ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Bio",
+                        subtitle: controller
+                            .userProfileModel.value!.userProfile!.biographyEn!,
+                        showIcon: true,
+                        hintText: "-",
+                        onTap: () {},
+                      ),
+                      SizedBox(height: 6 * SizeConfig.heightMultiplier),
+                      Text(
+                        "Private Information",
+                        style: AppTextStyles.medium.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xff11142D),
+                          fontSize: 2 * SizeConfig.heightMultiplier,
+                        ),
+                      ),
+                      SizedBox(height: 2 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Email",
+                        subtitle: controller
+                            .userProfileModel.value!.userProfile!.email!,
+                        showIcon: true,
+                        hintText: "Email",
+                        onTap: () => Get.toNamed(Routes.doctorChangeEmail),
+                      ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Phone",
+                        subtitle: controller.userProfileModel.value!
+                            .userProfile!.phone!.number!,
+                        showIcon: false,
+                        hintText: "Phone",
+                        onTap: () {},
+                      ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Username",
+                        subtitle: controller
+                            .userProfileModel.value!.userProfile!.username!,
+                        showIcon: true,
+                        hintText: "Username",
+                        onTap: () => Get.toNamed(Routes.doctorChangeUserName),
+                      ),
+                      SizedBox(height: 1 * SizeConfig.heightMultiplier),
+                      _profileTextField(
+                        context: context,
+                        title: "Gender",
+                        subtitle: controller
+                            .userProfileModel.value!.userProfile!.gender!
+                            .toUpperCase(),
+                        showIcon: true,
+                        hintText: "Gender",
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 4 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Name",
-                subtitle: "Elnnd selman",
-                showIcon: false,
-                hintText: "UserName",
-                onTap: () {},
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Specialist",
-                subtitle: "Specialist Name",
-                showIcon: true,
-                hintText: "Specialist Name",
-                onTap: () => Get.toNamed(Routes.doctorEditSpeciality),
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Level",
-                subtitle: "Level Name",
-                showIcon: true,
-                hintText: "Level",
-                onTap: () => Get.toNamed(Routes.doctorEditLevel),
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Language",
-                subtitle: "English, Kurdish",
-                showIcon: true,
-                hintText: "Level",
-                onTap: () => Get.toNamed(Routes.doctorchangeLanguage),
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Bio",
-                subtitle: "-",
-                showIcon: true,
-                hintText: "-",
-                onTap: () {},
-              ),
-              SizedBox(height: 6 * SizeConfig.heightMultiplier),
-              Text(
-                "Private Information",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: const Color(0xff11142D),
-                  fontSize: 2 * SizeConfig.heightMultiplier,
-                ),
-              ),
-              SizedBox(height: 2 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Email",
-                subtitle: "saki@momento.network",
-                showIcon: false,
-                hintText: "Email",
-                onTap: () {},
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Phone",
-                subtitle: "+964 770 687 2770",
-                showIcon: false,
-                hintText: "Phone",
-                onTap: () {},
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Username",
-                subtitle: "Saki",
-                showIcon: false,
-                hintText: "Username",
-                onTap: () {},
-              ),
-              SizedBox(height: 1 * SizeConfig.heightMultiplier),
-              _profileTextField(
-                context: context,
-                title: "Gender",
-                subtitle: "Female",
-                showIcon: true,
-                hintText: "Gender",
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
@@ -239,8 +315,8 @@ class DoctorEditProfile extends StatelessWidget {
               // cursorHeight: 10,
               decoration: InputDecoration(
                 enabled: false,
-                contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                fillColor: AppColors.whiteBGColor,
+                contentPadding: const EdgeInsets.only(top: 10, bottom: 20),
+                fillColor: Colors.white,
                 filled: true,
                 errorBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: AppColors.borderColor),
@@ -263,10 +339,13 @@ class DoctorEditProfile extends StatelessWidget {
                 suffixIcon: showIcon
                     ? GestureDetector(
                         onTap: onTap,
-                        child: const Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: AppColors.primaryColor,
-                          size: 18,
+                        child: const Padding(
+                          padding: EdgeInsets.only(bottom: 6),
+                          child: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: AppColors.primaryColor,
+                            size: 18,
+                          ),
                         ),
                       )
                     : const SizedBox(),

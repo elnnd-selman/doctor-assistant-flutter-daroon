@@ -7,6 +7,7 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
+import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:duration_picker/duration_picker.dart';
@@ -42,6 +43,42 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
               ),
             ),
           ),
+          leading: IconButton(
+              onPressed: () {
+                Get.dialog(
+                  CustomDialogBox(
+                    onPressedCancel: () {
+                      Get.back();
+                      Get.back();
+                    },
+                    title: 'Save change',
+                    confirmButtonText: 'Save',
+                    onPressedConfirm: () {
+                      if (controller.selectedWeekDays.isNotEmpty &&
+                          controller.isStartWithTime.value == true &&
+                          controller.isEndWithTime.value == true &&
+                          controller.istimeDuration.value == true &&
+                          controller.feeClinic.text.isNotEmpty &&
+                          controller.feeMessage.text.isNotEmpty &&
+                          controller.feeVideo.text.isNotEmpty &&
+                          controller.feeCall.text.isNotEmpty) {
+                        Get.back();
+                        controller.updateOffice(
+                            context: context, office: officeAddress);
+                      } else {
+                        showToastMessage(
+                            message: "Please Fill all Fields ",
+                            context: context,
+                            color: const Color(0xffEC1C24),
+                            icon: Icons.close);
+                      }
+                    },
+                    subTitle: 'Are you sure you want to\ndiscard the change?',
+                  ),
+                  barrierColor: AppColors.blackBGColor.withOpacity(0.5),
+                );
+              },
+              icon: const Icon(Icons.arrow_back)),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -375,8 +412,24 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
                               controller.feeMessage.text.isNotEmpty &&
                               controller.feeVideo.text.isNotEmpty &&
                               controller.feeCall.text.isNotEmpty) {
-                            controller.updateOffice(
-                                context: context, office: officeAddress);
+                            Get.dialog(
+                              CustomDialogBox(
+                                title: 'Save change',
+                                confirmButtonText: 'Save',
+                                onPressedCancel: () {
+                                  Get.back();
+                                },
+                                onPressedConfirm: () {
+                                  Get.back();
+                                  controller.updateOffice(
+                                      context: context, office: officeAddress);
+                                },
+                                subTitle:
+                                    'Are you sure you want to\ndiscard the change?',
+                              ),
+                              barrierColor:
+                                  AppColors.blackBGColor.withOpacity(0.5),
+                            );
                           } else {
                             showToastMessage(
                                 message: "Please Fill all Fields ",

@@ -8,7 +8,12 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/change_a
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/select_assistant_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/add_offer_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/edit_offer.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/edit_offer_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/offer_add_succesfully.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/binding/doctor_edit_profile_binding.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_change_email.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/doctor_change_username.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/binding/forget_password_binding.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/pages/forget_email.dart';
@@ -163,13 +168,23 @@ class AppPages {
       binding: DoctorOffersBinding(),
     ),
     GetPage(
+      name: Routes.doctorEditOffers,
+      page: () => DoctorEditOfferScreen(),
+      binding: DoctorOffersBinding(),
+    ),
+    GetPage(
       name: Routes.addOfferAddress,
       page: () => const AddOfferAddress(),
       binding: DoctorOffersBinding(),
     ),
     GetPage(
+      name: Routes.editOfferAddress,
+      page: () => EditOfferAddress(),
+      binding: DoctorOffersBinding(),
+    ),
+    GetPage(
       name: Routes.addOfferSuccessfully,
-      page: () => const OfferAddSuccesfully(),
+      page: () => OfferAddSuccesfully(),
     ),
     GetPage(
       name: Routes.cancelAppointment,
@@ -228,22 +243,36 @@ class AppPages {
     GetPage(
       name: Routes.doctorEditProfile,
       page: () => const DoctorEditProfile(),
+      binding: DoctorProfileBinding(),
     ),
+    ///////////////// Chnage binding
     GetPage(
       name: Routes.doctorchangeLanguage,
       page: () => const DoctorLanguageScreen(),
       binding: DoctorProfileBinding(),
     ),
+
     GetPage(
       name: Routes.doctorEditSpeciality,
       page: () => const DoctorEditSpeciality(),
-      binding: DoctorProfileBinding(),
+      binding: DoctorEditProfileBinding(),
     ),
     GetPage(
       name: Routes.doctorEditLevel,
       page: () => const DoctorEditLevel(),
-      binding: DoctorProfileBinding(),
+      binding: DoctorEditProfileBinding(),
     ),
+    GetPage(
+      name: Routes.doctorChangeEmail,
+      page: () => const DoctorChangeEmail(),
+      binding: DoctorEditProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.doctorChangeUserName,
+      page: () => const DoctorChangeUsername(),
+      binding: DoctorEditProfileBinding(),
+    ),
+    /////////////////
     GetPage(
       name: Routes.doctorMessage,
       page: () => const DoctorMessageScreen(),

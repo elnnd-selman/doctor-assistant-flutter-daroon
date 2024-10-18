@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/country_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/currency_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/office_data_model.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -104,6 +110,10 @@ class AddDoctorAddressController extends GetxController {
     return minutes;
   }
 
+  RxString countryID = ''.obs;
+  RxString currencyID = ''.obs;
+  RxString officeTypeID = ''.obs;
+
   Future<void> registerOffice(BuildContext context) async {
     try {
       _processing.value = true;
@@ -136,7 +146,7 @@ class AddDoctorAddressController extends GetxController {
               "feeCall": feeCall.text,
               "feeVideoCall": feeVideo.text
             },
-            "typeOfCurrency": "66ea99e6c7a88efd35724531",
+            "typeOfCurrency": currencyID.value,
 
             // 'typeOfOffice':'dd',
             "phoneNumbers": ["07500132", "075016132"],
@@ -145,11 +155,11 @@ class AddDoctorAddressController extends GetxController {
                 "latitude": "${lat.value}",
                 "longitude": "${long.value}",
               },
-              "country": "66eb276fc7a88efd35724dba",
+              "country": countryID.value,
               "city": cityName.text,
               "town": townName.text,
               "street": streetNumber.text,
-              "typeOfOffice": "66e04d4b15b32e335a665792",
+              "typeOfOffice": officeTypeID.value,
             }
           });
 
@@ -194,6 +204,151 @@ class AddDoctorAddressController extends GetxController {
           context: context,
           color: const Color(0xffEC1C24),
           icon: Icons.close);
+    }
+  }
+
+  RxList<CountryData> countryModelList = RxList();
+
+  getOfficeCountry() async {
+    final response = await ApiService.getwithUserToken(
+      endPoint: "${AppTokens.apiURl}/users/country",
+      userToken: {
+        "Authorization":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
+    );
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
+      countryModelList.value =
+          jsonResponse.map((data) => CountryData.fromJson(data)).toList();
+    }
+  }
+
+  RxList<CurrencyData> currencyModelList = RxList();
+  getOfficeCurrency() async {
+    final response = await ApiService.getwithUserToken(
+      endPoint: "${AppTokens.apiURl}/users/type-of-currency",
+      userToken: {
+        "Authorization":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
+    );
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
+      currencyModelList.value =
+          jsonResponse.map((data) => CurrencyData.fromJson(data)).toList();
+    }
+  }
+
+  RxList<OfficeTypeDatum> officeModelList = RxList();
+
+  getTypeOfOffice() async {
+    final response = await ApiService.getwithUserToken(
+      endPoint: "${AppTokens.apiURl}/users/type-of-offices",
+      userToken: {
+        "Authorization":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
+    );
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
+      officeModelList.value =
+          jsonResponse.map((data) => OfficeTypeDatum.fromJson(data)).toList();
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAllData();
+  }
+
+  getAllData() async {
+    _processing.value = true;
+    await getOfficeCountry();
+    await getOfficeCurrency();
+    await getTypeOfOffice();
+    _processing.value = false;
+  }
+
+  checkValition(BuildContext context) {
+    if (title.text.isEmpty ||
+        streetNumber.text.isEmpty ||
+        townName.text.isEmpty ||
+        cityName.text.isEmpty ||
+        description.text.isEmpty ||
+        long.value == 0.0 ||
+        lat.value == 0.0 ||
+        countryID.value == '' ||
+        currencyID.value == '' ||
+        officeTypeID.value == '') {
+      if (title.text.isEmpty) {
+        showToastMessage(
+            message: "Enter Title",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (streetNumber.text.isEmpty) {
+        showToastMessage(
+            message: "Enter Street Number",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (townName.text.isEmpty) {
+        showToastMessage(
+            message: "Enter Town Name",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (cityName.text.isEmpty) {
+        showToastMessage(
+            message: "Enter City Name",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (description.text.isEmpty) {
+        showToastMessage(
+            message: "Enter Description",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (long.value == 0.0 || lat.value == 0.0) {
+        showToastMessage(
+            message: "Select Address",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (countryID.value == '') {
+        showToastMessage(
+            message: "Select Country",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (currencyID.value == '') {
+        showToastMessage(
+            message: "Select Currency",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      } else if (officeTypeID.value == '') {
+        showToastMessage(
+            message: "Select Office Type",
+            context: context,
+            color: const Color(0xffEC1C24),
+            icon: Icons.close);
+        return;
+      }
+    } else {
+      FocusManager.instance.primaryFocus?.unfocus();
+      Get.toNamed(Routes.addDoctorAdressDetail);
     }
   }
 }

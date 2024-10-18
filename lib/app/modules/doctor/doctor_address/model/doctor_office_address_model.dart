@@ -51,9 +51,6 @@ class OfficeAddreesModel {
     required this.createdAt,
     required this.updatedAt,
     required this.v,
-    required this.buildingNumber,
-    required this.floor,
-    required this.room,
   });
 
   final Fee? fee;
@@ -74,9 +71,6 @@ class OfficeAddreesModel {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
-  final int? buildingNumber;
-  final int? floor;
-  final int? room;
 
   factory OfficeAddreesModel.fromJson(Map<String, dynamic> json) {
     return OfficeAddreesModel(
@@ -107,9 +101,6 @@ class OfficeAddreesModel {
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
-      buildingNumber: json["buildingNumber"],
-      floor: json["floor"],
-      room: json["room"],
     );
   }
 
@@ -132,9 +123,6 @@ class OfficeAddreesModel {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-        "buildingNumber": buildingNumber,
-        "floor": floor,
-        "room": room,
       };
 }
 
@@ -153,7 +141,7 @@ class Address {
   final String? city;
   final String? town;
   final String? street;
-  final dynamic typeOfOffice;
+  final TypeOfOffice? typeOfOffice;
 
   factory Address.fromJson(Map<String, dynamic> json) {
     return Address(
@@ -165,7 +153,9 @@ class Address {
       city: json["city"],
       town: json["town"],
       street: json["street"],
-      typeOfOffice: json["typeOfOffice"],
+      typeOfOffice: json["typeOfOffice"] == null
+          ? null
+          : TypeOfOffice.fromJson(json["typeOfOffice"]),
     );
   }
 
@@ -175,7 +165,7 @@ class Address {
         "city": city,
         "town": town,
         "street": street,
-        "typeOfOffice": typeOfOffice,
+        "typeOfOffice": typeOfOffice?.toJson(),
       };
 }
 
@@ -243,81 +233,71 @@ class Country {
       };
 }
 
-class AppointmentTimes {
-  AppointmentTimes({
-    required this.sunday,
-    required this.monday,
-    required this.tuesday,
-    required this.wednesday,
-    required this.thursday,
-    required this.friday,
-    required this.saturday,
+class TypeOfOffice {
+  TypeOfOffice({
+    required this.id,
+    required this.typeOfOfficeKu,
+    required this.typeOfOfficeAr,
+    required this.typeOfOfficeEn,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
   });
 
-  final List<Day> sunday;
-  final List<Day> monday;
-  final List<Day> tuesday;
-  final List<Day> wednesday;
-  final List<Day> thursday;
-  final List<Day> friday;
-  final List<Day> saturday;
+  final String? id;
+  final String? typeOfOfficeKu;
+  final String? typeOfOfficeAr;
+  final String? typeOfOfficeEn;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
 
-  factory AppointmentTimes.fromJson(Map<String, dynamic> json) {
-    return AppointmentTimes(
-      sunday: json["sunday"] == null
-          ? []
-          : List<Day>.from(json["sunday"]!.map((x) => Day.fromJson(x))),
-      monday: json["monday"] == null
-          ? []
-          : List<Day>.from(json["monday"]!.map((x) => Day.fromJson(x))),
-      tuesday: json["tuesday"] == null
-          ? []
-          : List<Day>.from(json["tuesday"]!.map((x) => Day.fromJson(x))),
-      wednesday: json["wednesday"] == null
-          ? []
-          : List<Day>.from(json["wednesday"]!.map((x) => Day.fromJson(x))),
-      thursday: json["thursday"] == null
-          ? []
-          : List<Day>.from(json["thursday"]!.map((x) => Day.fromJson(x))),
-      friday: json["friday"] == null
-          ? []
-          : List<Day>.from(json["friday"]!.map((x) => Day.fromJson(x))),
-      saturday: json["saturday"] == null
-          ? []
-          : List<Day>.from(json["saturday"]!.map((x) => Day.fromJson(x))),
+  factory TypeOfOffice.fromJson(Map<String, dynamic> json) {
+    return TypeOfOffice(
+      id: json["_id"],
+      typeOfOfficeKu: json["typeOfOffice_ku"],
+      typeOfOfficeAr: json["typeOfOffice_ar"],
+      typeOfOfficeEn: json["typeOfOffice_en"],
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      v: json["__v"],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "sunday": sunday.map((x) => x.toJson()).toList(),
-        "monday": monday.map((x) => x.toJson()).toList(),
-        "tuesday": tuesday.map((x) => x.toJson()).toList(),
-        "wednesday": wednesday.map((x) => x.toJson()).toList(),
-        "thursday": thursday.map((x) => x.toJson()).toList(),
-        "friday": friday.map((x) => x.toJson()).toList(),
-        "saturday": saturday.map((x) => x.toJson()).toList(),
+        "_id": id,
+        "typeOfOffice_ku": typeOfOfficeKu,
+        "typeOfOffice_ar": typeOfOfficeAr,
+        "typeOfOffice_en": typeOfOfficeEn,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
       };
 }
 
-class Day {
-  Day({
-    required this.time,
-    required this.isBooked,
+class AppointmentTimes {
+  AppointmentTimes({
+    required this.wednesday,
+    required this.tuesday,
   });
 
-  final String? time;
-  final bool? isBooked;
+  final List<dynamic> wednesday;
+  final List<dynamic> tuesday;
 
-  factory Day.fromJson(Map<String, dynamic> json) {
-    return Day(
-      time: json["time"],
-      isBooked: json["isBooked"],
+  factory AppointmentTimes.fromJson(Map<String, dynamic> json) {
+    return AppointmentTimes(
+      wednesday: json["wednesday"] == null
+          ? []
+          : List<dynamic>.from(json["wednesday"]!.map((x) => x)),
+      tuesday: json["tuesday"] == null
+          ? []
+          : List<dynamic>.from(json["tuesday"]!.map((x) => x)),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "time": time,
-        "isBooked": isBooked,
+        "wednesday": wednesday.map((x) => x).toList(),
+        "tuesday": tuesday.map((x) => x).toList(),
       };
 }
 

@@ -34,7 +34,7 @@ class DoctorProfileAppBar extends GetView<DoctorCustomNaviController> {
         GestureDetector(
           onTap: () => Get.toNamed(Routes.doctorEditProfile),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               "Edit",
               style: AppTextStyles.medium.copyWith(

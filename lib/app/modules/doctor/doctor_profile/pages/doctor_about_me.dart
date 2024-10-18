@@ -1,8 +1,10 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:get/get.dart';
 
 class DoctorAboutMe extends StatelessWidget {
   const DoctorAboutMe({super.key});
@@ -11,52 +13,17 @@ class DoctorAboutMe extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-          decoration: BoxDecoration(
-              color: const Color(0xffE8E8E8).withOpacity(.24),
-              borderRadius: BorderRadius.circular(12)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Education",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryColor,
-                  fontSize: SizeConfig.heightMultiplier * 2,
-                ),
-              ),
-              10.verticalSpace,
-              Text(
-                "Science of Psychiatrist",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.blackBGColor,
-                  fontSize: SizeConfig.heightMultiplier * 1.8,
-                ),
-              ),
-              7.verticalSpace,
-              Text(
-                "Koya University",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lighttextColor,
-                  fontSize: SizeConfig.heightMultiplier * 1.8,
-                ),
-              ),
-              Text(
-                "2020",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lighttextColor,
-                  fontSize: SizeConfig.heightMultiplier * 1.8,
-                ),
-              ),
-            ],
-          ),
-        ),
+        ListView.builder(
+            shrinkWrap: true,
+            itemCount: Get.find<DoctorHomeController>()
+                .userModel
+                .value!
+                .user!
+                .education
+                .length,
+            itemBuilder: (context, index) {
+              return _buildEducationContainer(context);
+            }),
         SizedBox(height: 3 * SizeConfig.heightMultiplier),
         Container(
           width: MediaQuery.of(context).size.width,
@@ -119,6 +86,55 @@ class DoctorAboutMe extends StatelessWidget {
         ),
         SizedBox(height: 8 * SizeConfig.heightMultiplier),
       ],
+    );
+  }
+
+  Container _buildEducationContainer(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      decoration: BoxDecoration(
+          color: const Color(0xffE8E8E8).withOpacity(.24),
+          borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Education",
+            style: AppTextStyles.medium.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.primaryColor,
+              fontSize: SizeConfig.heightMultiplier * 2,
+            ),
+          ),
+          10.verticalSpace,
+          Text(
+            "Science of Psychiatrist",
+            style: AppTextStyles.medium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.blackBGColor,
+              fontSize: SizeConfig.heightMultiplier * 1.8,
+            ),
+          ),
+          7.verticalSpace,
+          Text(
+            "Koya University",
+            style: AppTextStyles.medium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.lighttextColor,
+              fontSize: SizeConfig.heightMultiplier * 1.8,
+            ),
+          ),
+          Text(
+            "2020",
+            style: AppTextStyles.medium.copyWith(
+              fontWeight: FontWeight.w500,
+              color: AppColors.lighttextColor,
+              fontSize: SizeConfig.heightMultiplier * 1.8,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

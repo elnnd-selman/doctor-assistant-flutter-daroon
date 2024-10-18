@@ -5,12 +5,14 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_address/widget/edit_goog
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/widget/edit_office_type.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
-import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class EditAddressDoctor extends GetView<EditDoctorAddressController> {
@@ -119,34 +121,122 @@ class EditAddressDoctor extends GetView<EditDoctorAddressController> {
                                 },
                               ),
                               const SizedBox(height: 20),
-                              CommonTextfeild(
-                                scanIcons: false,
-                                obscuretext: false,
-                                hinttext: "Street Number",
-                                controller: controller.streetNumber,
-                                keyboardType: TextInputType.streetAddress,
-                                showicon: false,
-                                validations: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Street";
-                                  }
-                                  return null;
-                                },
+                              Obx(
+                                () => DropdownButtonFormField2<Country>(
+                                  isExpanded: true,
+                                  value: controller.currentCountryModel.value,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0xffF7F7F8),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 22),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  hint: Text(
+                                    'Select Country',
+                                    style: AppTextStyles.medium.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: const Color(0xff535353),
+                                    ),
+                                  ),
+                                  items: controller.countryModelList
+                                      .map<DropdownMenuItem<Country>>(
+                                          (Country level) {
+                                    return DropdownMenuItem<Country>(
+                                      value: level,
+                                      child: Text(
+                                        level.countryEn!,
+                                        style: AppTextStyles.medium.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
+                                          color: AppColors.blackBGColor,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return '   Please Choose Country';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.countryID.value = value!.id!;
+                                  },
+                                  buttonStyleData: ButtonStyleData(
+                                    padding: EdgeInsets.only(
+                                        right: 4 * SizeConfig.widthMultiplier),
+                                  ),
+                                  iconStyleData: IconStyleData(
+                                    icon: SvgPicture.asset(
+                                        "assets/icons/downIcon.svg"),
+                                    iconSize: 24,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    elevation: 0,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xffF7F7F8),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  menuItemStyleData: const MenuItemStyleData(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 20),
-                              CommonTextfeild(
-                                scanIcons: false,
-                                obscuretext: false,
-                                hinttext: "Town Name",
-                                controller: controller.townName,
-                                keyboardType: TextInputType.streetAddress,
-                                showicon: false,
-                                validations: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Town Name";
-                                  }
-                                  return null;
-                                },
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CommonTextfeild(
+                                      scanIcons: false,
+                                      obscuretext: false,
+                                      hinttext: "Town Name",
+                                      controller: controller.townName,
+                                      keyboardType: TextInputType.streetAddress,
+                                      showicon: false,
+                                      validations: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Enter Town Name";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Expanded(
+                                    child: CommonTextfeild(
+                                      scanIcons: false,
+                                      obscuretext: false,
+                                      hinttext: "Street Number",
+                                      controller: controller.streetNumber,
+                                      keyboardType: TextInputType.streetAddress,
+                                      showicon: false,
+                                      validations: (value) {
+                                        if (value!.isEmpty) {
+                                          return "Enter Street";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 20),
                               CommonTextfeild(
@@ -163,48 +253,177 @@ class EditAddressDoctor extends GetView<EditDoctorAddressController> {
                                   return null;
                                 },
                               ),
-                              const SizedBox(height: 20),
-                              CommonTextfeild(
-                                scanIcons: false,
-                                obscuretext: false,
-                                hinttext: "Country Name",
-                                controller: controller.countryName,
-                                keyboardType: TextInputType.streetAddress,
-                                showicon: false,
-                                validations: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Enter Country Name";
-                                  }
-                                  return null;
-                                },
+
+                              const SizedBox(height: 20), ///////////
+                              ////////////////
+                              /// const SizedBox(height: 20),
+                              Obx(
+                                () => DropdownButtonFormField2<TypeOfCurrency>(
+                                  isExpanded: true,
+                                  value: controller.currentCurrencyModel.value,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0xffF7F7F8),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 22),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  hint: Text(
+                                    'Select Currency',
+                                    style: AppTextStyles.medium.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: const Color(0xff535353),
+                                    ),
+                                  ),
+                                  items: controller.currencyModelList
+                                      .map<DropdownMenuItem<TypeOfCurrency>>(
+                                          (TypeOfCurrency level) {
+                                    return DropdownMenuItem<TypeOfCurrency>(
+                                      value: level,
+                                      child: Text(
+                                        level.typeOfCurrencyEn!,
+                                        style: AppTextStyles.medium.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
+                                          color: AppColors.blackBGColor,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return '   Please Choose Currency';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.currencyID.value = value!.id!;
+                                  },
+                                  buttonStyleData: ButtonStyleData(
+                                    padding: EdgeInsets.only(
+                                        right: 4 * SizeConfig.widthMultiplier),
+                                  ),
+                                  iconStyleData: IconStyleData(
+                                    icon: SvgPicture.asset(
+                                        "assets/icons/downIcon.svg"),
+                                    iconSize: 24,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    elevation: 0,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xffF7F7F8),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  menuItemStyleData: const MenuItemStyleData(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                  ),
+                                ),
                               ),
+                              const SizedBox(height: 20),
+                              Obx(
+                                () => DropdownButtonFormField2<TypeOfOffice>(
+                                  isExpanded: true,
+                                  value:
+                                      controller.currentOfficeTypeModel.value,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0xffF7F7F8),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 22),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: AppColors.borderColor),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  hint: Text(
+                                    'Select Office Type',
+                                    style: AppTextStyles.medium.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                      color: const Color(0xff535353),
+                                    ),
+                                  ),
+                                  items: controller.officeModelList
+                                      .map<DropdownMenuItem<TypeOfOffice>>(
+                                          (TypeOfOffice level) {
+                                    return DropdownMenuItem<TypeOfOffice>(
+                                      value: level,
+                                      child: Text(
+                                        level.typeOfOfficeEn!,
+                                        style: AppTextStyles.medium.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
+                                          color: AppColors.blackBGColor,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return '   Please Choose Currency';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) {
+                                    controller.officeTypeID.value = value!.id!;
+                                  },
+                                  buttonStyleData: ButtonStyleData(
+                                    padding: EdgeInsets.only(
+                                        right: 4 * SizeConfig.widthMultiplier),
+                                  ),
+                                  iconStyleData: IconStyleData(
+                                    icon: SvgPicture.asset(
+                                        "assets/icons/downIcon.svg"),
+                                    iconSize: 24,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    elevation: 0,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xffF7F7F8),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                  menuItemStyleData: const MenuItemStyleData(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 16),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 20),
                               SizedBox(height: 2 * SizeConfig.heightMultiplier),
                               CommonButton(
                                   ontap: () {
-                                    if (controller.title.text.isNotEmpty &&
-                                        controller
-                                            .streetNumber.text.isNotEmpty &&
-                                        controller.townName.text.isNotEmpty &&
-                                        controller.cityName.text.isNotEmpty &&
-                                        controller
-                                            .countryName.text.isNotEmpty &&
-                                        controller
-                                            .description.text.isNotEmpty &&
-                                        controller.long.value != 0.0 &&
-                                        controller.lat.value != 0.0) {
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                      controller.updateOffice(
-                                          context: context,
-                                          office: officeAddress);
-                                    } else {
-                                      showToastMessage(
-                                          message:
-                                              "Please Fill all Fields like Address",
-                                          context: context,
-                                          color: const Color(0xffEC1C24),
-                                          icon: Icons.close);
-                                    }
+                                    controller.checkValition(
+                                        context, officeAddress, true);
                                   },
                                   name: "Save"),
                               SizedBox(height: 1 * SizeConfig.heightMultiplier),

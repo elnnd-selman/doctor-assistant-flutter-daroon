@@ -56,7 +56,7 @@ class _CommonTextfeildState extends State<CommonTextfeild> {
       onChanged: widget.onChange,
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
+            const EdgeInsets.symmetric(vertical: 22, horizontal: 14),
         fillColor: const Color(0xffF7F7F8),
         filled: true,
         errorBorder: OutlineInputBorder(
@@ -267,7 +267,7 @@ class _AddressTextFieldState extends State<AddressTextField> {
       onChanged: widget.onChange,
       decoration: InputDecoration(
         contentPadding:
-            const EdgeInsets.symmetric(vertical: 18, horizontal: 14),
+            const EdgeInsets.symmetric(vertical: 22, horizontal: 14),
         fillColor: const Color(0xffF7F7F8),
         filled: true,
         errorBorder: OutlineInputBorder(

@@ -40,7 +40,7 @@ class DoctorProfileController extends GetxController {
       );
       if (response!.statusCode == 200 || response.statusCode == 201) {
         final jsonData = jsonDecode(response.body);
-        print(jsonData);
+
         contentModelList.value = ContentModel.fromJson(jsonData);
         totalPages.value = contentModelList.value!.paginationCount!;
       } else {

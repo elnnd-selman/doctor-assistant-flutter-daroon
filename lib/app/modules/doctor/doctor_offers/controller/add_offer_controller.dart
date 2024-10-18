@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
@@ -200,7 +201,10 @@ class AddOfferController extends GetxController {
               color: const Color(0xff5BA66B),
               icon: Icons.check);
           _processing.value = false;
-          Get.offNamed(Routes.addOfferSuccessfully);
+          Get.find<DoctorOffersController>().getDoctorOfersData();
+          Get.offNamed(Routes.addOfferSuccessfully, arguments: [
+            "Great! you add new offer\nsuccessfully.",
+          ]);
         } else {
           _processing.value = false;
           showToastMessage(

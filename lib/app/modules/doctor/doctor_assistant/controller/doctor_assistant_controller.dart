@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
@@ -32,7 +30,6 @@ class DoctorAssistantController extends GetxController {
 
       if (response!.statusCode == 200 || response.statusCode == 201) {
         final jsonData = jsonDecode(response.body);
-        log(response.body);
         assistantModel.value = AssistantModel.fromJson(jsonData);
       } else {}
       isLoading.value = false;
@@ -77,9 +74,8 @@ class DoctorAssistantController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        // https://development-api.daroon.krd/assistants/:assistantId/:officeId/update
         endPoint:
-            '${AppTokens.apiURl}/assistants/${assistantData.id!}/${selectedAddressID.value}/update',
+            '${AppTokens.apiURl}/assistants/${assistantData.id!}/offices/${selectedAddressID.value}/update',
         body: {
           "permissions": assistantData.permissions,
           "office": selectedAddressID.value,
@@ -132,7 +128,8 @@ class DoctorAssistantController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/assistants/${assistantData.id!}/update',
+        endPoint:
+            '${AppTokens.apiURl}/assistants/${assistantData.id!}/offices/${selectedAddressID.value}/update',
         body: {
           "permissions": tempStringList,
           "office": assistantData.office!.id!,
@@ -200,9 +197,10 @@ class DoctorAssistantController extends GetxController {
           printInfo(info: "Suucessfull Delete Assistant");
           assistantModel.value!.assistants
               .removeWhere((item) => item.id == assistantData.id);
+          assistantModel.refresh();
           Get.back();
           showToastMessage(
-              message: "Suucessfull Delete Assistant",
+              message: "Suucessfully Delete Assistant",
               context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);

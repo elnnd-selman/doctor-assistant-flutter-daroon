@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,5 +35,10 @@ class DoctorHomeController extends GetxController {
       print(userModel.value!.token!);
       print(userModel.value!.user!.id!);
     }
+  }
+
+  signOutUser() {
+    Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
+    Get.offAllNamed(Routes.login);
   }
 }

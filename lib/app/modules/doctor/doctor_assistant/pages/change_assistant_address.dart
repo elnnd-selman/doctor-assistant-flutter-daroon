@@ -88,10 +88,12 @@ class ChangeAssistantAddress extends GetView<DoctorAssistantController> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 border: Border.all(
-                                    color:
-                                        controller.selectedIndex.value == index
-                                            ? AppColors.primaryColor
-                                            : AppColors.secondaryborderColor,
+                                    color: controller.selectedAddressID.value ==
+                                            Get.find<DoctorAddressController>()
+                                                .officeAddressModelList[index]
+                                                .id!
+                                        ? AppColors.primaryColor
+                                        : AppColors.secondaryborderColor,
                                     width: 0.5)),
                             child: Column(
                               children: [
@@ -120,14 +122,23 @@ class ChangeAssistantAddress extends GetView<DoctorAssistantController> {
                                       width: 22,
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color:
-                                              controller.selectedIndex.value ==
-                                                      index
-                                                  ? AppColors.primaryColor
-                                                  : Colors.transparent,
+                                          color: controller.selectedAddressID
+                                                      .value ==
+                                                  Get.find<
+                                                          DoctorAddressController>()
+                                                      .officeAddressModelList[
+                                                          index]
+                                                      .id!
+                                              ? AppColors.primaryColor
+                                              : Colors.transparent,
                                           // color: APp
                                           border: Border.all(
                                               color: AppColors.primaryColor)),
+                                      child: const Icon(
+                                        Icons.check,
+                                        color: AppColors.whiteBGColor,
+                                        size: 15,
+                                      ),
                                     ),
                                   ],
                                 ),
