@@ -125,7 +125,7 @@ class AddDoctorAddressController extends GetxController {
             'Authorization':
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: '${AppTokens.apiURl}/office',
+          endPoint: '${AppTokens.apiURl}/doctors/offices',
           body: {
             "title": title.text,
             // "doctorId":

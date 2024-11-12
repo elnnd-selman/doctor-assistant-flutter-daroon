@@ -38,7 +38,7 @@ class DoctorAddressController extends GetxController {
         await getBytesFromAsset('assets/icons_png/location_icon.png', 80);
 
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/office/my-offices",
+      endPoint: "${AppTokens.apiURl}/doctors/offices/my-offices",
       userToken: {
         "Authorization": "Bearer ${userModel.value!.token!}",
       },

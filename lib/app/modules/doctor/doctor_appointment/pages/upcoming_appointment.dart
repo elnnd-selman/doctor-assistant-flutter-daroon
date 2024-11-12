@@ -1,4 +1,6 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,37 +14,39 @@ class UpcomingAppointment extends GetView<DoctorAppointmentController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: 3 * SizeConfig.widthMultiplier, vertical: 10),
-      child: controller.isLoading.value
+    return Obx(
+      () => controller.isLoading.value
           ? const LoadingWidget()
           : controller.upcomingAppointmentList.isEmpty
-              ? const Text("fffrr")
+              ? Center(
+                  child: Text(
+                    "No Upcoming appointment\nis found.",
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.medium.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.lighttextColor),
+                  ),
+                )
               : ListView.builder(
                   padding:
                       EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
                   shrinkWrap: true,
                   itemCount: controller.upcomingAppointmentList.length,
                   itemBuilder: (context, index) {
-                    return UpcomingAppointmentContainer(
-                      appointmentModel:
-                          controller.upcomingAppointmentList[index],
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: index ==
+                                  controller.upcomingAppointmentList.length - 1
+                              ? 12 * SizeConfig.heightMultiplier
+                              : 0),
+                      child: UpcomingAppointmentContainer(
+                        appointmentModel:
+                            controller.upcomingAppointmentList[index],
+                      ),
                     );
-                  }),
-      // InkWell(
-      //   onTap: () {
-      //     Get.toNamed(Routes.doctorAppointmentDetail, arguments: {
-      //       "buttonName": "Confirm",
-      //       "type": "upcoming",
-      //       "textColor": const Color(0xffFFC000),
-      //       "isReschedule": true,
-      //       "title": "Upcoming Appointment",
-      //       "showButton": true,
-      //     });
-      //   },
-      //   child: const UpcomingAppointmentContainer(),
-      // ),
+                  },
+                ),
     );
   }
 }

@@ -74,9 +74,12 @@ class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
                       6.horizontalSpace,
                       GestureDetector(
                         onTap: () {
-                          Get.toNamed(Routes.editdoctorSchedule, arguments: [
-                            officeAddreesModel,
-                          ]);
+                          Get.toNamed(
+                            Routes.editdoctorSchedule,
+                            arguments: [
+                              officeAddreesModel,
+                            ],
+                          );
                         },
                         child: Text(
                           "Edit Schedule",

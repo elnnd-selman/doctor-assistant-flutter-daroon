@@ -17,7 +17,8 @@ class DoctorAppointmentController extends GetxController {
   RxList<AppointmentModel> upcomingAppointmentList = RxList();
   RxList<AppointmentModel> confirmedAppointmentList = RxList();
   RxList<AppointmentModel> completedAppointmentList = RxList();
-  RxList<AppointmentModel> pendingAppointmentList = RxList();
+  // RxList<AppointmentModel> pendingAppointmentList = RxList();
+  RxList<AppointmentModel> requestAppointmentList = RxList();
 
 // const APPOINTMENTS_STATUS = {
 //   PENDING: "pending",
@@ -31,7 +32,7 @@ class DoctorAppointmentController extends GetxController {
     isLoading.value = true;
 
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/appointment/my-appointments",
+      endPoint: "${AppTokens.apiURl}/doctors/appointments",
       userToken: {
         "Authorization": "Bearer ${userModel.value!.token!}",
       },
@@ -43,8 +44,8 @@ class DoctorAppointmentController extends GetxController {
 
       if (appointmentModelList.isNotEmpty) {
         for (int i = 0; i < appointmentModelList.length; i++) {
-          if (appointmentModelList[i].status == "pending") {
-            pendingAppointmentList.add(appointmentModelList[i]);
+          if (appointmentModelList[i].status == "requesting") {
+            requestAppointmentList.add(appointmentModelList[i]);
           } else if (appointmentModelList[i].status == "confirmed") {
             confirmedAppointmentList.add(appointmentModelList[i]);
           } else if (appointmentModelList[i].status == "cancelled") {
@@ -65,7 +66,7 @@ class DoctorAppointmentController extends GetxController {
           .sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
       confirmedAppointmentList
           .sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
-      pendingAppointmentList
+      requestAppointmentList
           .sort((a, b) => a.updatedAt!.compareTo(b.updatedAt!));
 
       isLoading.value = false;

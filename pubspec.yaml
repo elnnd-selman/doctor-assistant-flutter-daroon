@@ -72,7 +72,10 @@ dependencies:
   carousel_slider: ^5.0.0
   cloud_firestore: ^5.4.0
   rich_text_controller: ^2.0.1
+  readmore: ^3.0.0
+  dotted_border: ^2.1.0
   custom_pop_up_menu: ^1.2.4
+
 
 
 

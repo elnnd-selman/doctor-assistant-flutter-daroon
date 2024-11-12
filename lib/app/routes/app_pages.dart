@@ -166,7 +166,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.doctorAppointmentDetail,
-      page: () => const AppointmentDetailScreen(),
+      page: () => AppointmentDetailScreen(),
     ),
     GetPage(
       name: Routes.doctorAddOffers,

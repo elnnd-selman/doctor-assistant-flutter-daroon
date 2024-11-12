@@ -1,3 +1,6 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -10,10 +13,13 @@ import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/border_common_button.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:intl/intl.dart';
+import 'package:readmore/readmore.dart';
 
 class AppointmentDetailScreen extends StatelessWidget {
-  const AppointmentDetailScreen({super.key});
+  AppointmentDetailScreen({super.key});
 
+  final appointmentModel = Get.arguments[7] as AppointmentModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +49,7 @@ class AppointmentDetailScreen extends StatelessWidget {
             children: [
               SizedBox(height: 3 * SizeConfig.heightMultiplier),
               Text(
-                Get.arguments["title"],
+                Get.arguments[4],
                 style: AppTextStyles.medium.copyWith(
                   fontWeight: FontWeight.w600,
                   color: AppColors.lighttextColor,
@@ -55,22 +61,31 @@ class AppointmentDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 9 * SizeConfig.heightMultiplier,
-                    width: 18 * SizeConfig.widthMultiplier,
-                    decoration: BoxDecoration(
-                      image: const DecorationImage(
-                          image: AssetImage("assets/images/Rectangle 25.png")),
-                      borderRadius: BorderRadius.circular(10),
+                  // Container(
+                  //   height: 9 * SizeConfig.heightMultiplier,
+                  //   width: 18 * SizeConfig.widthMultiplier,
+                  //   decoration: BoxDecoration(
+                  //     image: const DecorationImage(
+                  //         image: AssetImage("assets/images/Rectangle 25.png")),
+                  //     borderRadius: BorderRadius.circular(10),
+                  //   ),
+                  // ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: NetWorkImageLoader(
+                      containerColor: Colors.black54,
+                      imageURL: appointmentModel.bookedBy!.profilePicture!.bg!,
+                      height: 9 * SizeConfig.heightMultiplier,
+                      width: 18 * SizeConfig.widthMultiplier,
                     ),
                   ),
-                  6.horizontalSpace,
+                  16.horizontalSpace,
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Patient Name",
+                        appointmentModel.fullName!.capitalizeFirst!,
                         style: AppTextStyles.medium.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.primaryColor,
@@ -79,7 +94,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 1 * SizeConfig.heightMultiplier),
                       Text(
-                        "For her mother",
+                        appointmentModel.bookedFor!,
                         style: AppTextStyles.medium.copyWith(
                           fontWeight: FontWeight.w500,
                           color: const Color(0xff737373),
@@ -103,11 +118,19 @@ class AppointmentDetailScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: SvgPicture.asset(
-                            "assets/icons/messageIcons.svg",
-                            colorFilter: const ColorFilter.mode(
-                                AppColors.whiteBGColor, BlendMode.srcIn),
-                          ),
+                          child: Get.arguments[1] == "confirmed"
+                              ? Image.asset(
+                                  Assets.phone,
+                                  color: AppColors.whiteBGColor,
+                                )
+                              : SvgPicture.asset(
+                                  Get.arguments[1] == "requesting" ||
+                                          Get.arguments[1] == "upcoming"
+                                      ? "assets/icons/messageIcons.svg"
+                                      : Assets.locationIcon,
+                                  colorFilter: const ColorFilter.mode(
+                                      AppColors.whiteBGColor, BlendMode.srcIn),
+                                ),
                         ),
                       ),
                     ],
@@ -115,6 +138,61 @@ class AppointmentDetailScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 3 * SizeConfig.heightMultiplier),
+              Get.arguments[1] == "cancelled"
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          bottom: 3 * SizeConfig.heightMultiplier),
+                      child: DottedBorder(
+                        borderType: BorderType.RRect,
+                        padding: EdgeInsets.zero,
+                        color: Get.arguments[2],
+                        radius: const Radius.circular(20),
+                        dashPattern: const [7, 4],
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 14),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              6.verticalSpace,
+                              Text(
+                                "Schedule Information",
+                                style: AppTextStyles.medium.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.lighttextColor,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              20.verticalSpace,
+                              Container(
+                                height: 0.4,
+                                color: const Color(0xffC4C4C4),
+                              ),
+                              20.verticalSpace,
+                              ReadMoreText(
+                                appointmentModel.cancelledReason,
+                                trimMode: TrimMode.Line,
+                                trimLines: 2,
+                                colorClickableText: Colors.pink,
+                                trimCollapsedText: '...More',
+                                trimExpandedText: '...Less',
+                                style: AppTextStyles.normal.copyWith(
+                                  fontSize: 16,
+                                  color: const Color(0xff404D61),
+                                ),
+                                moreStyle: AppTextStyles.normal.copyWith(
+                                    color: AppColors.primaryColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              8.verticalSpace,
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -163,10 +241,11 @@ class AppointmentDetailScreen extends StatelessWidget {
                             ),
                             4.verticalSpace,
                             Text(
-                              "Sun, Jan 15, 09.00am - 12.00am",
+                              formatDate(
+                                  appointmentModel.appointmentDate.toString()),
                               style: AppTextStyles.medium.copyWith(
                                 fontWeight: FontWeight.w500,
-                                color: Get.arguments["textColor"],
+                                color: Get.arguments[2],
                                 fontSize: 15,
                               ),
                             ),
@@ -198,7 +277,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                             ),
                             4.verticalSpace,
                             Text(
-                              "Sulaymaniyah, Orzdi street,floor ..",
+                              appointmentModel.office!.description!,
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyles.medium.copyWith(
                                 fontWeight: FontWeight.w500,
@@ -259,15 +338,17 @@ class AppointmentDetailScreen extends StatelessWidget {
                             children: [
                               _patientDetailContainer(
                                 "assets/icons/offerBookIcon.svg",
-                                "My father",
+                                fatherName(appointmentModel
+                                    .fullName!.capitalizeFirst!),
                               ),
                               _patientDetailContainer(
                                 "assets/icons/genderIcon.svg",
-                                "Male",
+                                appointmentModel.gender!.capitalizeFirst!,
                               ),
                               _patientDetailContainer(
                                 Assets.calendarIcon,
-                                "21 Oct,2002",
+                                foramtBirthDate(
+                                    appointmentModel.dateOfBirth.toString()),
                               ),
                             ],
                           ),
@@ -282,7 +363,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                           ),
                           10.verticalSpace,
                           Text(
-                            "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a form of a   form of a  document ...More",
+                            appointmentModel.extraInformation!,
                             style: AppTextStyles.medium.copyWith(
                               fontWeight: FontWeight.w400,
                               color: AppColors.lighttextColor,
@@ -296,7 +377,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                 ),
               ),
               20.verticalSpace,
-              Get.arguments["showButton"]
+              Get.arguments[5]
                   ? CommonButton(
                       ontap: () {
                         showToastMessage(
@@ -305,18 +386,24 @@ class AppointmentDetailScreen extends StatelessWidget {
                             color: const Color(0xff5BA66B),
                             icon: Icons.check);
                       },
-                      name: Get.arguments["buttonName"])
+                      name: Get.arguments[0])
                   : const SizedBox(),
-              10.verticalSpace,
-              Get.arguments["showButton"]
+              0.verticalSpace,
+              Get.arguments[6]
                   ? BorderCommonButton(
                       ontap: () {
-                        Get.toNamed(Routes.cancelAppointment);
+                        Get.toNamed(
+                          Routes.cancelAppointment,
+                          arguments: [
+                            appointmentModel,
+                            Get.arguments[1],
+                          ],
+                        );
                       },
                       name: "Cancel")
                   : const SizedBox(),
               14.verticalSpace,
-              Get.arguments["isReschedule"]
+              Get.arguments[3]
                   ? Center(
                       child: Text(
                         "Change Schedule?",
@@ -336,6 +423,27 @@ class AppointmentDetailScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String foramtBirthDate(String inputDate) {
+    DateTime dateTime = DateTime.parse(inputDate);
+
+    String formattedDate = DateFormat("d MMM, yyyy").format(dateTime);
+    return formattedDate;
+  }
+
+  String fatherName(String fullName) {
+    List<String> nameParts = fullName.split(" ");
+    String lastName = nameParts[1];
+
+    return lastName;
+  }
+
+  String formatDate(String inputDate) {
+    DateTime dateTime = DateTime.parse(inputDate);
+    String formattedDate = DateFormat("EEE, MMM d, h:mma").format(dateTime);
+
+    return formattedDate;
   }
 
   Container _patientDetailContainer(String icon, String text) {

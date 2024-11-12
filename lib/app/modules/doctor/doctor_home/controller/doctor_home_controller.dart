@@ -26,6 +26,7 @@ class DoctorHomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    // signOutUser();
     // Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
 
     userModel.value = await Get.find<LocalStorageController>()
