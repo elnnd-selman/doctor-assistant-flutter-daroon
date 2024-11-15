@@ -4,6 +4,7 @@ import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,8 +39,12 @@ class DoctorOfferPendingContainer extends GetView<DoctorOffersController> {
                       shrinkWrap: true,
                       itemCount: controller.offerSearchList.length,
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () => Get.toNamed(Routes.doctorOffersDetails,
+                        return CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () => Get.toNamed(
+                              Routes.doctorOffersDetails,
                               arguments: [
                                 controller.offerSearchList[index],
                                 const Color(0xffFFC000),
@@ -70,8 +75,12 @@ class DoctorOfferPendingContainer extends GetView<DoctorOffersController> {
                       shrinkWrap: true,
                       itemCount: controller.doctorOfferPendingModel.length,
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () => Get.toNamed(Routes.doctorOffersDetails,
+                        return CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () => Get.toNamed(
+                              Routes.doctorOffersDetails,
                               arguments: [
                                 controller.doctorOfferPendingModel[index],
                                 const Color(0xffFFC000),

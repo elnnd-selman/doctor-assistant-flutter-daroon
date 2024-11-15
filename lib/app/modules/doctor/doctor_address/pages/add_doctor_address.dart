@@ -4,6 +4,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/office_dat
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/widget/office_type_container.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -69,8 +70,11 @@ class AddDoctorAddressScreen extends GetView<AddDoctorAddressController> {
                               shrinkWrap: true,
                               itemCount: officeTypeList.length,
                               itemBuilder: (context, index) {
-                                return GestureDetector(
-                                    onTap: () {
+                                return CupertinoButton(
+                                    pressedOpacity: 0,
+                                    padding: EdgeInsets.zero,
+                                    minSize: 0,
+                                    onPressed: () {
                                       controller.slectedOffice.value = index;
                                     },
                                     child: OfficeTypeContainer(

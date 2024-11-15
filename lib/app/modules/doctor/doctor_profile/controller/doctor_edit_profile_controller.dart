@@ -22,7 +22,7 @@ class DoctorEditProfileController extends GetxController {
   getUserProfileData() async {
     isLoading.value = true;
     final response = await ApiService.getwithUserToken(
-      endPoint: '${AppTokens.apiURl}/users/profile',
+      endPoint: '${AppTokens.apiURl}/doctors/profile',
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",

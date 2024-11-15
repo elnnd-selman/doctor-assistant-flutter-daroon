@@ -76,14 +76,13 @@ class DoctorProfileHeadrer extends GetView<DoctorProfileController> {
               ),
             ),
             4.verticalSpace,
-            Obx(
-              () => Text(
-                "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.speciality!.specialityEn}",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lighttextColor,
-                  fontSize: SizeConfig.heightMultiplier * 1.6,
-                ),
+            Text(
+              "f",
+              // "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.speciality!.specialityEn}",
+              style: AppTextStyles.medium.copyWith(
+                fontWeight: FontWeight.w500,
+                color: AppColors.lighttextColor,
+                fontSize: SizeConfig.heightMultiplier * 1.6,
               ),
             ),
             4.verticalSpace,
@@ -94,14 +93,13 @@ class DoctorProfileHeadrer extends GetView<DoctorProfileController> {
                   height: 15,
                 ),
                 10.horizontalSpace,
-                Obx(
-                  () => Text(
-                    "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.level!.levelEn}",
-                    style: AppTextStyles.medium.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.lighttextColor,
-                      fontSize: SizeConfig.heightMultiplier * 1.6,
-                    ),
+                Text(
+                  "cc",
+                  // "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.level!.levelEn}",
+                  style: AppTextStyles.medium.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.lighttextColor,
+                    fontSize: SizeConfig.heightMultiplier * 1.6,
                   ),
                 )
               ],

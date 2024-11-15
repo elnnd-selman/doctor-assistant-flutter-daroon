@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/controller/doctor_custom_navi_controller.dart';
@@ -31,7 +32,7 @@ class DoctorProfileAppBar extends GetView<DoctorCustomNaviController> {
         ),
       ),
       actions: [
-        GestureDetector(
+        CustomCupertinoButton(
           onTap: () => Get.toNamed(Routes.doctorEditProfile),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),

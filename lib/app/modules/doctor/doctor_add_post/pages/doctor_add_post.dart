@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -192,8 +193,11 @@ class DoctorAddPostScreen extends GetView<DoctorAddPostController> {
                                       ),
                                       Positioned(
                                         right: 0,
-                                        child: InkWell(
-                                          onTap: () =>
+                                        child: CupertinoButton(
+                                          pressedOpacity: 0,
+                                          padding: EdgeInsets.zero,
+                                          minSize: 0,
+                                          onPressed: () =>
                                               controller.removeImage(index),
                                           child: Container(
                                             height: 30,
@@ -280,8 +284,10 @@ class DoctorAddPostScreen extends GetView<DoctorAddPostController> {
                                       ),
                                       Positioned(
                                         right: 0,
-                                        child: InkWell(
-                                          onTap: () =>
+                                        child: CupertinoButton(
+                                          padding: EdgeInsets.zero,
+                                          minSize: 0,
+                                          onPressed: () =>
                                               controller.removeVideo(index),
                                           child: Container(
                                             height: 30,
@@ -313,8 +319,11 @@ class DoctorAddPostScreen extends GetView<DoctorAddPostController> {
                   SizedBox(height: 6 * SizeConfig.heightMultiplier),
                   Row(
                     children: [
-                      GestureDetector(
-                        onTap: () {
+                      CupertinoButton(
+                        pressedOpacity: 0,
+                        padding: EdgeInsets.zero,
+                        minSize: 0,
+                        onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
                           addPhoto(context);
                         },
@@ -326,8 +335,11 @@ class DoctorAddPostScreen extends GetView<DoctorAddPostController> {
                         ),
                       ),
                       10.horizontalSpace,
-                      InkWell(
-                        onTap: () {
+                      CupertinoButton(
+                        pressedOpacity: 0,
+                        padding: EdgeInsets.zero,
+                        minSize: 0,
+                        onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
                           addVideo(context);
                         },
@@ -337,8 +349,11 @@ class DoctorAddPostScreen extends GetView<DoctorAddPostController> {
                         ),
                       ),
                       const Spacer(),
-                      InkWell(
-                        onTap: () {
+                      CupertinoButton(
+                        pressedOpacity: 0,
+                        padding: EdgeInsets.zero,
+                        minSize: 0,
+                        onPressed: () {
                           if (form.currentState!.validate()) {
                             FocusManager.instance.primaryFocus?.unfocus();
                             controller.uploadContent(context);

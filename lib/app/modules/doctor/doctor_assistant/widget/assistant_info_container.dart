@@ -4,6 +4,7 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -17,7 +18,7 @@ class AssistantInfoContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),

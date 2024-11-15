@@ -3,6 +3,7 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -62,8 +63,11 @@ class GenderDialogBox extends GetView<DoctorEditProfileController> {
                             children: [
                               Align(
                                 alignment: Alignment.topRight,
-                                child: InkWell(
-                                  onTap: () => Get.back(),
+                                child: CupertinoButton(
+                                  pressedOpacity: 0,
+                                  padding: EdgeInsets.zero,
+                                  minSize: 0,
+                                  onPressed: () => Get.back(),
                                   child: const Icon(
                                     Icons.close,
                                     color: Colors.grey,
@@ -82,8 +86,11 @@ class GenderDialogBox extends GetView<DoctorEditProfileController> {
                               const SizedBox(height: 20),
                               ...List.generate(controller.genderList.length,
                                   (index) {
-                                return InkWell(
-                                  onTap: () {
+                                return CupertinoButton(
+                                  pressedOpacity: 0,
+                                  padding: EdgeInsets.zero,
+                                  minSize: 0,
+                                  onPressed: () {
                                     controller.selectedGender.value = index;
                                   },
                                   child: Padding(

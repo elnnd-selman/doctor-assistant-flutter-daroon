@@ -11,6 +11,7 @@ import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -76,8 +77,11 @@ class EditAddressDoctor extends GetView<EditDoctorAddressController> {
                                   shrinkWrap: true,
                                   itemCount: officeTypeList.length,
                                   itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                        onTap: () {
+                                    return CupertinoButton(
+                                        pressedOpacity: 0,
+                                        padding: EdgeInsets.zero,
+                                        minSize: 0,
+                                        onPressed: () {
                                           controller.slectedOffice.value =
                                               index;
                                         },

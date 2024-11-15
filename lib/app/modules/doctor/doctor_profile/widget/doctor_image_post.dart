@@ -4,8 +4,10 @@ import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/post_comment_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/comment_bottom_sheet.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -189,9 +191,11 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
             children: [
               Row(
                 children: [
-                  InkWell(
-                      splashColor: Colors.transparent,
-                      onTap: () => Get.find<DoctorProfileController>()
+                  CupertinoButton(
+                      pressedOpacity: 0,
+                      padding: EdgeInsets.zero,
+                      minSize: 0,
+                      onPressed: () => Get.find<DoctorProfileController>()
                           .updateLikeOnPost(
                               contentData: widget.contentData,
                               index: widget.index),
@@ -204,8 +208,11 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
                             : Colors.black,
                       )),
                   const SizedBox(width: 4),
-                  InkWell(
-                    onTap: () => Get.toNamed(Routes.postLikeUserDetail),
+                  CupertinoButton(
+                    pressedOpacity: 0,
+                    padding: EdgeInsets.zero,
+                    minSize: 0,
+                    onPressed: () => Get.toNamed(Routes.postLikeUserDetail),
                     child: Text(
                       " ${widget.contentData.likes} Likes",
                       style: AppTextStyles.medium.copyWith(
@@ -250,9 +257,13 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
     );
   }
 
-  InkWell _buildLikeRow(String title, String iconUrl, Function()? onTap) {
-    return InkWell(
-      onTap: onTap,
+  CupertinoButton _buildLikeRow(
+      String title, String iconUrl, Function()? onTap) {
+    return CupertinoButton(
+      pressedOpacity: 0,
+      padding: EdgeInsets.zero,
+      minSize: 0,
+      onPressed: onTap,
       child: Row(
         children: [
           SvgPicture.asset(
@@ -292,8 +303,7 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: menuList
                   .map(
-                    (item) => GestureDetector(
-                      behavior: HitTestBehavior.translucent,
+                    (item) => CustomCupertinoButton(
                       onTap: () {
                         customPopupMenuController.hideMenu();
 

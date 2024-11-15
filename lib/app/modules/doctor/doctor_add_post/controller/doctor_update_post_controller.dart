@@ -167,7 +167,7 @@ class DoctorUpdatePostController extends GetxController {
     );
 
     if (response.statusCode == 201 || response.statusCode == 200) {
-      Get.find<DoctorProfileController>().getDoctorPost();
+      Get.find<DoctorProfileController>().getDoctorPost(postType: 'post');
       clearController();
       Get.back();
       showToastMessage(

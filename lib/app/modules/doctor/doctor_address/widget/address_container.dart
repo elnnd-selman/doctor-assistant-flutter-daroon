@@ -7,6 +7,7 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -136,8 +137,7 @@ class _AddressContainerState extends State<AddressContainer> {
               children: Get.find<DoctorAddressController>()
                   .menuList
                   .map(
-                    (item) => GestureDetector(
-                      behavior: HitTestBehavior.translucent,
+                    (item) => CustomCupertinoButton(
                       onTap: () {
                         setState(() {
                           customPopupMenuController.hideMenu();

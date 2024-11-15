@@ -2,6 +2,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class AddAssistantPremission extends GetView<AddAssistantController> {
           ),
         ),
       ),
-      bottomNavigationBar: GestureDetector(
+      bottomNavigationBar: CustomCupertinoButton(
         onTap: () {
           if (controller.selectedPremissionList.isEmpty) {
             showToastMessage(

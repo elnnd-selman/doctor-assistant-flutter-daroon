@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/auth/forget/controller/forget_password_controller.dart';
@@ -53,8 +54,11 @@ class ForgetPassowrdScreen extends GetView<ForgetPasswordCtrl> {
               shrinkWrap: true,
               itemCount: 2,
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
+                return CupertinoButton(
+                  pressedOpacity: 0,
+                  padding: EdgeInsets.zero,
+                  minSize: 0,
+                  onPressed: () {
                     controller.currentIndex.value = index;
                   },
                   child: _buildForgetContainer(index),

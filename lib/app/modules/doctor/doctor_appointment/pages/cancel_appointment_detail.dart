@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,7 @@ class CancelAppointmentDetail extends GetView<CancelAppointmentController> {
                     shrinkWrap: true,
                     itemCount: cancelAppointmentList.length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
+                      return CustomCupertinoButton(
                         onTap: () {
                           controller.currentIndex.value = index;
                         },

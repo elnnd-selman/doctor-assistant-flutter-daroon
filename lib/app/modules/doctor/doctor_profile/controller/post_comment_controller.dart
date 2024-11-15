@@ -44,7 +44,7 @@ class PostCommentController extends GetxController {
     commentsLoading.value = true;
     // content/66fc53279a950595e01369de/comments
     final response = await ApiService.getwithUserToken(
-      endPoint: '${AppTokens.apiURl}/content/$postID/comments',
+      endPoint: '${AppTokens.apiURl}/contents/$postID/comments',
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -66,7 +66,7 @@ class PostCommentController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/comments/$postID',
+        endPoint: '${AppTokens.apiURl}/comments/contents/$postID',
         body: {
           "comment": commentTextController.text.trim(),
         },
@@ -100,7 +100,7 @@ class PostCommentController extends GetxController {
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
         endPoint:
-            '${AppTokens.apiURl}/content/$postID/comments/${commetnModelList[selectedCommentIndex.value].id}/replay',
+            '${AppTokens.apiURl}/contents/$postID/comments/${commetnModelList[selectedCommentIndex.value].id}/replay',
         body: {
           "comment": commentTextController.text.trim(),
         },

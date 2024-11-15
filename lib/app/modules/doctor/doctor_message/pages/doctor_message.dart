@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/pages/doctor_chat_room.dart';
@@ -115,8 +116,9 @@ class DoctorMessageScreen extends StatelessWidget {
   }
 }
 
-GestureDetector _buildChatContainer(Message allChat, BuildContext context) {
-  return GestureDetector(
+CustomCupertinoButton _buildChatContainer(
+    Message allChat, BuildContext context) {
+  return CustomCupertinoButton(
     onTap: () {
       // Get.to(() => ChatPage());
       // Get.toNamed(Routes.doctorChatRoom, arguments: {

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -86,7 +87,7 @@ class _VideoPlayerPostState extends State<VideoPlayerPost> {
                                 const Expanded(
                                   flex: 3,
                                   child: SizedBox(),
-                                  //  GestureDetector(
+                                  //  CustomCupertinoButton(
                                   //   onDoubleTap: () async {
                                   //     Duration? position =
                                   //         await controller!.position;
@@ -104,8 +105,11 @@ class _VideoPlayerPostState extends State<VideoPlayerPost> {
                                 ),
                                 Expanded(
                                     flex: 4,
-                                    child: InkWell(
-                                      onTap: () {
+                                    child: CupertinoButton(
+                                      pressedOpacity: 0,
+                                      padding: EdgeInsets.zero,
+                                      minSize: 0,
+                                      onPressed: () {
                                         setState(() {
                                           if (controller!.value.isPlaying) {
                                             controller!.pause();
@@ -142,7 +146,7 @@ class _VideoPlayerPostState extends State<VideoPlayerPost> {
                                   flex: 3,
                                   child: SizedBox(),
 
-                                  // GestureDetector(
+                                  // CustomCupertinoButton(
                                   //   onDoubleTap: () async {
                                   //     Duration? position =
                                   //         await controller!.position;

@@ -1,6 +1,7 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_edit_speciality_controller.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -26,9 +27,11 @@ class DoctorSpecialtyContainer extends GetView<DoctorEditSpecialityController> {
               shrinkWrap: true,
               itemCount: controller.specialityDataList.length,
               itemBuilder: (context, index) {
-                return InkWell(
-                  splashColor: Colors.transparent,
-                  onTap: () {
+                return CupertinoButton(
+                  pressedOpacity: 0,
+                  padding: EdgeInsets.zero,
+                  minSize: 0,
+                  onPressed: () {
                     controller.selectedIndex.value = index;
                   },
                   child: Center(

@@ -139,9 +139,11 @@ class ApiService {
     required String descriptionEN,
     required String descriptionAR,
   }) async {
+    // contents?title_ku=TextKu&title_ar=TextAr&title_en=textEn&content_ku=here is content&content_en=here is content&content_ar=here is content&isPrivate=false&contentType=post
     var uri = Uri.parse(
-      '${AppTokens.apiURl}/content?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false&contentType=post',
+      '${AppTokens.apiURl}/contents?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false&contentType=post',
     );
+    print(uri);
     var request = http.MultipartRequest('POST', uri)
       ..headers['Content-Type'] = 'multipart/form-data'
       ..headers["Authorization"] = userToken;
@@ -178,7 +180,7 @@ class ApiService {
     required String descriptionAR,
   }) async {
     var uri = Uri.parse(
-      '${AppTokens.apiURl}/content/$contentID/update?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false&contentType=post',
+      '${AppTokens.apiURl}/contents/$contentID/update?title_ku=$titleKU&title_ar=$titleAR&title_en=$titleEN&content_ku=$descriptionKU&content_en=$descriptionEN&content_ar=$descriptionAR&isPrivate=false&contentType=post',
     );
     var request = http.MultipartRequest('PUT', uri)
       ..headers['Content-Type'] = 'multipart/form-data'
@@ -226,6 +228,20 @@ class ApiService {
     var streamedResponse = await request.send();
 
     var response = await http.Response.fromStream(streamedResponse);
+    return response;
+  }
+
+  static Future<http.Response?> patchWithHeader({
+    required String endPoint,
+    required Map<String, dynamic>? body,
+    required Map<String, String>? userToken,
+  }) async {
+    if (kDebugMode) {
+      print(endPoint);
+    }
+    final response = await http.put(Uri.parse(endPoint),
+        headers: userToken, body: jsonEncode(body));
+
     return response;
   }
 }

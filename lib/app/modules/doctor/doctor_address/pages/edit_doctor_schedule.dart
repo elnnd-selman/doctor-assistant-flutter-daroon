@@ -7,10 +7,12 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:duration_picker/duration_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -111,8 +113,11 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
                     Row(
                       children: [
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
+                          child: CupertinoButton(
+                            pressedOpacity: 0,
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: () async {
                               // controller.startWithTime.value =
                               final time = await getTime(context: context);
                               if (time != null) {
@@ -165,8 +170,11 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
                         ),
                         SizedBox(width: 3 * SizeConfig.widthMultiplier),
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
+                          child: CupertinoButton(
+                            pressedOpacity: 0,
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: () async {
                               final time = await getTime(context: context);
                               if (time != null) {
                                 controller.endWithTime.value = time;
@@ -230,8 +238,11 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
                     Row(
                       children: [
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
+                          child: CupertinoButton(
+                            pressedOpacity: 0,
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: () async {
                               final time = await getTimeDuration(context);
                               if (time != null) {
                                 controller.timeDuration.value = time;
@@ -275,8 +286,11 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
                         ),
                         SizedBox(width: 3 * SizeConfig.widthMultiplier),
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () async {
+                          child: CupertinoButton(
+                            pressedOpacity: 0,
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: () async {
                               final time = await getTimeDuration(context);
                               if (time != null) {
                                 controller.timeDuration.value = time;
@@ -523,7 +537,7 @@ class EditDoctorSchedule extends GetView<EditDoctorScheduleController> {
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return GestureDetector(
+            return CustomCupertinoButton(
               onTap: () {
                 if (controller.selectedWeekDays
                     .contains(controller.weekDaysListFull[index])) {

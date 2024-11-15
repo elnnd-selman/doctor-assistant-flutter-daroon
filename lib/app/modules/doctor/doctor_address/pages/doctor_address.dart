@@ -1,6 +1,7 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/widget/address_container.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -40,8 +41,11 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                           ),
                         ),
                         const Spacer(),
-                        InkWell(
-                          onTap: () => Get.toNamed(Routes.seeOnMapOffices),
+                        CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () => Get.toNamed(Routes.seeOnMapOffices),
                           child: Text(
                             "See On Map",
                             style: AppTextStyles.medium.copyWith(
@@ -128,8 +132,11 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                                   itemCount:
                                       controller.officeAddressModelList.length,
                                   itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
+                                    return CupertinoButton(
+                                      pressedOpacity: 0,
+                                      padding: EdgeInsets.zero,
+                                      minSize: 0,
+                                      onPressed: () {
                                         Get.toNamed(
                                           Routes.doctorAdressDetail,
                                           arguments: [

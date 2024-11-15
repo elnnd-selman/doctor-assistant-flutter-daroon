@@ -1,4 +1,5 @@
 import 'package:duration_picker/duration_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -70,8 +71,11 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                   Row(
                     children: [
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
+                        child: CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () async {
                             // controller.startWithTime.value =
                             final time = await getTime(context: context);
                             if (time != null) {
@@ -123,8 +127,11 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                       ),
                       SizedBox(width: 3 * SizeConfig.widthMultiplier),
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
+                        child: CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () async {
                             final time = await getTime(context: context);
                             if (time != null) {
                               controller.endWithTime.value = time;
@@ -187,8 +194,11 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                   Row(
                     children: [
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
+                        child: CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () async {
                             final time = await getTimeDuration(context);
                             if (time != null) {
                               controller.timeDuration.value = time;
@@ -232,8 +242,11 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
                       ),
                       SizedBox(width: 3 * SizeConfig.widthMultiplier),
                       Expanded(
-                        child: GestureDetector(
-                          onTap: () async {
+                        child: CupertinoButton(
+                          pressedOpacity: 0,
+                          padding: EdgeInsets.zero,
+                          minSize: 0,
+                          onPressed: () async {
                             final time = await getTimeDuration(context);
                             if (time != null) {
                               controller.timeDuration.value = time;
@@ -462,8 +475,11 @@ class AddAdressDetailScreen extends GetView<AddDoctorAddressController> {
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
+            return CupertinoButton(
+              pressedOpacity: 0,
+              padding: EdgeInsets.zero,
+              minSize: 0,
+              onPressed: () {
                 if (controller.selectedWeekDays
                     .contains(controller.weekDaysListFull[index])) {
                   controller.selectedWeekDays.removeWhere(

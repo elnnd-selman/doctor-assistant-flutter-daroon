@@ -7,6 +7,7 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -108,8 +109,11 @@ class SeeOnMapContainer extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              InkWell(
-                onTap: () => Get.toNamed(
+              CupertinoButton(
+                pressedOpacity: 0,
+                padding: EdgeInsets.zero,
+                minSize: 0,
+                onPressed: () => Get.toNamed(
                   Routes.doctorAdressDetail,
                   arguments: [
                     officeAddreesModel,

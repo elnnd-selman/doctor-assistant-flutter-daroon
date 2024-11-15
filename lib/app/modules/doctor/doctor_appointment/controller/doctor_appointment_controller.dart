@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
 import 'package:daroon_doctor/app/model/user_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DoctorAppointmentController extends GetxController {
@@ -84,5 +87,135 @@ class DoctorAppointmentController extends GetxController {
         .daroonBox!
         .get("userModel", defaultValue: UserModel);
     await getDoctorAppointments();
+  }
+
+/////////////////
+  RxInt currentIndex = RxInt(-1);
+
+  RxList<String> weekDaysList = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ].obs;
+
+  RxInt currentTimeIndex = RxInt(-1);
+
+  RxList<String> timeDaysList = [
+    "8:00",
+    "8:30",
+    "9:00",
+    "9:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+  ].obs;
+
+  RxList<String> weekDaysListFull = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday"
+  ].obs;
+
+  RxBool processing = false.obs;
+  reScheduleAppointment(
+    AppointmentModel appointmentModel,
+    BuildContext context,
+  ) async {
+    try {
+      processing.value = true;
+      final response = await ApiService.putWithHeader(
+          userToken: {
+            'Content-Type': 'application/json',
+            "Authorization":
+                "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+          },
+          endPoint:
+              '${AppTokens.apiURl}/doctors/appointments/${appointmentModel.id}/reschedule',
+          body: {
+            "selectedDay": weekDaysListFull[currentIndex.value],
+            "selectedTime": timeDaysList[currentTimeIndex.value],
+          });
+
+      if (response != null) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          print(response.body);
+        } else {
+          print(response.body);
+          showToastMessage(
+              message: response.body,
+              // ignore: use_build_context_synchronously
+              context: context,
+              color: const Color(0xffEC1C24),
+              icon: Icons.close);
+        }
+      }
+      processing.value = false;
+    } catch (e) {
+      processing.value = false;
+      printInfo(info: e.toString());
+    }
+  }
+
+  final _confirmProcessing = false.obs;
+  bool get confirmProcessing => _confirmProcessing.value;
+  confirmAppointment(
+    AppointmentModel appointmentModel,
+    BuildContext context,
+    String status,
+  ) async {
+    try {
+      _confirmProcessing.value = true;
+      final response = await ApiService.putWithHeader(
+          userToken: {
+            'Content-Type': 'application/json',
+            "Authorization":
+                "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+          },
+          endPoint:
+              '${AppTokens.apiURl}/doctors/appointments/${appointmentModel.id}/$status',
+          body: {});
+
+      if (response != null) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
+        } else {
+          showToastMessage(
+              message: response.body,
+              // ignore: use_build_context_synchronously
+              context: context,
+              color: const Color(0xffEC1C24),
+              icon: Icons.close);
+        }
+      }
+      _confirmProcessing.value = false;
+    } catch (e) {
+      _confirmProcessing.value = false;
+      print(e.toString());
+    }
   }
 }

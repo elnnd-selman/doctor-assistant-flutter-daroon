@@ -7,6 +7,8 @@ import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,7 @@ class CommentBottomSheet extends GetView<PostCommentController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => PostCommentController());
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Container(
         height: MediaQuery.of(context).size.height / 1.2 +
@@ -185,8 +187,11 @@ class CommentBottomSheet extends GetView<PostCommentController> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           isDense: true,
-                          suffixIcon: InkWell(
-                            onTap: () {
+                          suffixIcon: CupertinoButton(
+                            pressedOpacity: 0,
+                            padding: EdgeInsets.zero,
+                            minSize: 0,
+                            onPressed: () {
                               if (controller.selectedCommentIndex.value == -1) {
                                 controller.sendCommentOnPost();
                               } else {

@@ -1,5 +1,6 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class AddAssistantScreen extends GetView<AddAssistantController> {
           ),
         ),
       ),
-      bottomNavigationBar: GestureDetector(
+      bottomNavigationBar: CustomCupertinoButton(
         onTap: () {
           if (controller.selectedUserIndex.value == -1) {
             showToastMessage(
@@ -163,7 +164,7 @@ class AddAssistantScreen extends GetView<AddAssistantController> {
                               }
                             }),
               ),
-              // GestureDetector(
+              // CustomCupertinoButton(
               //   onTap: () => Get.toNamed(
               //     Routes.searchUser,
               //   ),
@@ -475,7 +476,7 @@ class AddAssistantScreen extends GetView<AddAssistantController> {
               //   ),
               // ),
               // 16.verticalSpace,
-              // GestureDetector(
+              // CustomCupertinoButton(
               //   onTap: () => Get.toNamed(Routes.doctorAssistantEditAddress,
               //       arguments: {"isEditing": false}),
               //   child: Container(

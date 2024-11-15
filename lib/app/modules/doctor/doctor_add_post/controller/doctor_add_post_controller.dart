@@ -45,7 +45,7 @@ class DoctorAddPostController extends GetxController {
           color: const Color(0xff5BA66B),
           icon: Icons.check);
       clearController();
-      Get.find<DoctorProfileController>().getDoctorPost();
+      Get.find<DoctorProfileController>().getDoctorPost(postType: 'post');
     } else {
       showToastMessage(
           message: response.body,

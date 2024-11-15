@@ -1,6 +1,7 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/offer_edit_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/model/doctor_offer_model.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
@@ -84,7 +85,7 @@ class EditOfferAddress extends GetView<OfferEditController> {
                         .officeAddressModelList
                         .length,
                     itemBuilder: (context, index) {
-                      return GestureDetector(
+                      return CustomCupertinoButton(
                         onTap: () {
                           controller.selectedIndex.value = index;
                           controller.selectedAddress.value =

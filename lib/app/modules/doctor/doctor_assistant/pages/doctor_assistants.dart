@@ -1,4 +1,5 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/widget/assistant_info_container.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -111,7 +112,7 @@ class DoctorAssistantsScreen extends GetView<DoctorAssistantController> {
                       fontSize: 17,
                     ),
                   ),
-                  GestureDetector(
+                  CustomCupertinoButton(
                     onTap: () => Get.toNamed(Routes.adddoctorAssistant),
                     child: Text(
                       "Add Assistant",

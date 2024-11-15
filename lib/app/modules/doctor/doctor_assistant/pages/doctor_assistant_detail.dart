@@ -1,6 +1,7 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/doctor_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +46,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
         // actions: [
         //   Padding(
         //     padding: const EdgeInsets.only(right: 14),
-        //     child: GestureDetector(
+        //     child: CustomCupertinoButton(
         //       onTap: () => Get.toNamed(Routes.doctorAssistantEditProfile),
         //       child: Text(
         //         "Edit",
@@ -76,7 +77,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                   SizedBox(height: 2 * SizeConfig.heightMultiplier),
                   premissionContainer(context),
                   SizedBox(height: 2 * SizeConfig.heightMultiplier),
-                  GestureDetector(
+                  CustomCupertinoButton(
                     onTap: () {
                       controller.deleteAssistant(
                           assistantData: assistantData, context: context);
@@ -147,7 +148,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                     AppColors.primaryColor, BlendMode.srcIn),
               ),
               4.horizontalSpace,
-              GestureDetector(
+              CustomCupertinoButton(
                 onTap: () {
                   controller.selectedPremissionList.value = [];
                   if (assistantData.permissions
@@ -264,7 +265,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                     AppColors.primaryColor, BlendMode.srcIn),
               ),
               4.horizontalSpace,
-              GestureDetector(
+              CustomCupertinoButton(
                 onTap: () {
                   controller.selectedAddress.value =
                       assistantData.office!.description!;
@@ -404,7 +405,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                                       ),
                                     ),
                                     const Spacer(),
-                                    GestureDetector(
+                                    CustomCupertinoButton(
                                       onTap: () => Get.back(),
                                       child: Icon(
                                         Icons.close,
@@ -423,7 +424,7 @@ class DoctorAssistantDetailScreen extends GetView<DoctorAssistantController> {
                                             .premissionList
                                             .length,
                                     itemBuilder: (context, index) {
-                                      return GestureDetector(
+                                      return CustomCupertinoButton(
                                         onTap: () {
                                           if (controller.selectedPremissionList
                                               .contains(Get.find<

@@ -1,4 +1,5 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -251,7 +252,8 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           : const Color(0xff979797),
                       ontap: () {
                         if (Get.find<DoctorProfileController>().initialized) {
-                          Get.find<DoctorProfileController>().getDoctorPost();
+                          Get.find<DoctorProfileController>()
+                              .getDoctorPost(postType: 'post');
                           Get.find<DoctorProfileController>()
                               .getUserProfileData();
                         }
@@ -274,13 +276,13 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
     );
   }
 
-  GestureDetector _bottomIcons({
+  CustomCupertinoButton _bottomIcons({
     required String icon,
     required double size,
     required Color color,
     required Function()? ontap,
   }) {
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: ontap,
       child: Container(
         padding: EdgeInsets.symmetric(

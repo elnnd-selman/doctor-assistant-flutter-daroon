@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -72,12 +73,12 @@ class DoctorLanguageScreen extends GetView<DoctorLanguageController> {
     );
   }
 
-  GestureDetector languageContainer(
+  CustomCupertinoButton languageContainer(
     String title,
     int index,
     Function()? onTap,
   ) {
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),

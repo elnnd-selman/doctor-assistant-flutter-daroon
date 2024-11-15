@@ -3,6 +3,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/doctor
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/model/doctor_offer_model.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/generated/assets.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
@@ -60,7 +61,7 @@ class DoctorOfferDetailScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GestureDetector(
+                            CustomCupertinoButton(
                               onTap: () => Get.back(),
                               child: const Icon(
                                 Icons.arrow_back,
@@ -359,8 +360,7 @@ class DoctorOfferDetailScreen extends StatelessWidget {
               children: Get.find<DoctorOffersController>()
                   .menuList
                   .map(
-                    (item) => GestureDetector(
-                      behavior: HitTestBehavior.translucent,
+                    (item) => CustomCupertinoButton(
                       onTap: () {
                         Get.find<DoctorOffersController>()
                             .controller

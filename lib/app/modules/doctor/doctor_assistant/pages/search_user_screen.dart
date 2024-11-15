@@ -5,6 +5,7 @@ import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
@@ -17,7 +18,7 @@ class SearchUserScreen extends GetView<AddAssistantController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: GestureDetector(
+      bottomNavigationBar: CustomCupertinoButton(
         onTap: () {
           if (controller.selectedUserIndex.value == -1) {
             showToastMessage(
@@ -175,7 +176,7 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: onTap,
       child: Obx(
         () => Container(

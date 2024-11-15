@@ -1,5 +1,6 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/doctor_offer_pending_container.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/doctor_offer_published_container.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -125,7 +126,7 @@ class DoctorOffersPage extends GetView<DoctorOffersController> {
                       fontSize: 17,
                     ),
                   ),
-                  GestureDetector(
+                  CustomCupertinoButton(
                     onTap: () => Get.toNamed(Routes.doctorAddOffers),
                     child: Text(
                       "Add Offer",

@@ -14,7 +14,7 @@ import 'package:intl/intl.dart';
 class DoctorProfileController extends GetxController {
   final _selectedTab = 0.obs;
   int get selectedTab => _selectedTab.value;
-  RxInt currentPage = 0.obs;
+  // RxInt currentPage = 0.obs;
   RxInt totalPages = 1.obs;
   RxBool isLoading = false.obs;
   RxBool processing = false.obs;
@@ -23,10 +23,28 @@ class DoctorProfileController extends GetxController {
     _selectedTab.value = value;
   }
 
-  Rxn<ContentModel> contentModelList = Rxn();
+  // Rxn<ContentModel> contentModelList = Rxn();
+  RxList<ContentData> contentModelList = <ContentData>[].obs;
+  RxList<String> getPostType = [
+    "All Posts",
+    "Image",
+    "Videos",
+    "Text",
+  ].obs;
 
-  getDoctorPost() async {
+  RxString selecetdPostType = 'All Posts'.obs;
+
+  RxInt currentRecord = 0.obs;
+  RxInt currentPage = 1.obs;
+  RxInt totalRecord = RxInt(-1);
+
+  getDoctorPost({
+    required String postType,
+  }) async {
     isLoading.value = true;
+    currentPage.value = 1;
+    currentRecord.value = 0;
+    contentModelList.value = [];
 
     try {
       if (kDebugMode) {
@@ -36,7 +54,7 @@ class DoctorProfileController extends GetxController {
 
       final response = await ApiService.getwithUserToken(
         endPoint:
-            '${AppTokens.apiURl}/content/my-contents?pagination=1&limit=10&contentType=post',
+            '${AppTokens.apiURl}/contents/my-contents?pagination=1&limit=10&contentType=${postType == 'All Posts' ? 'post' : postType.toLowerCase()}',
         userToken: {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -45,8 +63,15 @@ class DoctorProfileController extends GetxController {
       if (response!.statusCode == 200 || response.statusCode == 201) {
         final jsonData = jsonDecode(response.body);
 
-        contentModelList.value = ContentModel.fromJson(jsonData);
-        totalPages.value = contentModelList.value!.paginationCount!;
+        RxList<ContentData> tempList = <ContentData>[].obs;
+
+        totalRecord.value = jsonData["totalRecord"];
+
+        tempList.value = List<ContentData>.from(
+            jsonData["data"]!.map((x) => ContentData.fromJson(x)));
+
+        contentModelList = contentModelList + tempList;
+        currentRecord.value = contentModelList.length;
       } else {
         printError(info: response.body);
       }
@@ -57,6 +82,29 @@ class DoctorProfileController extends GetxController {
       printInfo(info: e.toString());
     }
     isLoading.value = false;
+  }
+
+  postInApiReFetch(String postType) async {
+    currentPage = currentPage + 1;
+
+    final response = await ApiService.getwithUserToken(
+      endPoint:
+          '${AppTokens.apiURl}/contents/my-contents?pagination=$currentPage&limit=10&contentType=$postType',
+      userToken: {
+        "Authorization":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
+    );
+    if (response!.statusCode == 200 || response.statusCode == 201) {
+      final jsonData = jsonDecode(response.body);
+      final tempList = <ContentData>[].obs;
+
+      tempList.value = List<ContentData>.from(
+          jsonData["data"]!.map((x) => ContentData.fromJson(x)));
+
+      contentModelList = contentModelList + tempList;
+      currentRecord.value = contentModelList.length;
+    }
   }
 
   String convertDateToformat(String date) {
@@ -75,18 +123,16 @@ class DoctorProfileController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}"
         },
-        endPoint: '${AppTokens.apiURl}/likes/${contentData.id}',
+        endPoint: '${AppTokens.apiURl}/likes/contents/${contentData.id}',
         body: {});
     if (response != null) {
       if (response.statusCode == 201 || response.statusCode == 200) {
-        if (contentModelList.value!.data[index].isLiked!) {
-          contentModelList.value!.data[index].isLiked = false;
-          contentModelList.value!.data[index].likes =
-              contentModelList.value!.data[index].likes! - 1;
+        if (contentModelList[index].isLiked!) {
+          contentModelList[index].isLiked = false;
+          contentModelList[index].likes = contentModelList[index].likes! - 1;
         } else {
-          contentModelList.value!.data[index].isLiked = true;
-          contentModelList.value!.data[index].likes =
-              contentModelList.value!.data[index].likes! + 1;
+          contentModelList[index].isLiked = true;
+          contentModelList[index].likes = contentModelList[index].likes! + 1;
         }
         contentModelList.refresh();
       } else {
@@ -99,7 +145,7 @@ class DoctorProfileController extends GetxController {
   getUserProfileData() async {
     processing.value = true;
     final response = await ApiService.getwithUserToken(
-      endPoint: '${AppTokens.apiURl}/users/profile',
+      endPoint: '${AppTokens.apiURl}/doctors/profile',
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -135,14 +181,13 @@ class DoctorProfileController extends GetxController {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
       },
-      endPoint: '${AppTokens.apiURl}/content/${contentData.id}/delete',
+      endPoint: '${AppTokens.apiURl}/contents/${contentData.id}/delete',
       body: {},
     );
 
     if (response != null) {
       if (response.statusCode == 200 || response.statusCode == 201) {
-        contentModelList.value!.data
-            .removeWhere((val) => val.id == contentData.id);
+        contentModelList.removeWhere((val) => val.id == contentData.id);
         contentModelList.refresh();
         showToastMessage(
             message:
@@ -152,5 +197,35 @@ class DoctorProfileController extends GetxController {
             icon: Icons.check);
       }
     }
+  }
+
+  ScrollController scrollController = ScrollController();
+  RxBool reFetchLoader = false.obs;
+
+  Future<void> _loadMoreData() async {
+    if (selectedTab == 1) {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        if (contentModelList.isNotEmpty) {
+          if (totalRecord.value != currentRecord.value &&
+              currentRecord < totalRecord.value) {
+            reFetchLoader.value = true;
+            await postInApiReFetch(selecetdPostType.value == 'All Posts'
+                ? 'post'
+                : selecetdPostType.value.toLowerCase());
+          }
+        }
+
+        reFetchLoader.value = false;
+      }
+    } else {
+      print("No");
+    }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController.addListener(_loadMoreData);
   }
 }

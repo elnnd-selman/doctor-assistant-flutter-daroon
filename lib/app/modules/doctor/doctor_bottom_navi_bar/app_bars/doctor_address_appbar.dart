@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/controller/doctor_custom_navi_controller.dart';
@@ -49,7 +50,7 @@ class DoctorLocationAppBar extends GetView<DoctorCustomNaviController> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
+                CustomCupertinoButton(
                   onTap: () => Get.toNamed(Routes.addDoctorAdress),
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.045,

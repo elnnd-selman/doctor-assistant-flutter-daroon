@@ -168,7 +168,7 @@ class OfferEditController extends GetxController {
     _processing.value = true;
 
     final imageResponse = await ApiService.uploadImageInDataBase(
-      url: '${AppTokens.apiURl}/content/upload-image',
+      url: '${AppTokens.apiURl}/contents/upload-image',
       headers: {
         "Content-type": "multipart/form-data",
         "Authorization":
@@ -202,7 +202,7 @@ class OfferEditController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/offers/${data.id}/update',
+        endPoint: '${AppTokens.apiURl}/doctors/offers/${data.id}/update',
         body: jsonData,
       );
       if (response != null) {

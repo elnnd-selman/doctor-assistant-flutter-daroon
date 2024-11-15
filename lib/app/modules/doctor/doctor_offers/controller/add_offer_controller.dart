@@ -155,7 +155,7 @@ class AddOfferController extends GetxController {
     _processing.value = true;
 
     final imageResponse = await ApiService.uploadImageInDataBase(
-      url: '${AppTokens.apiURl}/content/upload-image',
+      url: '${AppTokens.apiURl}/contents/upload-image',
       headers: {
         "Content-type": "multipart/form-data",
         "Authorization":
@@ -189,7 +189,7 @@ class AddOfferController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/offers',
+        endPoint: '${AppTokens.apiURl}/doctors/offers',
         body: jsonData,
       );
       if (response != null) {

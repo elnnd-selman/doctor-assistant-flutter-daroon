@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -59,12 +60,12 @@ class DoctorHomeAppBar extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          GestureDetector(
+          CustomCupertinoButton(
               onTap: () => Get.toNamed(Routes.doctorNotification),
               child: SvgPicture.asset(Assets.notificationIcon,
                   height: 23, width: 23)),
           14.horizontalSpace,
-          GestureDetector(
+          CustomCupertinoButton(
               onTap: () => Get.toNamed(Routes.doctorMessage),
               child:
                   SvgPicture.asset(Assets.messageIcon, height: 23, width: 23)),

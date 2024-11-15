@@ -4,8 +4,10 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/docto
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/gender_dialog_box.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/widget/uplaod_profile_pic_dialog.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
@@ -132,9 +134,11 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
                             Positioned(
                               bottom: 3,
                               right: 8,
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                onTap: () => updateProfilePhoto(context),
+                              child: CupertinoButton(
+                                pressedOpacity: 0,
+                                padding: EdgeInsets.zero,
+                                minSize: 0,
+                                onPressed: () => updateProfilePhoto(context),
                                 child: Container(
                                   alignment: Alignment.center,
                                   height: 3 * SizeConfig.heightMultiplier,
@@ -340,7 +344,7 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
           ),
         ),
         Expanded(
-          child: GestureDetector(
+          child: CustomCupertinoButton(
             onTap: onTap,
             child: TextFormField(
               style: AppTextStyles.medium.copyWith(
@@ -375,7 +379,7 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
                   borderSide: BorderSide(color: AppColors.borderColor),
                 ),
                 suffixIcon: showIcon
-                    ? GestureDetector(
+                    ? CustomCupertinoButton(
                         onTap: onTap,
                         child: const Padding(
                           padding: EdgeInsets.only(bottom: 6),

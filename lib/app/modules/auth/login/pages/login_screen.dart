@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/auth/login/controller/login_controller.dart';
@@ -109,8 +110,11 @@ class LoginScreen extends GetView<LoginCtrl> {
                     const SizedBox(height: 15),
                     Align(
                       alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () {
+                      child: CupertinoButton(
+                        pressedOpacity: 0,
+                        padding: EdgeInsets.zero,
+                        minSize: 0,
+                        onPressed: () {
                           Get.toNamed(Routes.forgetPassword);
                         },
                         child: Text("Forgot password?",

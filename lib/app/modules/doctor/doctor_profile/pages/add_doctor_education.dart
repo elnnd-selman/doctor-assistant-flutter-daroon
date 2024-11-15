@@ -4,6 +4,7 @@ import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/common_button.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -286,11 +287,11 @@ class AddDoctorEducation extends GetView<AddEducationController> {
     );
   }
 
-  GestureDetector _buildTimeContainer({
+  CustomCupertinoButton _buildTimeContainer({
     required String title,
     required Function()? ontap,
   }) {
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: ontap,
       child: Container(
         padding: EdgeInsets.symmetric(

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -24,8 +25,11 @@ class UpcomingAppointmentContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: 3 * SizeConfig.widthMultiplier,
           vertical: 1.5 * SizeConfig.heightMultiplier),
-      child: InkWell(
-        onTap: () {
+      child: CupertinoButton(
+        pressedOpacity: 0,
+        padding: EdgeInsets.zero,
+        minSize: 0,
+        onPressed: () {
           Get.toNamed(
             Routes.doctorAppointmentDetail,
             arguments: [

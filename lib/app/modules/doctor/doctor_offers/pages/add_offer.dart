@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/add_offer_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/image_video_pick.dart';
 import 'package:daroon_doctor/global/utils/timestamp_extention.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/widget/date_picker.dart';
@@ -68,8 +70,11 @@ class DoctorAddOfferScreen extends GetView<AddOfferController> {
                 ),
               ),
               10.verticalSpace,
-              InkWell(
-                onTap: () => addOfferPhoto(context),
+              CupertinoButton(
+                pressedOpacity: 0,
+                padding: EdgeInsets.zero,
+                minSize: 0,
+                onPressed: () => addOfferPhoto(context),
                 child: Obx(
                   () => Container(
                       height: 20 * SizeConfig.heightMultiplier,
@@ -313,11 +318,11 @@ class DoctorAddOfferScreen extends GetView<AddOfferController> {
     );
   }
 
-  GestureDetector _buildTimeContainer({
+  CustomCupertinoButton _buildTimeContainer({
     required String title,
     required Function()? ontap,
   }) {
-    return GestureDetector(
+    return CustomCupertinoButton(
       onTap: ontap,
       child: Container(
         padding: EdgeInsets.symmetric(

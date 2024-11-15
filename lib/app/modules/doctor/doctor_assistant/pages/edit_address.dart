@@ -1,6 +1,7 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -62,7 +63,7 @@ class DoctorAssistentEditAddress extends GetView<AddAssistantController> {
                     .officeAddressModelList
                     .length,
                 itemBuilder: (context, index) {
-                  return GestureDetector(
+                  return CustomCupertinoButton(
                     onTap: () {
                       controller.selectedIndex.value = index;
                       controller.selectedAddress.value =

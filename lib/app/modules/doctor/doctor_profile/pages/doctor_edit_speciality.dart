@@ -2,6 +2,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/docto
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/pages/edit_doctor_specialist.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
@@ -34,8 +35,11 @@ class DoctorEditSpeciality extends GetView<DoctorEditSpecialityController> {
           ),
         ),
         actions: [
-          InkWell(
-            onTap: () {
+          CupertinoButton(
+            pressedOpacity: 0,
+            padding: EdgeInsets.zero,
+            minSize: 0,
+            onPressed: () {
               if (controller.selectedIndex.value == -1) {
                 showToastMessage(
                     message: 'Please Select Speciality',

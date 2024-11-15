@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
@@ -69,7 +70,7 @@ class OfferCustomOptionalToggleButton extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: GestureDetector(
+                  child: CustomCupertinoButton(
                     onTap: () => onValueChange(0),
                     child: Center(
                       child: Text(
@@ -87,7 +88,7 @@ class OfferCustomOptionalToggleButton extends StatelessWidget {
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
+                  child: CustomCupertinoButton(
                     onTap: () => onValueChange(1),
                     child: Text(
                       centreText,

@@ -14,6 +14,7 @@ import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -302,8 +303,11 @@ class DoctorUpdatePost extends GetView<DoctorUpdatePostController> {
                                             ),
                                             Positioned(
                                               right: 0,
-                                              child: InkWell(
-                                                onTap: () => controller
+                                              child: CupertinoButton(
+                                                pressedOpacity: 0,
+                                                padding: EdgeInsets.zero,
+                                                minSize: 0,
+                                                onPressed: () => controller
                                                     .removeImage(index),
                                                 child: Container(
                                                   height: 30,
@@ -397,8 +401,11 @@ class DoctorUpdatePost extends GetView<DoctorUpdatePostController> {
                                             ),
                                             Positioned(
                                               right: 0,
-                                              child: InkWell(
-                                                onTap: () => controller
+                                              child: CupertinoButton(
+                                                pressedOpacity: 0,
+                                                padding: EdgeInsets.zero,
+                                                minSize: 0,
+                                                onPressed: () => controller
                                                     .removeVideo(index),
                                                 child: Container(
                                                   height: 30,
@@ -433,8 +440,11 @@ class DoctorUpdatePost extends GetView<DoctorUpdatePostController> {
                         SizedBox(height: 6 * SizeConfig.heightMultiplier),
                         Row(
                           children: [
-                            GestureDetector(
-                              onTap: () {
+                            CupertinoButton(
+                              pressedOpacity: 0,
+                              padding: EdgeInsets.zero,
+                              minSize: 0,
+                              onPressed: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 updatePostPhoto(context);
                               },
@@ -446,8 +456,11 @@ class DoctorUpdatePost extends GetView<DoctorUpdatePostController> {
                               ),
                             ),
                             10.horizontalSpace,
-                            InkWell(
-                              onTap: () {
+                            CupertinoButton(
+                              pressedOpacity: 0,
+                              padding: EdgeInsets.zero,
+                              minSize: 0,
+                              onPressed: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 updatePostVideo(context);
                               },
@@ -457,8 +470,11 @@ class DoctorUpdatePost extends GetView<DoctorUpdatePostController> {
                               ),
                             ),
                             const Spacer(),
-                            InkWell(
-                              onTap: () {
+                            CupertinoButton(
+                              pressedOpacity: 0,
+                              padding: EdgeInsets.zero,
+                              minSize: 0,
+                              onPressed: () {
                                 if (form.currentState!.validate()) {
                                   FocusManager.instance.primaryFocus?.unfocus();
                                   controller.updateContantPost(context);

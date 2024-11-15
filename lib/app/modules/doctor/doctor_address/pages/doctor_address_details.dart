@@ -4,6 +4,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/docto
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -72,8 +73,11 @@ class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
                         Assets.editIcon,
                       ),
                       6.horizontalSpace,
-                      GestureDetector(
-                        onTap: () {
+                      CupertinoButton(
+                        pressedOpacity: 0,
+                        padding: EdgeInsets.zero,
+                        minSize: 0,
+                        onPressed: () {
                           Get.toNamed(
                             Routes.editdoctorSchedule,
                             arguments: [
@@ -237,8 +241,11 @@ class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
                         Assets.editIcon,
                       ),
                       6.horizontalSpace,
-                      GestureDetector(
-                        onTap: () {
+                      CupertinoButton(
+                        pressedOpacity: 0,
+                        padding: EdgeInsets.zero,
+                        minSize: 0,
+                        onPressed: () {
                           Get.toNamed(Routes.editdoctorAdress, arguments: [
                             officeAddreesModel,
                           ]);
@@ -527,9 +534,11 @@ class DoctorAddressDetailsScreen extends GetView<DoctorDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: controller.menuList
                   .map(
-                    (item) => GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
+                    (item) => CupertinoButton(
+                      pressedOpacity: 0,
+                      padding: EdgeInsets.zero,
+                      minSize: 0,
+                      onPressed: () {
                         controller.customPopupMenuController.hideMenu();
 
                         if (item == "Delete") {

@@ -7,6 +7,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/doctor_off
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -154,8 +155,11 @@ class _EditGoogleMapContainerAddressState
                     fontSize: SizeConfig.heightMultiplier * 1.8,
                   ),
                 ),
-                InkWell(
-                    onTap: () {
+                CupertinoButton(
+                    pressedOpacity: 0,
+                    padding: EdgeInsets.zero,
+                    minSize: 0,
+                    onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
                       _handlePressButton();
                     },

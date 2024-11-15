@@ -39,7 +39,7 @@ class DoctorOffersController extends GetxController {
     doctorOfferPendingModel.value = [];
     try {
       final response = await ApiService.getwithUserToken(
-        endPoint: '${AppTokens.apiURl}/offers/my-offers',
+        endPoint: '${AppTokens.apiURl}/doctors/offers/my-offers',
         userToken: {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -117,7 +117,7 @@ class DoctorOffersController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/offers/${data.id}/delete',
+        endPoint: '${AppTokens.apiURl}/doctors/offers/${data.id}/delete',
         body: {},
       );
 

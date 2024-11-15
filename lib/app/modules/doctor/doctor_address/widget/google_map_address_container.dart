@@ -2,6 +2,8 @@
 
 import 'dart:ui' as ui;
 
+import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -95,7 +97,7 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
               // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
+                CustomCupertinoButton(
                   onTap: () => Get.back(),
                   child: SvgPicture.asset(
                     "assets/icons/Arrow Left-Outline.svg",
@@ -110,8 +112,11 @@ class _GoogleMapContainerAddressState extends State<GoogleMapContainerAddress> {
                     fontSize: SizeConfig.heightMultiplier * 1.8,
                   ),
                 ),
-                InkWell(
-                    onTap: () {
+                CupertinoButton(
+                    pressedOpacity: 0,
+                    padding: EdgeInsets.zero,
+                    minSize: 0,
+                    onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
                       _handlePressButton(context);
                     },

@@ -18,31 +18,33 @@ class DoctorProfileScreen extends GetView<DoctorProfileController> {
       padding: EdgeInsets.symmetric(
           horizontal: 4 * SizeConfig.widthMultiplier,
           vertical: 3 * SizeConfig.heightMultiplier),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            const DoctorProfileHeadrer(),
-            SizedBox(height: 5 * SizeConfig.heightMultiplier),
-            const DoctorProfileHeaderRow(),
-            SizedBox(height: 5 * SizeConfig.heightMultiplier),
-            Obx(
-              () => DoctorProfileToggleButton(
-                leftText: 'About Me',
-                centreText: 'Posts',
-                rightText: 'Reviews',
-                value: controller.selectedTab,
-                onValueChange: controller.selectTab,
-              ),
+      child: ListView(
+        controller: controller.scrollController,
+        physics: const BouncingScrollPhysics(),
+        children: [
+          const DoctorProfileHeadrer(),
+          SizedBox(height: 5 * SizeConfig.heightMultiplier),
+          const DoctorProfileHeaderRow(),
+          SizedBox(height: 5 * SizeConfig.heightMultiplier),
+          Obx(
+            () => DoctorProfileToggleButton(
+              leftText: 'About Me',
+              centreText: 'Posts',
+              rightText: 'Reviews',
+              value: controller.selectedTab,
+              onValueChange: controller.selectTab,
             ),
-            SizedBox(height: 2 * SizeConfig.heightMultiplier),
-            Obx(() => controller.selectedTab == 0
+          ),
+          SizedBox(height: 2 * SizeConfig.heightMultiplier),
+          Obx(
+            () => controller.selectedTab == 0
                 ? const DoctorAboutMe()
                 : controller.selectedTab == 1
                     ? const DoctorPost()
-                    : const DoctorReviews()),
-            SizedBox(height: 6 * SizeConfig.heightMultiplier),
-          ],
-        ),
+                    : const DoctorReviews(),
+          ),
+          SizedBox(height: 6 * SizeConfig.heightMultiplier),
+        ],
       ),
     );
   }
