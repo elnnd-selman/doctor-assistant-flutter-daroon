@@ -22,13 +22,6 @@ class DoctorOfficeAddressModel {
       status: json["status"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "message": message,
-        "success": success,
-        "data": data.map((x) => x.toJson()).toList(),
-        "status": status,
-      };
 }
 
 class OfficeAddreesModel {
@@ -47,7 +40,7 @@ class OfficeAddreesModel {
     required this.typeOfCurrency,
     required this.phoneNumbers,
     required this.isDeleted,
-    required this.appointmentTimes,
+    // required this.appointmentTimes,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
@@ -67,7 +60,7 @@ class OfficeAddreesModel {
   final TypeOfCurrency? typeOfCurrency;
   final List<String> phoneNumbers;
   final bool? isDeleted;
-  final AppointmentTimes? appointmentTimes;
+  // final AppointmentTimes? appointmentTimes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -95,9 +88,9 @@ class OfficeAddreesModel {
           ? []
           : List<String>.from(json["phoneNumbers"]!.map((x) => x)),
       isDeleted: json["isDeleted"],
-      appointmentTimes: json["appointmentTimes"] == null
-          ? null
-          : AppointmentTimes.fromJson(json["appointmentTimes"]),
+      // appointmentTimes: json["appointmentTimes"] == null
+      //     ? null
+      //     : AppointmentTimes.fromJson(json["appointmentTimes"]),
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
@@ -119,7 +112,7 @@ class OfficeAddreesModel {
         "typeOfCurrency": typeOfCurrency?.toJson(),
         "phoneNumbers": phoneNumbers.map((x) => x).toList(),
         "isDeleted": isDeleted,
-        "appointmentTimes": appointmentTimes?.toJson(),
+        // "appointmentTimes": appointmentTimes?.toJson(),
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
@@ -193,6 +186,7 @@ class Coordinate {
 
 class Country {
   Country({
+    required this.isDeleted,
     required this.id,
     required this.countryKu,
     required this.countryAr,
@@ -202,6 +196,7 @@ class Country {
     required this.v,
   });
 
+  final bool? isDeleted;
   final String? id;
   final String? countryKu;
   final String? countryAr;
@@ -212,6 +207,7 @@ class Country {
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
+      isDeleted: json["isDeleted"],
       id: json["_id"],
       countryKu: json["country_ku"],
       countryAr: json["country_ar"],
@@ -223,6 +219,7 @@ class Country {
   }
 
   Map<String, dynamic> toJson() => {
+        "isDeleted": isDeleted,
         "_id": id,
         "country_ku": countryKu,
         "country_ar": countryAr,
@@ -235,6 +232,7 @@ class Country {
 
 class TypeOfOffice {
   TypeOfOffice({
+    required this.isDeleted,
     required this.id,
     required this.typeOfOfficeKu,
     required this.typeOfOfficeAr,
@@ -244,6 +242,7 @@ class TypeOfOffice {
     required this.v,
   });
 
+  final bool? isDeleted;
   final String? id;
   final String? typeOfOfficeKu;
   final String? typeOfOfficeAr;
@@ -254,6 +253,7 @@ class TypeOfOffice {
 
   factory TypeOfOffice.fromJson(Map<String, dynamic> json) {
     return TypeOfOffice(
+      isDeleted: json["isDeleted"],
       id: json["_id"],
       typeOfOfficeKu: json["typeOfOffice_ku"],
       typeOfOfficeAr: json["typeOfOffice_ar"],
@@ -265,6 +265,7 @@ class TypeOfOffice {
   }
 
   Map<String, dynamic> toJson() => {
+        "isDeleted": isDeleted,
         "_id": id,
         "typeOfOffice_ku": typeOfOfficeKu,
         "typeOfOffice_ar": typeOfOfficeAr,
@@ -276,29 +277,14 @@ class TypeOfOffice {
 }
 
 class AppointmentTimes {
-  AppointmentTimes({
-    required this.wednesday,
-    required this.tuesday,
-  });
-
-  final List<dynamic> wednesday;
-  final List<dynamic> tuesday;
+  AppointmentTimes({required this.json});
+  final Map<String, dynamic> json;
 
   factory AppointmentTimes.fromJson(Map<String, dynamic> json) {
-    return AppointmentTimes(
-      wednesday: json["wednesday"] == null
-          ? []
-          : List<dynamic>.from(json["wednesday"]!.map((x) => x)),
-      tuesday: json["tuesday"] == null
-          ? []
-          : List<dynamic>.from(json["tuesday"]!.map((x) => x)),
-    );
+    return AppointmentTimes(json: json);
   }
 
-  Map<String, dynamic> toJson() => {
-        "wednesday": wednesday.map((x) => x).toList(),
-        "tuesday": tuesday.map((x) => x).toList(),
-      };
+  Map<String, dynamic> toJson() => {};
 }
 
 class Fee {
@@ -333,6 +319,7 @@ class Fee {
 
 class TypeOfCurrency {
   TypeOfCurrency({
+    required this.isDeleted,
     required this.id,
     required this.typeOfCurrencyKu,
     required this.typeOfCurrencyAr,
@@ -342,6 +329,7 @@ class TypeOfCurrency {
     required this.v,
   });
 
+  final bool? isDeleted;
   final String? id;
   final String? typeOfCurrencyKu;
   final String? typeOfCurrencyAr;
@@ -352,6 +340,7 @@ class TypeOfCurrency {
 
   factory TypeOfCurrency.fromJson(Map<String, dynamic> json) {
     return TypeOfCurrency(
+      isDeleted: json["isDeleted"],
       id: json["_id"],
       typeOfCurrencyKu: json["typeOfCurrency_ku"],
       typeOfCurrencyAr: json["typeOfCurrency_ar"],
@@ -363,6 +352,7 @@ class TypeOfCurrency {
   }
 
   Map<String, dynamic> toJson() => {
+        "isDeleted": isDeleted,
         "_id": id,
         "typeOfCurrency_ku": typeOfCurrencyKu,
         "typeOfCurrency_ar": typeOfCurrencyAr,

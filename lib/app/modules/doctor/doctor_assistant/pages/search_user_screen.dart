@@ -1,9 +1,11 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/controller/add_assistant_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/user_search_model.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/capital_first_letter.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/auth_text_field.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
@@ -250,12 +252,13 @@ class UserTile extends StatelessWidget {
                     '${user.firstName!.toUpperCase()} ${user.lastNameEn!.toUpperCase()}',
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: AppColors.blackBGColor,
+                      color: const Color(0xff404D61),
                       fontSize: 1.8 * SizeConfig.heightMultiplier,
                     ),
                   ),
+                  4.verticalSpace,
                   Text(
-                    user.gender!,
+                    user.gender!.capitalizeFirstLetter(),
                     style: AppTextStyles.medium.copyWith(
                       fontWeight: FontWeight.w400,
                       color: AppColors.lighttextColor,
@@ -278,6 +281,7 @@ class UserTile extends StatelessWidget {
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: AppColors.primaryColor,
+                      width: 1.5,
                     )),
                 child: Icon(
                   Icons.check,

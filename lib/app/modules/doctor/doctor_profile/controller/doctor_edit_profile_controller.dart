@@ -110,7 +110,7 @@ class DoctorEditProfileController extends GetxController {
             "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: '${AppTokens.apiURl}/users',
+          endPoint: '${AppTokens.apiURl}/doctors',
           body: {
             "gender": genderList[selectedGender.value].toLowerCase(),
           });

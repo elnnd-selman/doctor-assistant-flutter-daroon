@@ -238,8 +238,12 @@ class DoctorEditProfile extends GetView<DoctorEditProfileController> {
                       _profileTextField(
                         context: context,
                         title: "Bio",
-                        subtitle: controller
-                            .userProfileModel.value!.userProfile!.biographyEn!,
+                        subtitle: controller.userProfileModel.value!
+                                    .userProfile!.biographyEn ==
+                                null
+                            ? "--"
+                            : controller.userProfileModel.value!.userProfile!
+                                .biographyEn!,
                         showIcon: true,
                         hintText: "-",
                         onTap: () {},

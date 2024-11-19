@@ -14,9 +14,10 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:intl/intl.dart';
 
-class CompleteAppointment extends StatelessWidget {
+class RequestAppointmentContainer extends StatelessWidget {
   final AppointmentModel appointmentModel;
-  const CompleteAppointment({super.key, required this.appointmentModel});
+  const RequestAppointmentContainer(
+      {super.key, required this.appointmentModel});
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +33,24 @@ class CompleteAppointment extends StatelessWidget {
           Get.toNamed(
             Routes.doctorAppointmentDetail,
             arguments: [
-              "Completed",
-              "completed",
-              const Color(0xff66A073),
+              "requesting",
+              "requesting",
+              const Color(0xffFD9E46),
               false,
-              "Completed Appointment",
+              "Request Appointment",
               false,
-              false,
+              true,
               appointmentModel,
             ],
           );
         },
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width * 0.8,
-              (MediaQuery.of(context).size.height * 0.3)),
+              (MediaQuery.of(context).size.height * 0.32)),
           painter: RPSCustomPainters(),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 1,
-            height: (MediaQuery.of(context).size.height * 0.3).toDouble(),
+            height: (MediaQuery.of(context).size.height * 0.285).toDouble(),
             child: Stack(
               children: [
                 _startButton(),
@@ -62,14 +63,14 @@ class CompleteAppointment extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 4 * SizeConfig.heightMultiplier),
+                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
                         Center(
                           child: Container(
                             color: Colors.transparent,
                             width: MediaQuery.of(context).size.width * 0.83,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
@@ -86,7 +87,8 @@ class CompleteAppointment extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      appointmentModel.fullName!,
+                                      appointmentModel
+                                          .fullName!.capitalizeFirst!,
                                       style: AppTextStyles.medium.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.primaryColor,
@@ -122,11 +124,9 @@ class CompleteAppointment extends StatelessWidget {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: SvgPicture.asset(
-                                          Assets.cameraIcon,
-                                          colorFilter: const ColorFilter.mode(
-                                              AppColors.whiteBGColor,
-                                              BlendMode.srcIn),
+                                        child: Image.asset(
+                                          Assets.phone,
+                                          color: AppColors.whiteBGColor,
                                         ),
                                       ),
                                     ),
@@ -141,7 +141,7 @@ class CompleteAppointment extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.8,
                           padding: EdgeInsets.symmetric(
                               horizontal: SizeConfig.widthMultiplier * 4,
-                              vertical: SizeConfig.heightMultiplier * 2),
+                              vertical: SizeConfig.heightMultiplier * 1.5),
                           decoration: BoxDecoration(
                               border: Border.all(
                                 color: const Color(0xffC4C4C4).withOpacity(0.5),
@@ -155,13 +155,13 @@ class CompleteAppointment extends StatelessWidget {
                                     "assets/icons/clock.svg",
                                     height: SizeConfig.heightMultiplier * 2.8,
                                   ),
-                                  8.horizontalSpace,
+                                  14.horizontalSpace,
                                   Text(
-                                    formatDate(appointmentModel.appointmentDate
+                                    formatDate(appointmentModel.appointmentDate!
                                         .toString()),
                                     style: AppTextStyles.medium.copyWith(
                                       fontWeight: FontWeight.w500,
-                                      color: const Color(0xff427347),
+                                      color: const Color(0xffFD9E46),
                                       fontSize:
                                           SizeConfig.heightMultiplier * 1.6,
                                     ),
@@ -169,7 +169,7 @@ class CompleteAppointment extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                  height: SizeConfig.heightMultiplier * 1.7),
+                                  height: SizeConfig.heightMultiplier * 1.5),
                               Row(
                                 children: [
                                   SvgPicture.asset(
@@ -178,7 +178,7 @@ class CompleteAppointment extends StatelessWidget {
                                     colorFilter: const ColorFilter.mode(
                                         Color(0xff979797), BlendMode.srcIn),
                                   ),
-                                  8.horizontalSpace,
+                                  14.horizontalSpace,
                                   Text(
                                     appointmentModel.office!.description!,
                                     style: AppTextStyles.medium.copyWith(
@@ -216,7 +216,7 @@ class CompleteAppointment extends StatelessWidget {
   Positioned _startButton() {
     return Positioned(
       right: 2 * SizeConfig.widthMultiplier,
-      // top: 4,
+      top: 0,
       child: FadeInRight(
           child: Container(
         padding: EdgeInsets.symmetric(

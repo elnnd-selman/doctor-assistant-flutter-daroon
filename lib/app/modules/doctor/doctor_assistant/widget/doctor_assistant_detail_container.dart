@@ -27,7 +27,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
                 color: const Color(0xffF2F8FF),
                 borderRadius: BorderRadius.circular(12)),
             child: Padding(
-              padding: EdgeInsets.only(top: 8 * SizeConfig.heightMultiplier),
+              padding: EdgeInsets.only(top: 9 * SizeConfig.heightMultiplier),
               child: Column(
                 children: [
                   Text(
@@ -60,7 +60,7 @@ class DoctorAssistantDetailContainer extends StatelessWidget {
                       context: context,
                       title: "Email",
                       subtitle: assistantElement.assistant!.email!),
-                  SizedBox(height: 2.5 * SizeConfig.heightMultiplier)
+                  SizedBox(height: 3.5 * SizeConfig.heightMultiplier)
                 ],
               ),
             ),

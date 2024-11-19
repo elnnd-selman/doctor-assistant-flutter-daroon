@@ -33,6 +33,13 @@ class DoctorAppointmentController extends GetxController {
 
   getDoctorAppointments() async {
     isLoading.value = true;
+    cancelAppointmentList.value = [];
+
+    upcomingAppointmentList.value = [];
+    confirmedAppointmentList.value = [];
+
+    completedAppointmentList.value = [];
+    requestAppointmentList.value = [];
 
     final response = await ApiService.getwithUserToken(
       endPoint: "${AppTokens.apiURl}/doctors/appointments",
@@ -203,7 +210,32 @@ class DoctorAppointmentController extends GetxController {
 
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
+          if (status == "confirmed") {
+            upcomingAppointmentList
+                .removeWhere((item) => item.id == appointmentModel.id);
+            confirmedAppointmentList.add(appointmentModel);
+            Get.back();
+            showToastMessage(
+                message: "Successfully confirmed appointmetnt",
+                // ignore: use_build_context_synchronously
+                context: context,
+                color: const Color(0xff5BA66B),
+                icon: Icons.check);
+          } else {
+            confirmedAppointmentList
+                .removeWhere((item) => item.id == appointmentModel.id);
+            completedAppointmentList.add(appointmentModel);
+            Get.back();
+            showToastMessage(
+                message: "Successfully complete appointmetnt",
+                // ignore: use_build_context_synchronously
+                context: context,
+                color: const Color(0xff5BA66B),
+                icon: Icons.check);
+          }
+          print(response.body);
         } else {
+          print(response.body);
           showToastMessage(
               message: response.body,
               // ignore: use_build_context_synchronously

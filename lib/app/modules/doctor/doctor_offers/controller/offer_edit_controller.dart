@@ -52,6 +52,8 @@ class OfferEditController extends GetxController {
     discountPrice.text = data.discountedPrice!.toString();
     selectedAddress.value = data.office!.description!;
     selectedAddressID.value = data.office!.id!;
+    startTime.value = data.startTime!;
+    endTime.value = data.endTime!;
     _processing.value = false;
   }
 

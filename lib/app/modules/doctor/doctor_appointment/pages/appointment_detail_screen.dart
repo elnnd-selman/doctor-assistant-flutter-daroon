@@ -25,6 +25,8 @@ class AppointmentDetailScreen extends StatelessWidget {
   final appointmentModel = Get.arguments[7] as AppointmentModel;
   @override
   Widget build(BuildContext context) {
+    print(appointmentModel.bookedBy!.id!);
+    print(appointmentModel.doctor!.id!);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,

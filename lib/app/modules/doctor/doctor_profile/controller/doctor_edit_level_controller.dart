@@ -49,7 +49,7 @@ class DoctorEditLevelCtrl extends GetxController {
             "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: '${AppTokens.apiURl}/users',
+          endPoint: '${AppTokens.apiURl}/doctors',
           body: {
             "level": selectedLevel.value,
           });

@@ -41,6 +41,7 @@ class UpcomingAppointment extends GetView<DoctorAppointmentController> {
                               ? 12 * SizeConfig.heightMultiplier
                               : 0),
                       child: UpcomingAppointmentContainer(
+                        isPadding: true,
                         appointmentModel:
                             controller.upcomingAppointmentList[index],
                       ),

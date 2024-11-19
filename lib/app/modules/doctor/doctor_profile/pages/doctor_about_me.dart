@@ -27,13 +27,15 @@ class DoctorAboutMe extends GetView<DoctorProfileController> {
                   ? SizedBox(
                       height: MediaQuery.of(context).size.height * 0.17,
                       width: MediaQuery.of(context).size.width,
-                      child: const Text("No Education available "))
+                      child:
+                          const Center(child: Text("No Education available ")))
                   : controller.userProfileModel.value!.userProfile!.education
                           .isEmpty
                       ? SizedBox(
                           height: MediaQuery.of(context).size.height * 0.17,
                           width: MediaQuery.of(context).size.width,
-                          child: const Text("No Education available "))
+                          child: const Center(
+                              child: Text("No Education available ")))
                       : SizedBox(
                           height: MediaQuery.of(context).size.height * 0.17,
                           width: MediaQuery.of(context).size.width,

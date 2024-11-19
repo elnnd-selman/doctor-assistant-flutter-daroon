@@ -75,6 +75,9 @@ dependencies:
   readmore: ^3.0.0
   dotted_border: ^2.1.0
   custom_pop_up_menu: ^1.2.4
+  geolocator: ^13.0.2
+  geocoding: ^3.0.0
+  socket_io_client: ^3.0.2
 
 
 

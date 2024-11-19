@@ -14,9 +14,10 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:intl/intl.dart';
 
-class ConfirmedAppointment extends StatelessWidget {
+class ConfirmedAppointmentContainer extends StatelessWidget {
   final AppointmentModel appointmentModel;
-  const ConfirmedAppointment({super.key, required this.appointmentModel});
+  const ConfirmedAppointmentContainer(
+      {super.key, required this.appointmentModel});
 
   @override
   Widget build(BuildContext context) {

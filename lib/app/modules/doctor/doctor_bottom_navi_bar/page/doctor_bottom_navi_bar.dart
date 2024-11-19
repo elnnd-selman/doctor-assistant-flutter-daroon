@@ -1,3 +1,5 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
@@ -209,6 +211,12 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           _controller5!.reverse();
                           HapticFeedback.lightImpact();
                         });
+
+                        if (Get.find<DoctorAppointmentController>()
+                            .initialized) {
+                          Get.find<DoctorAppointmentController>()
+                              .getDoctorAppointments();
+                        }
                       }),
                   _bottomIcons(
                       size: _animation3!.value,
@@ -243,6 +251,10 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           _controller5!.reverse();
                           HapticFeedback.lightImpact();
                         });
+                        if (Get.find<DoctorAddressController>().initialized) {
+                          Get.find<DoctorAddressController>()
+                              .getDoctorOfficeAddress();
+                        }
                       }),
                   _bottomIcons(
                       size: _animation5!.value,

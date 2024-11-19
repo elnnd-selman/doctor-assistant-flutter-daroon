@@ -14,9 +14,9 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:intl/intl.dart';
 
-class RequestAppointment extends StatelessWidget {
+class CancelAppointmentContainer extends StatelessWidget {
   final AppointmentModel appointmentModel;
-  const RequestAppointment({super.key, required this.appointmentModel});
+  const CancelAppointmentContainer({super.key, required this.appointmentModel});
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +32,32 @@ class RequestAppointment extends StatelessWidget {
           Get.toNamed(
             Routes.doctorAppointmentDetail,
             arguments: [
-              "requesting",
-              "requesting",
-              const Color(0xffFD9E46),
+              "cancelled",
+              "cancelled",
+              const Color(0xffEC1C24),
               false,
-              "Request Appointment",
+              "Cancelled Appointment",
               false,
-              true,
+              false,
               appointmentModel,
             ],
           );
+          // Get.toNamed(Routes.doctorAppointmentDetail, arguments: {
+          //   "buttonName":
+          //   "type":
+          //   "textColor":
+          //   "isReschedule": false,
+          //   "title":
+          //   "showButton": false,
+          // });
         },
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width * 0.8,
-              (MediaQuery.of(context).size.height * 0.32)),
+              (MediaQuery.of(context).size.height * 0.3)),
           painter: RPSCustomPainters(),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 1,
-            height: (MediaQuery.of(context).size.height * 0.285).toDouble(),
+            height: (MediaQuery.of(context).size.height * 0.3).toDouble(),
             child: Stack(
               children: [
                 _startButton(),
@@ -69,7 +77,7 @@ class RequestAppointment extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.83,
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
@@ -86,8 +94,7 @@ class RequestAppointment extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      appointmentModel
-                                          .fullName!.capitalizeFirst!,
+                                      appointmentModel.fullName!,
                                       style: AppTextStyles.medium.copyWith(
                                         fontWeight: FontWeight.w600,
                                         color: AppColors.primaryColor,
@@ -140,7 +147,7 @@ class RequestAppointment extends StatelessWidget {
                           width: MediaQuery.of(context).size.width * 0.8,
                           padding: EdgeInsets.symmetric(
                               horizontal: SizeConfig.widthMultiplier * 4,
-                              vertical: SizeConfig.heightMultiplier * 1.5),
+                              vertical: SizeConfig.heightMultiplier * 2),
                           decoration: BoxDecoration(
                               border: Border.all(
                                 color: const Color(0xffC4C4C4).withOpacity(0.5),
@@ -154,13 +161,13 @@ class RequestAppointment extends StatelessWidget {
                                     "assets/icons/clock.svg",
                                     height: SizeConfig.heightMultiplier * 2.8,
                                   ),
-                                  14.horizontalSpace,
+                                  8.horizontalSpace,
                                   Text(
-                                    formatDate(appointmentModel.appointmentDate!
+                                    formatDate(appointmentModel.appointmentDate
                                         .toString()),
                                     style: AppTextStyles.medium.copyWith(
                                       fontWeight: FontWeight.w500,
-                                      color: const Color(0xffFD9E46),
+                                      color: const Color(0xffEC1C24),
                                       fontSize:
                                           SizeConfig.heightMultiplier * 1.6,
                                     ),
@@ -168,7 +175,7 @@ class RequestAppointment extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                  height: SizeConfig.heightMultiplier * 1.5),
+                                  height: SizeConfig.heightMultiplier * 1.7),
                               Row(
                                 children: [
                                   SvgPicture.asset(
@@ -177,7 +184,7 @@ class RequestAppointment extends StatelessWidget {
                                     colorFilter: const ColorFilter.mode(
                                         Color(0xff979797), BlendMode.srcIn),
                                   ),
-                                  14.horizontalSpace,
+                                  8.horizontalSpace,
                                   Text(
                                     appointmentModel.office!.description!,
                                     style: AppTextStyles.medium.copyWith(
@@ -192,7 +199,6 @@ class RequestAppointment extends StatelessWidget {
                             ],
                           ),
                         ),
-                        // SizedBox(height: 2.5 * SizeConfig.heightMultiplier),
                       ],
                     ),
                   ),

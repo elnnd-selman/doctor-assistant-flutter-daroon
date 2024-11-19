@@ -218,8 +218,6 @@ class DoctorProfileController extends GetxController {
 
         reFetchLoader.value = false;
       }
-    } else {
-      print("No");
     }
   }
 

@@ -100,12 +100,18 @@ class SeeOnMapContainer extends StatelessWidget {
                     shape: BoxShape.circle, color: Color(0xff6FCF84)),
               ),
               10.horizontalSpace,
-              Text(
-                "${officeAddreesModel.daysOpen.length} days per week",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: const Color(0xff898A8D),
-                  fontSize: 1.4 * SizeConfig.heightMultiplier,
+              CupertinoButton(
+                pressedOpacity: 0,
+                padding: EdgeInsets.zero,
+                minSize: 0,
+                onPressed: () {},
+                child: Text(
+                  "${officeAddreesModel.daysOpen.length} days per week",
+                  style: AppTextStyles.medium.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xff898A8D),
+                    fontSize: 1.4 * SizeConfig.heightMultiplier,
+                  ),
                 ),
               ),
               const Spacer(),

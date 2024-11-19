@@ -53,7 +53,7 @@ class AssistantInfoContainer extends StatelessWidget {
                           ? Center(
                               child: FittedBox(
                                 child: Text(
-                                  '${assistantElement.assistant!.firstName![0].toUpperCase()}${assistantElement.assistant!.lastNameAr![1].toUpperCase()}',
+                                  '${assistantElement.assistant!.firstName![0].toUpperCase()}${assistantElement.assistant!.username![1].toUpperCase()}',
                                   style: AppTextStyles.bold.copyWith(
                                     color: Colors.white,
                                     fontSize: Spaces.fontSize(fontSize: 18),

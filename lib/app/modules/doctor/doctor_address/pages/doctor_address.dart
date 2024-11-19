@@ -152,7 +152,7 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                                     );
                                   }),
                     ),
-                    SizedBox(height: 6 * SizeConfig.heightMultiplier),
+                    SizedBox(height: 10 * SizeConfig.heightMultiplier),
                   ],
                 ),
               ),

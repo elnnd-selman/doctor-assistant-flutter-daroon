@@ -45,9 +45,10 @@ class DoctorAppointmentAppBar extends GetView<DoctorCustomNaviController> {
               isSearchBoxOnRightSide: true,
               enableBoxShadow: false,
               enableButtonShadow: false,
-              hintText: "Search Patient",
+              hintText: "Search Appointment",
               buttonBorderColour: Colors.black45,
               searchBoxWidth: MediaQuery.of(context).size.width * 0.94,
+              onChanged: (val) {},
               onFieldSubmitted: (String value) {
                 debugPrint('onFieldSubmitted value $value');
               },

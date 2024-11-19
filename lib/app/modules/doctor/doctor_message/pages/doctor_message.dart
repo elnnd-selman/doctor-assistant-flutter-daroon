@@ -1,4 +1,7 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/controller/doctor_message_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/model/doctor_message_model.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/pages/doctor_chat_room.dart';
@@ -6,8 +9,9 @@ import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:get/get.dart';
 
-class DoctorMessageScreen extends StatelessWidget {
+class DoctorMessageScreen extends GetView<DoctorMessageController> {
   const DoctorMessageScreen({super.key});
 
   @override
@@ -43,14 +47,20 @@ class DoctorMessageScreen extends StatelessWidget {
               SizedBox(height: 3 * SizeConfig.heightMultiplier),
               _buildPatientTextField(),
               SizedBox(height: 2 * SizeConfig.heightMultiplier),
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemCount: allChats.length,
-                  itemBuilder: (context, int index) {
-                    final allChat = allChats[index];
-                    return _buildChatContainer(allChat, context);
-                  }),
+              controller.isLoading.value
+                  ? const LoadingWidget()
+                  : controller.doctorConversationList.isEmpty
+                      ? const Text("vvfr")
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: const ScrollPhysics(),
+                          itemCount: controller.doctorConversationList.length,
+                          itemBuilder: (context, int index) {
+                            // final allChat = allChats[index];
+                            return _buildChatContainer(
+                                controller.doctorConversationList[index],
+                                context);
+                          }),
             ],
           ),
         ),
@@ -117,10 +127,14 @@ class DoctorMessageScreen extends StatelessWidget {
 }
 
 CustomCupertinoButton _buildChatContainer(
-    Message allChat, BuildContext context) {
+  DoctorMessageModelData doctorMessageModelData,
+  BuildContext context,
+) {
   return CustomCupertinoButton(
     onTap: () {
-      // Get.to(() => ChatPage());
+      Get.to(() => ChatPage(
+            doctorMessageModelData: doctorMessageModelData,
+          ));
       // Get.toNamed(Routes.doctorChatRoom, arguments: {
       //   "user": allChat.sender!,
       // });
@@ -131,7 +145,8 @@ CustomCupertinoButton _buildChatContainer(
           children: [
             CircleAvatar(
               radius: 28,
-              backgroundImage: AssetImage(allChat.avatar!),
+              backgroundImage: NetworkImage(
+                  doctorMessageModelData.patient!.profilePicture!.md!),
             ),
             const SizedBox(
               width: 20,
@@ -141,7 +156,7 @@ CustomCupertinoButton _buildChatContainer(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  allChat.sender!.name!,
+                  doctorMessageModelData.patient!.firstName!,
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackBGColor,
@@ -149,7 +164,9 @@ CustomCupertinoButton _buildChatContainer(
                   ),
                 ),
                 Text(
-                  allChat.text!,
+                  doctorMessageModelData.messages.isEmpty
+                      ? '--'
+                      : doctorMessageModelData.messages[0],
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: const Color(0xff707281),
@@ -162,28 +179,28 @@ CustomCupertinoButton _buildChatContainer(
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                allChat.unreadCount == 0
-                    ? const Icon(
-                        Icons.done_all,
-                        color: AppColors.primaryColor,
-                      )
-                    : CircleAvatar(
-                        radius: 1.2 * SizeConfig.heightMultiplier,
-                        backgroundColor: AppColors.primaryColor,
-                        child: Center(
-                          child: Text(
-                            allChat.unreadCount.toString(),
-                            style: AppTextStyles.medium.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.whiteBGColor,
-                              fontSize: SizeConfig.heightMultiplier * 1.3,
-                            ),
-                          ),
-                        ),
+                // ? const Icon(
+                //     Icons.done_all,
+                //     color: AppColors.primaryColor,
+                //   )
+                // :
+                CircleAvatar(
+                  radius: 1.2 * SizeConfig.heightMultiplier,
+                  backgroundColor: AppColors.primaryColor,
+                  child: Center(
+                    child: Text(
+                      '1',
+                      style: AppTextStyles.medium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.whiteBGColor,
+                        fontSize: SizeConfig.heightMultiplier * 1.3,
                       ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
-                  "${allChat.time!}am",
+                  "am",
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: const Color(0xff707281),

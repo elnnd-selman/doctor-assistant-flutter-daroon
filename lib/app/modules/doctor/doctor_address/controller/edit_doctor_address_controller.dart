@@ -9,6 +9,7 @@ import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -73,7 +74,7 @@ class EditDoctorAddressController extends GetxController {
             "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: '${AppTokens.apiURl}/office/${office.id}/update',
+          endPoint: '${AppTokens.apiURl}/doctors/offices/${office.id}/update',
           body: {
             "title": title.text,
             "doctorId":
@@ -164,7 +165,7 @@ class EditDoctorAddressController extends GetxController {
 
   getOfficeCountry() async {
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/users/country",
+      endPoint: "${AppTokens.apiURl}/offices/country",
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -180,7 +181,7 @@ class EditDoctorAddressController extends GetxController {
   RxList<TypeOfCurrency> currencyModelList = RxList();
   getOfficeCurrency() async {
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/users/type-of-currency",
+      endPoint: "${AppTokens.apiURl}/offices/type-of-currency",
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -196,48 +197,64 @@ class EditDoctorAddressController extends GetxController {
   RxList<TypeOfOffice> officeModelList = RxList();
 
   getTypeOfOffice() async {
-    final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/users/type-of-offices",
-      userToken: {
-        "Authorization":
-            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
-      },
-    );
-    if (response!.statusCode == 200 || response.statusCode == 201) {
-      List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
-      officeModelList.value =
-          jsonResponse.map((data) => TypeOfOffice.fromJson(data)).toList();
+    try {
+      final response = await ApiService.getwithUserToken(
+        endPoint: "${AppTokens.apiURl}/offices/type-of-offices",
+        userToken: {
+          "Authorization":
+              "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+        },
+      );
+      if (response!.statusCode == 200 || response.statusCode == 201) {
+        List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
+        officeModelList.value =
+            jsonResponse.map((data) => TypeOfOffice.fromJson(data)).toList();
+      } else {
+        if (kDebugMode) {
+          print(response.body);
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
   }
 
   getAllData(OfficeAddreesModel data) async {
-    _processing.value = true;
-    await getOfficeCountry();
-    await getOfficeCurrency();
-    await getTypeOfOffice();
+    try {
+      _processing.value = true;
+      await getOfficeCountry();
+      await getOfficeCurrency();
+      await getTypeOfOffice();
 
-    if (countryModelList.isNotEmpty) {
-      currentCountryModel.value = countryModelList.firstWhere(
-        (val) => val.id == data.address!.country!.id!,
-      );
+      if (countryModelList.isNotEmpty) {
+        currentCountryModel.value = countryModelList.firstWhere(
+          (val) => val.id == data.address!.country!.id!,
+        );
+      }
+      countryID.value = currentCountryModel.value!.id!;
+
+      if (currencyModelList.isNotEmpty) {
+        currentCurrencyModel.value = currencyModelList.firstWhere(
+          (val) => val.id == data.typeOfCurrency!.id!,
+        );
+      }
+      currencyID.value = currentCurrencyModel.value!.id!;
+      if (officeModelList.isNotEmpty) {
+        currentOfficeTypeModel.value = officeModelList.firstWhere(
+          (val) => val.id == data.address!.typeOfOffice!.id!,
+        );
+      }
+
+      officeTypeID.value = currentOfficeTypeModel.value!.id!;
+
+      _processing.value = false;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
     }
-    countryID.value = currentCountryModel.value!.id!;
-
-    if (currencyModelList.isNotEmpty) {
-      currentCurrencyModel.value = currencyModelList.firstWhere(
-        (val) => val.id == data.typeOfCurrency!.id!,
-      );
-    }
-    currencyID.value = currentCurrencyModel.value!.id!;
-    if (officeModelList.isNotEmpty) {
-      currentOfficeTypeModel.value = officeModelList.firstWhere(
-        (val) => val.id == data.address!.typeOfOffice!.id!,
-      );
-    }
-
-    officeTypeID.value = currentOfficeTypeModel.value!.id!;
-
-    _processing.value = false;
   }
 
   checkValition(

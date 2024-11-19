@@ -130,7 +130,7 @@ class EditDoctorScheduleController extends GetxController {
             "Authorization":
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
-          endPoint: '${AppTokens.apiURl}/office/${office.id}/update',
+          endPoint: '${AppTokens.apiURl}/doctors/offices/${office.id}/update',
           body: {
             "title": office.title,
             "doctorId":
@@ -150,7 +150,7 @@ class EditDoctorScheduleController extends GetxController {
               "feeCall": feeCall.text,
               "feeVideoCall": feeVideo.text
             },
-            "typeOfCurrency": "66ea99e6c7a88efd35724531",
+            "typeOfCurrency": office.typeOfCurrency,
             "phoneNumbers": ["07500132", "075016132"],
             "address": {
               "coordinate": {
@@ -161,7 +161,7 @@ class EditDoctorScheduleController extends GetxController {
               "city": office.address!.city!,
               "town": office.address!.town!,
               "street": office.address!.street!,
-              "typeOfOffice": "66e04d4b15b32e335a665792"
+              "typeOfOffice": office.address!.typeOfOffice!,
             }
           });
 

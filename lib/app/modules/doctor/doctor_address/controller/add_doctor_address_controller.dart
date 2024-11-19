@@ -211,7 +211,7 @@ class AddDoctorAddressController extends GetxController {
 
   getOfficeCountry() async {
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/users/country",
+      endPoint: "${AppTokens.apiURl}/offices/country",
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -227,7 +227,7 @@ class AddDoctorAddressController extends GetxController {
   RxList<CurrencyData> currencyModelList = RxList();
   getOfficeCurrency() async {
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/users/type-of-currency",
+      endPoint: "${AppTokens.apiURl}/offices/type-of-currency",
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
@@ -244,7 +244,7 @@ class AddDoctorAddressController extends GetxController {
 
   getTypeOfOffice() async {
     final response = await ApiService.getwithUserToken(
-      endPoint: "${AppTokens.apiURl}/users/type-of-offices",
+      endPoint: "${AppTokens.apiURl}/offices/type-of-offices",
       userToken: {
         "Authorization":
             "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",

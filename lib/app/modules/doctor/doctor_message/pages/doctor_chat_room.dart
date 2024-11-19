@@ -1,7 +1,15 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/model/doctor_message_model.dart';
+import 'package:daroon_doctor/global/constants/app_colors.dart';
+import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/constants/size_config.dart';
+import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:get/get.dart';
 
 class DoctorChatRoom extends StatelessWidget {
@@ -341,7 +349,8 @@ final List<Message> messages = [
 ];
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final DoctorMessageModelData doctorMessageModelData;
+  const ChatPage({super.key, required this.doctorMessageModelData});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -352,24 +361,118 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: AppColors.primaryColor,
       body: SafeArea(
-        child: Stack(
+        child: Column(
           children: [
-            Column(
-              children: [
-                _topChat(),
-                _bodyChat(),
-                const SizedBox(
-                  height: 120,
-                )
-              ],
-            ),
+            _topChat(),
+
+            _bodyChat(),
             _formChat(),
+            // Column(
+            //   children: [
+
+            //     const SizedBox(
+            //       height: 120,
+            //     )
+            //   ],
+            // ),
           ],
         ),
       ),
     );
+  }
+
+  late IO.Socket socket;
+  @override
+  void initState() {
+    super.initState();
+    connect();
+  }
+
+  String paitentToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI4ZWYzODYwNzdiYTRmMTlkZTU3MzFlMzgzYzk1M2IwZWFmY2I0MTNlNjFmZWIzNDQxZWYzMDlmMDU4OTExYzlhYTY5Mjk3YmQyYWNlMTE1MmVmZGM0ODc2ZDIyN2Y5YWYiLCJzZXNzaW9uVG9rZW4iOiI3NjkxYzdjZTVmODcyZTM2ZjFiYTgxZGIxYjEyMTY2MmVkZTczM2QxZGJkZjU1ZWU5YzBhZGU5ZjA3NDg3M2VkOGU5ZWU3MDI2M2JjZDdmMGQ5ZWZlYTNlYzNkZjdjM2RjYTM1ZmQ1MzUwYWYzY2M1ZmM3YzliODYyOWI3ZWJhYiIsImlhdCI6MTczMTk1NDk1MH0.jUw_d7hGZPS8gVh7k5unC6Ul1xGuSpuRqAudvl-Im1w';
+
+  String docotrToken =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJmZTQwYTcwMTQzMGM2YzAwYjMzODYyM2VjN2I0MmVjZWQxN2NkNTNjOTMxZGVkNTczZDVlZjhlNjYyZjIzYmIxZTRlMGJjMzhlNTJlMjZhNmU1N2JhM2MzNDczNDc1MzAiLCJzZXNzaW9uVG9rZW4iOiI4NmMxMzdmZGU4MTdhYzBlNDQ3NTc0OTgwYjhmOTdmOTAxNmYwNGE1ZjhmNzM0MDQ2MGQzNDgxYzRkNTM5OWJkZDM4NjkyYmFlNjllNzdjYmQzZTRhZDQ3MmE1NTc4M2FkMDUxYWExNzgyZGFlMTllNTFkMzVhY2QwYTAxMjMxOCIsImlhdCI6MTczMTk1NTA5NH0.ROFaenIzOYhfb6LQ-Mb6gKjFHYVMr1BgIbt8bVkz8PM';
+  Future<void> connect() async {
+    // MessageModel messageModel = MessageModel(sourceId: widget.sourceChat.id.toString(),targetId: );
+    socket = IO.io("${AppTokens.apiURl}", <String, dynamic>{
+      "transports": ["websocket"],
+      "autoConnect": false,
+    });
+
+    socket.connect();
+    socket.emit("join_conversation", [
+      widget.doctorMessageModelData.id,
+      "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+    ]);
+    print(
+      Get.find<DoctorHomeController>().userModel.value!.token!,
+    );
+    print(widget.doctorMessageModelData.id);
+    socket.onConnect((data) {
+      print("Connected");
+      socket.on("message", (msg) {
+        print(msg);
+        // setMessage("destination", msg["message"]);
+        // _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+        //     duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+      });
+    });
+    socket.onConnectError((val) {
+      print(val);
+    });
+    print(socket.connected);
+  }
+
+  getData() {
+    try {
+      print("Testt");
+
+      socket.onConnect((data) {
+        print("Connected");
+        print(data);
+        socket.on("new_message", (msg) {
+          print(msg);
+          // setMessage("destination", msg["message"]);
+          // _scrollController.animateTo(_scrollController.position.maxScrollExtent,
+          //     duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+        });
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  joinChat() {
+    print("Chhecc");
+    socket.emit("join_conversation", [
+      widget.doctorMessageModelData.id!,
+      "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+    ]);
+  }
+
+  sendMessage() {
+    Map<String, String> message = {
+      'conversationId': widget.doctorMessageModelData.id!,
+      "token":
+          "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      "text": "Testttff",
+    };
+    socket.emit("send_message", message);
+  }
+
+  newMeasa() {
+    print("New");
+    socket
+        .on(
+            "new_message",
+            (message) => {
+                  print(message),
+                  print("New Message"),
+                })
+        .printError();
   }
 
   _topChat() {
@@ -388,12 +491,22 @@ class _ChatPageState extends State<ChatPage> {
                   color: Colors.white,
                 ),
               ),
-              const Text(
-                'Fiona',
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+              InkWell(
+                onTap: () {
+                  // connect();
+                  // joinChat();
+                  // sendMessage();
+                  newMeasa();
+                  // getData();
+                  // sendMessage();
+                },
+                child: const Text(
+                  'Fiona',
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
             ],
           ),
@@ -436,7 +549,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget _bodyChat() {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+        padding: const EdgeInsets.only(left: 25, right: 25, top: 0),
         width: double.infinity,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -475,6 +588,42 @@ class _ChatPageState extends State<ChatPage> {
               chat: 1,
               message:
                   'The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.',
+              time: '18.00',
+            ),
+            _itemChat(
+              avatar: 'assets/images/tempImages.png',
+              chat: 1,
+              message: '😅 😂 🤣',
+              time: '18.00',
+            ),
+            _itemChat(
+              avatar: 'assets/images/tempImages.png',
+              chat: 1,
+              message: '😅 😂 🤣',
+              time: '18.00',
+            ),
+            _itemChat(
+              avatar: 'assets/images/tempImages.png',
+              chat: 1,
+              message: '😅 😂 🤣',
+              time: '18.00',
+            ),
+            _itemChat(
+              avatar: 'assets/images/tempImages.png',
+              chat: 1,
+              message: '😅 😂 🤣',
+              time: '18.00',
+            ),
+            _itemChat(
+              avatar: 'assets/images/tempImages.png',
+              chat: 1,
+              message: '😅 😂 🤣',
+              time: '18.00',
+            ),
+            _itemChat(
+              avatar: 'assets/images/tempImages.png',
+              chat: 1,
+              message: '😅 😂 🤣',
               time: '18.00',
             ),
             _itemChat(
@@ -538,38 +687,81 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget _formChat() {
-    return Positioned(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: 120,
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-          color: Colors.white,
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        color: AppColors.whiteBGColor,
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
           child: TextField(
+            style: AppTextStyles.normal.copyWith(
+              color: AppColors.blackBGColor,
+              fontWeight: FontWeight.w500,
+              fontSize: 1.6 * SizeConfig.heightMultiplier,
+            ),
             decoration: InputDecoration(
               hintText: 'Type your message...',
+              hintStyle: AppTextStyles.normal.copyWith(
+                color: const Color(0xff535353),
+                fontSize: 1.6 * SizeConfig.heightMultiplier,
+              ),
+              prefixIcon: Container(
+                // color: Colors.red,
+                width: 14 * SizeConfig.widthMultiplier,
+                margin: EdgeInsets.only(
+                    left: 4 * SizeConfig.widthMultiplier,
+                    right: 4 * SizeConfig.widthMultiplier),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/icons/camer_up.svg",
+                      height: 3 * SizeConfig.heightMultiplier,
+                    ),
+                    SizedBox(width: 1 * SizeConfig.widthMultiplier),
+                    SvgPicture.asset(
+                      "assets/icons/mic_icon.svg",
+                      height: 3 * SizeConfig.heightMultiplier,
+                    ),
+                  ],
+                ),
+              ),
               suffixIcon: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Colors.indigo),
+                margin: const EdgeInsets.only(right: 10),
                 padding: const EdgeInsets.all(14),
-                child: const Icon(
-                  Icons.send_rounded,
-                  color: Colors.white,
-                  size: 28,
+                child: Text(
+                  "Send",
+                  style: AppTextStyles.bold.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xff535353),
+                    fontSize: 1.7 * SizeConfig.heightMultiplier,
+                  ),
                 ),
               ),
               filled: true,
-              fillColor: Colors.blueGrey[50],
+              fillColor: const Color(0xffF7F7F8),
               labelStyle: const TextStyle(fontSize: 12),
               contentPadding: const EdgeInsets.all(20),
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(25),
+                borderSide: const BorderSide(color: Color(0xffF7F7F8)),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Color(0xffF7F7F8)),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Color(0xffF7F7F8)),
+                borderRadius: BorderRadius.circular(12),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.red),
-                borderRadius: BorderRadius.circular(25),
+                borderSide: const BorderSide(color: Color(0xffF7F7F8)),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Color(0xffF7F7F8)),
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
           ),

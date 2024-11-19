@@ -212,7 +212,10 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
                     pressedOpacity: 0,
                     padding: EdgeInsets.zero,
                     minSize: 0,
-                    onPressed: () => Get.toNamed(Routes.postLikeUserDetail),
+                    onPressed: () =>
+                        Get.toNamed(Routes.postLikeUserDetail, arguments: [
+                      widget.contentData,
+                    ]),
                     child: Text(
                       " ${widget.contentData.likes} Likes",
                       style: AppTextStyles.medium.copyWith(
@@ -226,7 +229,7 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
               ),
               20.horizontalSpace,
               _buildLikeRow(
-                " 0 Comment",
+                "  ${widget.contentData.commentCount} Comment",
                 Assets.commentIcon,
                 () {
                   Get.lazyPut(() =>
@@ -237,17 +240,10 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
                     isScrollControlled: true,
                     isDismissible: true,
                     enableDrag: false,
-                  );
-                  // showModalBottomSheet(
-                  //   context: Get.context!,
-                  //   builder: (context) => const CommentBottomSheet(),
-                  //   isScrollControlled: true,
-                  //   isDismissible: true,
-                  //   backgroundColor: Colors.transparent,
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(24),
-                  //   ),
-                  // );
+                  ).whenComplete(() {
+                    Get.find<DoctorProfileController>()
+                        .getDoctorPost(postType: "post");
+                  });
                 },
               ),
             ],
@@ -270,6 +266,7 @@ class _DoctorImagePostContainerState extends State<DoctorImagePostContainer> {
             iconUrl,
             height: 16,
           ),
+          const SizedBox(width: 4),
           Text(
             title,
             style: AppTextStyles.medium.copyWith(

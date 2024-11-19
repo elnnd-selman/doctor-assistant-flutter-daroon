@@ -14,9 +14,10 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:intl/intl.dart';
 
-class CancelAppointment extends StatelessWidget {
+class CompleteAppointmentContainer extends StatelessWidget {
   final AppointmentModel appointmentModel;
-  const CancelAppointment({super.key, required this.appointmentModel});
+  const CompleteAppointmentContainer(
+      {super.key, required this.appointmentModel});
 
   @override
   Widget build(BuildContext context) {
@@ -32,24 +33,16 @@ class CancelAppointment extends StatelessWidget {
           Get.toNamed(
             Routes.doctorAppointmentDetail,
             arguments: [
-              "cancelled",
-              "cancelled",
-              const Color(0xffEC1C24),
+              "Completed",
+              "completed",
+              const Color(0xff66A073),
               false,
-              "Cancelled Appointment",
+              "Completed Appointment",
               false,
               false,
               appointmentModel,
             ],
           );
-          // Get.toNamed(Routes.doctorAppointmentDetail, arguments: {
-          //   "buttonName":
-          //   "type":
-          //   "textColor":
-          //   "isReschedule": false,
-          //   "title":
-          //   "showButton": false,
-          // });
         },
         child: CustomPaint(
           size: Size(MediaQuery.of(context).size.width * 0.8,
@@ -70,7 +63,7 @@ class CancelAppointment extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 3 * SizeConfig.heightMultiplier),
+                        SizedBox(height: 4 * SizeConfig.heightMultiplier),
                         Center(
                           child: Container(
                             color: Colors.transparent,
@@ -130,9 +123,11 @@ class CancelAppointment extends StatelessWidget {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(
-                                          Assets.phone,
-                                          color: AppColors.whiteBGColor,
+                                        child: SvgPicture.asset(
+                                          Assets.cameraIcon,
+                                          colorFilter: const ColorFilter.mode(
+                                              AppColors.whiteBGColor,
+                                              BlendMode.srcIn),
                                         ),
                                       ),
                                     ),
@@ -167,7 +162,7 @@ class CancelAppointment extends StatelessWidget {
                                         .toString()),
                                     style: AppTextStyles.medium.copyWith(
                                       fontWeight: FontWeight.w500,
-                                      color: const Color(0xffEC1C24),
+                                      color: const Color(0xff427347),
                                       fontSize:
                                           SizeConfig.heightMultiplier * 1.6,
                                     ),
@@ -199,6 +194,7 @@ class CancelAppointment extends StatelessWidget {
                             ],
                           ),
                         ),
+                        // SizedBox(height: 2.5 * SizeConfig.heightMultiplier),
                       ],
                     ),
                   ),
@@ -221,7 +217,7 @@ class CancelAppointment extends StatelessWidget {
   Positioned _startButton() {
     return Positioned(
       right: 2 * SizeConfig.widthMultiplier,
-      top: 0,
+      // top: 4,
       child: FadeInRight(
           child: Container(
         padding: EdgeInsets.symmetric(

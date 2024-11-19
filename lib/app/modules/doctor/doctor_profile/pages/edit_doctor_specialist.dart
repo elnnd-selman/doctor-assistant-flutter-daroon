@@ -16,7 +16,8 @@ class DoctorSpecialtyContainer extends GetView<DoctorEditSpecialityController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.specialityDataList.isEmpty
-          ? const Center(child: Text("No Speciality Available"))
+          ? const Expanded(
+              child: Center(child: Text("No Speciality Available")))
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: 10,

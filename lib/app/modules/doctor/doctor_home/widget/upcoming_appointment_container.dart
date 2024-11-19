@@ -16,15 +16,16 @@ import 'package:intl/intl.dart';
 
 class UpcomingAppointmentContainer extends StatelessWidget {
   final AppointmentModel appointmentModel;
+  final bool isPadding;
   const UpcomingAppointmentContainer(
-      {super.key, required this.appointmentModel});
+      {super.key, required this.appointmentModel, required this.isPadding});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: 3 * SizeConfig.widthMultiplier,
-          vertical: 1.5 * SizeConfig.heightMultiplier),
+          horizontal: isPadding ? 3 * SizeConfig.widthMultiplier : 0,
+          vertical: isPadding ? 1.5 * SizeConfig.heightMultiplier : 0),
       child: CupertinoButton(
         pressedOpacity: 0,
         padding: EdgeInsets.zero,
@@ -57,7 +58,7 @@ class UpcomingAppointmentContainer extends StatelessWidget {
           // );
         },
         child: CustomPaint(
-          size: Size(MediaQuery.of(context).size.width * 0.8,
+          size: Size(MediaQuery.of(context).size.width * 1,
               (MediaQuery.of(context).size.height * 0.37)),
           painter: RPSCustomPainters(),
           child: SizedBox(

@@ -67,6 +67,7 @@ class ContentData {
     required this.likes,
     required this.type,
     required this.imageVideoUrl,
+    required this.commentCount,
   });
 
   final String? id;
@@ -89,6 +90,7 @@ class ContentData {
   int? v;
   int? likes;
   final String? type;
+  final int commentCount;
 
   factory ContentData.fromJson(Map<String, dynamic> json) {
     return ContentData(
@@ -100,6 +102,7 @@ class ContentData {
       contentKu: json["content_ku"],
       contentAr: json["content_ar"],
       contentEn: json["content_en"],
+      commentCount: json["commentCount"],
       images: json["images"] == null
           ? []
           : List<String>.from(json["images"]!.map((x) => x)),

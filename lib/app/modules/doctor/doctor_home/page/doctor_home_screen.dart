@@ -1,4 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/home_upcoming_appointment.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_container.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/utils/widget_spacing.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
@@ -7,6 +13,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/line_chart_g
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DoctorHomeScreen extends GetView<DoctorHomeController> {
   const DoctorHomeScreen({super.key});
@@ -50,16 +57,52 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
             SizedBox(height: 4 * SizeConfig.heightMultiplier),
             const LineChartGraph(),
             SizedBox(height: 3 * SizeConfig.heightMultiplier),
-            Text(
-              "Upcoming Appointment",
-              style: AppTextStyles.medium.copyWith(
-                fontWeight: FontWeight.w500,
-                color: AppColors.blackBGColor,
-                fontSize: SizeConfig.heightMultiplier * 1.6,
-              ),
+            Row(
+              children: [
+                Text(
+                  "Upcoming Appointment",
+                  style: AppTextStyles.medium.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.blackBGColor,
+                    fontSize: SizeConfig.heightMultiplier * 1.6,
+                  ),
+                ),
+                20.horizontalSpace,
+                Container(
+                  height: 3 * SizeConfig.heightMultiplier,
+                  width: 3 * SizeConfig.heightMultiplier,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                      child: Obx(
+                    () => Text(
+                      controller.isLoading.value
+                          ? "0"
+                          : controller.upcomingAppointmentList.length
+                              .toString(),
+                      style: AppTextStyles.medium.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.whiteBGColor,
+                        fontSize: SizeConfig.heightMultiplier * 1.5,
+                      ),
+                    ),
+                  )),
+                ),
+                const Spacer(),
+                Text(
+                  "See All",
+                  style: AppTextStyles.medium.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primaryColor,
+                    fontSize: 1.7 * SizeConfig.heightMultiplier,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 2 * SizeConfig.heightMultiplier),
-            // const UpcomingAppointmentContainer(),
+            const HomeUpcomingAppointment(),
             SizedBox(height: 3 * SizeConfig.heightMultiplier),
             Row(
               children: [
@@ -72,19 +115,69 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  "See All",
-                  style: AppTextStyles.medium.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.primaryColor,
-                    fontSize: 12,
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  minSize: 0,
+                  onPressed: () => Get.toNamed(Routes.doctorOffers),
+                  child: Text(
+                    "See All",
+                    style: AppTextStyles.medium.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryColor,
+                      fontSize: 1.7 * SizeConfig.heightMultiplier,
+                    ),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 2 * SizeConfig.heightMultiplier),
-            // const MoreOfferContainer(
-            //     statusColor: Color(0xff5BA66B), statusText: "Published"),
+            Obx(
+              () => controller.processing.value
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 7 * SizeConfig.heightMultiplier),
+                      child: const Center(child: LoadingWidget()),
+                    )
+                  : controller.doctorOfferPublishedModel.isEmpty
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 7 * SizeConfig.heightMultiplier),
+                          child: Center(
+                            child: Text(
+                              "No Offer available",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.blackBGColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return CupertinoButton(
+                              pressedOpacity: 0,
+                              padding: EdgeInsets.zero,
+                              minSize: 0,
+                              onPressed: () => Get.toNamed(
+                                  Routes.doctorOffersDetails,
+                                  arguments: [
+                                    controller.doctorOfferPublishedModel[index],
+                                    const Color(0xff5BA66B),
+                                    "Published"
+                                  ]),
+                              child: MoreOfferContainer(
+                                  offersData: controller
+                                      .doctorOfferPublishedModel[index],
+                                  statusColor: const Color(0xff5BA66B),
+                                  statusText: "Published"),
+                            );
+                          },
+                        ),
+            ),
             SizedBox(height: 10 * SizeConfig.heightMultiplier),
           ],
         ),

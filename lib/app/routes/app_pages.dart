@@ -11,6 +11,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/add_assi
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/change_assistant_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/search_user_screen.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/pages/select_assistant_address.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/binding/doctor_mesaage_binding.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/add_offer_address.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/edit_offer.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/pages/edit_offer_address.dart';
@@ -163,6 +164,7 @@ class AppPages {
     GetPage(
       name: Routes.doctorOffersDetails,
       page: () => DoctorOfferDetailScreen(),
+      binding: DoctorOffersBinding(),
     ),
     GetPage(
       name: Routes.doctorAppointmentDetail,
@@ -282,6 +284,7 @@ class AppPages {
     GetPage(
       name: Routes.doctorMessage,
       page: () => const DoctorMessageScreen(),
+      binding: DoctorMesaageBinding(),
     ),
     GetPage(
       name: Routes.doctorChatRoom,
@@ -332,7 +335,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.postLikeUserDetail,
-      page: () => const PostLikeUserDetail(),
+      page: () => PostLikeUserDetail(),
+      binding: DoctorProfileBinding(),
     ),
 
     ///

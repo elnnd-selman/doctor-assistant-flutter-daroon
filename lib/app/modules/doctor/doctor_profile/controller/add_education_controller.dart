@@ -45,7 +45,7 @@ class AddEducationController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/users/education',
+        endPoint: '${AppTokens.apiURl}/doctors/educations',
         body: {
           "degree": 83,
           "fromYear": onlyFromYear,

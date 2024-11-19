@@ -1,115 +1,93 @@
-class DoctorAppointmentModel {
-  DoctorAppointmentModel({
+class DoctorMessageModel {
+  DoctorMessageModel({
     required this.success,
-    required this.data,
     required this.message,
     required this.status,
+    required this.data,
   });
 
   final bool? success;
-  final List<AppointmentModel> data;
   final String? message;
   final int? status;
+  final List<DoctorMessageModelData> data;
 
-  factory DoctorAppointmentModel.fromJson(Map<String, dynamic> json) {
-    return DoctorAppointmentModel(
+  factory DoctorMessageModel.fromJson(Map<String, dynamic> json) {
+    return DoctorMessageModel(
       success: json["success"],
-      data: json["data"] == null
-          ? []
-          : List<AppointmentModel>.from(
-              json["data"]!.map((x) => AppointmentModel.fromJson(x))),
       message: json["message"],
       status: json["status"],
+      data: json["data"] == null
+          ? []
+          : List<DoctorMessageModelData>.from(
+              json["data"]!.map((x) => DoctorMessageModelData.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() => {
         "success": success,
-        "data": data.map((x) => x.toJson()).toList(),
         "message": message,
         "status": status,
+        "data": data.map((x) => x.toJson()).toList(),
       };
 }
 
-class AppointmentModel {
-  AppointmentModel({
+class DoctorMessageModelData {
+  DoctorMessageModelData({
     required this.id,
-    required this.office,
+    required this.patient,
     required this.doctor,
-    required this.selectedDay,
-    required this.selectedTime,
-    required this.isPaid,
-    required this.amountPaid,
-    required this.currencyPaid,
-    required this.fullName,
-    required this.age,
-    required this.gender,
-    required this.extraInformation,
-    required this.appointmentDate,
-    required this.dateOfBirth,
-    required this.appointmentType,
-    required this.selfBooked,
-    required this.bookedFor,
-    required this.bookedBy,
-    required this.status,
-    required this.cancelledReason,
-    required this.isDeleted,
+    required this.office,
+    required this.inTimeStartingConversation,
+    required this.inTimeEndingConversation,
+    required this.invoice,
+    required this.duration,
+    required this.timeType,
+    required this.types,
+    required this.appointment,
+    required this.isActive,
+    required this.messages,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
   });
 
   final String? id;
+  final Doctor? patient;
+  final Doctor? doctor;
   final Office? office;
-  final BookedBy? doctor;
-  final String? selectedDay;
-  final String? selectedTime;
-  final bool? isPaid;
-  final int? amountPaid;
-  final String? currencyPaid;
-  final String? fullName;
-  final int? age;
-  final String? gender;
-  final String? extraInformation;
-  final DateTime? appointmentDate;
-  final DateTime? dateOfBirth;
-  final List<String> appointmentType;
-  final bool? selfBooked;
-  final String? bookedFor;
-  final BookedBy? bookedBy;
-  final String? status;
-  String cancelledReason;
-  final bool? isDeleted;
+  final String? inTimeStartingConversation;
+  final String? inTimeEndingConversation;
+  final String? invoice;
+  final int? duration;
+  final String? timeType;
+  final List<String> types;
+  final String? appointment;
+  final bool? isActive;
+  final List<dynamic> messages;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
 
-  factory AppointmentModel.fromJson(Map<String, dynamic> json) {
-    return AppointmentModel(
+  factory DoctorMessageModelData.fromJson(Map<String, dynamic> json) {
+    return DoctorMessageModelData(
       id: json["_id"],
+      patient:
+          json["patient"] == null ? null : Doctor.fromJson(json["patient"]),
+      doctor: json["doctor"] == null ? null : Doctor.fromJson(json["doctor"]),
       office: json["office"] == null ? null : Office.fromJson(json["office"]),
-      doctor: json["doctor"] == null ? null : BookedBy.fromJson(json["doctor"]),
-      selectedDay: json["selectedDay"],
-      selectedTime: json["selectedTime"],
-      isPaid: json["isPaid"],
-      amountPaid: json["amountPaid"],
-      currencyPaid: json["currencyPaid"],
-      fullName: json["fullName"],
-      age: json["age"],
-      gender: json["gender"],
-      extraInformation: json["extraInformation"],
-      appointmentDate: DateTime.tryParse(json["appointmentDate"] ?? ""),
-      dateOfBirth: DateTime.tryParse(json["dateOfBirth"] ?? ""),
-      appointmentType: json["appointmentType"] == null
+      inTimeStartingConversation: json["inTimeStartingConversation"],
+      inTimeEndingConversation: json["inTimeEndingConversation"],
+      invoice: json["invoice"],
+      duration: json["duration"],
+      timeType: json["timeType"],
+      types: json["types"] == null
           ? []
-          : List<String>.from(json["appointmentType"]!.map((x) => x)),
-      selfBooked: json["selfBooked"],
-      bookedFor: json["bookedFor"],
-      bookedBy:
-          json["bookedBy"] == null ? null : BookedBy.fromJson(json["bookedBy"]),
-      status: json["status"],
-      cancelledReason: json["cancelledReason"] ?? '',
-      isDeleted: json["isDeleted"],
+          : List<String>.from(json["types"]!.map((x) => x)),
+      appointment: json["appointment"],
+      isActive: json["isActive"],
+      messages: json["messages"] == null
+          ? []
+          : List<dynamic>.from(json["messages"]!.map((x) => x)),
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
@@ -118,41 +96,41 @@ class AppointmentModel {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "office": office?.toJson(),
+        "patient": patient?.toJson(),
         "doctor": doctor?.toJson(),
-        "selectedDay": selectedDay,
-        "selectedTime": selectedTime,
-        "isPaid": isPaid,
-        "amountPaid": amountPaid,
-        "currencyPaid": currencyPaid,
-        "fullName": fullName,
-        "age": age,
-        "gender": gender,
-        "extraInformation": extraInformation,
-        "appointmentDate": appointmentDate?.toIso8601String(),
-        "dateOfBirth": dateOfBirth?.toIso8601String(),
-        "appointmentType": appointmentType.map((x) => x).toList(),
-        "selfBooked": selfBooked,
-        "bookedFor": bookedFor,
-        "bookedBy": bookedBy?.toJson(),
-        "status": status,
-        "cancelledReason": cancelledReason,
-        "isDeleted": isDeleted,
+        "office": office?.toJson(),
+        "inTimeStartingConversation": inTimeStartingConversation,
+        "inTimeEndingConversation": inTimeEndingConversation,
+        "invoice": invoice,
+        "duration": duration,
+        "timeType": timeType,
+        "types": types.map((x) => x).toList(),
+        "appointment": appointment,
+        "isActive": isActive,
+        "messages": messages.map((x) => x).toList(),
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
       };
 }
 
-class BookedBy {
-  BookedBy({
+class Doctor {
+  Doctor({
     required this.id,
     required this.firstName,
     required this.firstNameKu,
     required this.firstNameEn,
     required this.firstNameAr,
+    required this.username,
+    required this.gender,
     required this.education,
+    required this.lastNameKu,
+    required this.lastNameAr,
+    required this.lastNameEn,
     required this.profilePicture,
+    required this.isThirdParty,
+    required this.usePictureAsLink,
+    required this.dateOfBirth,
   });
 
   final String? id;
@@ -160,23 +138,39 @@ class BookedBy {
   final String? firstNameKu;
   final String? firstNameEn;
   final String? firstNameAr;
+  final String? username;
+  final String? gender;
   final List<Education> education;
+  final String? lastNameKu;
+  final String? lastNameAr;
+  final String? lastNameEn;
   final ProfilePicture? profilePicture;
+  final bool? isThirdParty;
+  final bool? usePictureAsLink;
+  final DateTime? dateOfBirth;
 
-  factory BookedBy.fromJson(Map<String, dynamic> json) {
-    return BookedBy(
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
       id: json["_id"],
       firstName: json["firstName"],
       firstNameKu: json["firstName_ku"],
       firstNameEn: json["firstName_en"],
       firstNameAr: json["firstName_ar"],
+      username: json["username"],
+      gender: json["gender"],
       education: json["education"] == null
           ? []
           : List<Education>.from(
               json["education"]!.map((x) => Education.fromJson(x))),
+      lastNameKu: json["lastName_ku"],
+      lastNameAr: json["lastName_ar"],
+      lastNameEn: json["lastName_en"],
       profilePicture: json["profilePicture"] == null
           ? null
           : ProfilePicture.fromJson(json["profilePicture"]),
+      isThirdParty: json["isThirdParty"],
+      usePictureAsLink: json["usePictureAsLink"],
+      dateOfBirth: DateTime.tryParse(json["dateOfBirth"] ?? ""),
     );
   }
 
@@ -186,8 +180,16 @@ class BookedBy {
         "firstName_ku": firstNameKu,
         "firstName_en": firstNameEn,
         "firstName_ar": firstNameAr,
+        "username": username,
+        "gender": gender,
         "education": education.map((x) => x.toJson()).toList(),
+        "lastName_ku": lastNameKu,
+        "lastName_ar": lastNameAr,
+        "lastName_en": lastNameEn,
         "profilePicture": profilePicture?.toJson(),
+        "isThirdParty": isThirdParty,
+        "usePictureAsLink": usePictureAsLink,
+        "dateOfBirth": dateOfBirth?.toIso8601String(),
       };
 }
 
@@ -292,21 +294,26 @@ class Office {
     required this.id,
     required this.title,
     required this.description,
-    required this.address,
+    required this.room,
+    required this.floor,
+    required this.buildingNumber,
   });
 
   final String? id;
   final String? title;
   final String? description;
-  final Address? address;
+  final int? room;
+  final int? floor;
+  final int? buildingNumber;
 
   factory Office.fromJson(Map<String, dynamic> json) {
     return Office(
       id: json["_id"],
       title: json["title"],
       description: json["description"],
-      address:
-          json["address"] == null ? null : Address.fromJson(json["address"]),
+      room: json["room"],
+      floor: json["floor"],
+      buildingNumber: json["buildingNumber"],
     );
   }
 
@@ -314,68 +321,8 @@ class Office {
         "_id": id,
         "title": title,
         "description": description,
-        "address": address?.toJson(),
-      };
-}
-
-class Address {
-  Address({
-    required this.coordinate,
-    required this.country,
-    required this.city,
-    required this.town,
-    required this.street,
-    required this.typeOfOffice,
-  });
-
-  final Coordinate? coordinate;
-  final String? country;
-  final String? city;
-  final String? town;
-  final String? street;
-  final String? typeOfOffice;
-
-  factory Address.fromJson(Map<String, dynamic> json) {
-    return Address(
-      coordinate: json["coordinate"] == null
-          ? null
-          : Coordinate.fromJson(json["coordinate"]),
-      country: json["country"],
-      city: json["city"],
-      town: json["town"],
-      street: json["street"],
-      typeOfOffice: json["typeOfOffice"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "coordinate": coordinate?.toJson(),
-        "country": country,
-        "city": city,
-        "town": town,
-        "street": street,
-        "typeOfOffice": typeOfOffice,
-      };
-}
-
-class Coordinate {
-  Coordinate({
-    required this.latitude,
-    required this.longitude,
-  });
-
-  final double? latitude;
-  final double? longitude;
-
-  factory Coordinate.fromJson(Map<String, dynamic> json) {
-    return Coordinate(
-      latitude: json["latitude"],
-      longitude: json["longitude"],
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "latitude": latitude,
-        "longitude": longitude,
+        "room": room,
+        "floor": floor,
+        "buildingNumber": buildingNumber,
       };
 }

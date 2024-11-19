@@ -114,7 +114,7 @@ class DoctorAddressController extends GetxController {
           "Authorization":
               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
         },
-        endPoint: '${AppTokens.apiURl}/office/${data.id}/delete',
+        endPoint: '${AppTokens.apiURl}/doctors/offices/${data.id}/delete',
         body: {},
       );
 

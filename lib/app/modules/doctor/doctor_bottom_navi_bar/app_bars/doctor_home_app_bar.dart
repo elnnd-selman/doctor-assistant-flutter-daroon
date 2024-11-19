@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,12 +50,14 @@ class DoctorHomeAppBar extends StatelessWidget {
                 ],
               ),
               4.verticalSpace,
-              Text(
-                "Xurmal, salm street, asia b..",
-                style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.blackBGColor,
-                  fontSize: 1.4 * SizeConfig.heightMultiplier,
+              Obx(
+                () => Text(
+                  Get.find<DoctorHomeController>().userLocation.value,
+                  style: AppTextStyles.medium.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.blackBGColor,
+                    fontSize: 1.4 * SizeConfig.heightMultiplier,
+                  ),
                 ),
               ),
             ],
