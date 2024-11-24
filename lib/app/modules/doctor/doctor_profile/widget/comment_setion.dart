@@ -131,11 +131,6 @@ class CommentSection extends GetView<PostCommentController> {
       ),
       child: const NoDataWidget(
         title: 'No Comments',
-        description: 'When someone comments on this post you will see it here.',
-        iconPath: 'assets/icons/svg/coment.svg',
-        backGroundcolor: AppColors.whiteBGColor,
-        svgIconColor: AppColors.blackBGColor,
-        iconBgColor: Colors.white,
       ),
     );
   }

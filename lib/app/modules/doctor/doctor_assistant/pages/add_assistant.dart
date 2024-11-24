@@ -120,13 +120,7 @@ class AddAssistantScreen extends GetView<AddAssistantController> {
                         ? Padding(
                             padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height * 0.10),
-                            child: const NoDataWidget(
-                                backGroundcolor: AppColors.secondaryborderColor,
-                                svgIconColor: Colors.white,
-                                iconType: true,
-                                iconPath: "assets/icons_png/no_location.png",
-                                title: "No User",
-                                description: "No User Found"),
+                            child: const NoDataWidget(title: "No User Found"),
                           )
                         : ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),

@@ -4,6 +4,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_c
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,6 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/line_chart_g
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DoctorHomeScreen extends GetView<DoctorHomeController> {
   const DoctorHomeScreen({super.key});
@@ -142,16 +142,8 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
                       ? Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 7 * SizeConfig.heightMultiplier),
-                          child: Center(
-                            child: Text(
-                              "No Offer available",
-                              style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.blackBGColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ),
+                          child: const Center(
+                              child: NoDataWidget(title: "No Offer available")),
                         )
                       : ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),

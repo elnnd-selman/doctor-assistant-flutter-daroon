@@ -478,9 +478,13 @@ class AppointmentDetailScreen extends StatelessWidget {
 
   String fatherName(String fullName) {
     List<String> nameParts = fullName.split(" ");
-    String lastName = nameParts[1];
+    if (nameParts.length >= 2) {
+      String lastName = nameParts[1];
 
-    return lastName;
+      return lastName;
+    } else {
+      return fullName;
+    }
   }
 
   String formatDate(String inputDate) {

@@ -116,15 +116,7 @@ class DoctorAdressScreen extends GetView<DoctorAddressController> {
                               ? const Padding(
                                   padding: EdgeInsets.only(top: 30),
                                   child: NoDataWidget(
-                                      backGroundcolor:
-                                          AppColors.secondaryborderColor,
-                                      svgIconColor: Colors.white,
-                                      iconType: true,
-                                      iconPath:
-                                          "assets/icons_png/no_location.png",
-                                      title: "No Address",
-                                      description:
-                                          "No office Address Available"),
+                                      title: "No office Address Available"),
                                 )
                               : ListView.builder(
                                   physics: const NeverScrollableScrollPhysics(),

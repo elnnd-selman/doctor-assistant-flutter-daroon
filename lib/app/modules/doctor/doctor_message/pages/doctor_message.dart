@@ -1,10 +1,11 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/controller/doctor_message_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/model/doctor_message_model.dart';
+import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_message/pages/doctor_chat_room.dart';
 import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
@@ -40,29 +41,34 @@ class DoctorMessageScreen extends GetView<DoctorMessageController> {
       body: Padding(
         padding:
             EdgeInsets.symmetric(horizontal: 6 * SizeConfig.widthMultiplier),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 3 * SizeConfig.heightMultiplier),
-              _buildPatientTextField(),
-              SizedBox(height: 2 * SizeConfig.heightMultiplier),
-              controller.isLoading.value
-                  ? const LoadingWidget()
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 3 * SizeConfig.heightMultiplier),
+            _buildPatientTextField(),
+            SizedBox(height: 2 * SizeConfig.heightMultiplier),
+            Obx(
+              () => controller.isLoading.value
+                  ? const Expanded(child: Center(child: LoadingWidget()))
                   : controller.doctorConversationList.isEmpty
-                      ? const Text("vvfr")
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          itemCount: controller.doctorConversationList.length,
-                          itemBuilder: (context, int index) {
-                            // final allChat = allChats[index];
-                            return _buildChatContainer(
-                                controller.doctorConversationList[index],
-                                context);
-                          }),
-            ],
-          ),
+                      ? const Expanded(
+                          child: NoDataWidget(
+                          title: "No chat available",
+                        ))
+                      : Expanded(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount:
+                                  controller.doctorConversationList.length,
+                              itemBuilder: (context, int index) {
+                                return _buildChatContainer(
+                                    controller.doctorConversationList[index],
+                                    context);
+                              }),
+                        ),
+            )
+          ],
         ),
       ),
     );
@@ -132,12 +138,7 @@ CustomCupertinoButton _buildChatContainer(
 ) {
   return CustomCupertinoButton(
     onTap: () {
-      Get.to(() => ChatPage(
-            doctorMessageModelData: doctorMessageModelData,
-          ));
-      // Get.toNamed(Routes.doctorChatRoom, arguments: {
-      //   "user": allChat.sender!,
-      // });
+      Get.toNamed(Routes.doctorChatRoom, arguments: [doctorMessageModelData]);
     },
     child: Container(
         margin: const EdgeInsets.only(top: 20),
@@ -213,36 +214,3 @@ CustomCupertinoButton _buildChatContainer(
         )),
   );
 }
-
-final User angel =
-    User(id: 2, name: 'Angel', avatar: 'assets/images/tempImages.png');
-
-final User deanna =
-    User(id: 3, name: 'Deanna', avatar: 'assets/images/tempImages.png');
-
-final List<Message> allChats = [
-  Message(
-    sender: addison,
-    avatar: 'assets/images/tempImages.png',
-    time: '12:59',
-    text: "No! I just wanted",
-    unreadCount: 0,
-    isRead: true,
-  ),
-  Message(
-    sender: deanna,
-    avatar: 'assets/images/tempImages.png',
-    time: '10:41',
-    text: "You did what?",
-    unreadCount: 1,
-    isRead: false,
-  ),
-  Message(
-    sender: deanna,
-    avatar: 'assets/images/tempImages.png',
-    time: '10:16',
-    text: "May I ask you something?",
-    unreadCount: 2,
-    isRead: false,
-  ),
-];

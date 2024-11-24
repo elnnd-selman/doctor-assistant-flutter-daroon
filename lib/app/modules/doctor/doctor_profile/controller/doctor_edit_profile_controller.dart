@@ -51,11 +51,12 @@ class DoctorEditProfileController extends GetxController {
     required String image,
     required BuildContext context,
   }) async {
-    await ApiService.patchImage(
+    final respose = await ApiService.patchImage(
       filepath: image,
       userToken: Get.find<DoctorHomeController>().userModel.value!.token!,
       url: '${AppTokens.apiURl}/users/profile-picture',
     );
+    print(respose.statusCode);
   }
 
   final imagePicker = ImagePicker();

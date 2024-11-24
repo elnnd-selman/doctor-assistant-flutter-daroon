@@ -31,16 +31,6 @@ class DoctorOfferModel {
               json["data"]!.map((x) => DoctorOffersData.fromJson(x))),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "message": message,
-        "success": success,
-        "status": status,
-        "pageCount": pageCount,
-        "page": page,
-        "totalRecord": totalRecord,
-        "data": data.map((x) => x?.toJson()).toList(),
-      };
 }
 
 class DoctorOffersData {
@@ -118,31 +108,6 @@ class DoctorOffersData {
       v: json["__v"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "doctor": doctor?.toJson(),
-        "title_ku": titleKu,
-        "title_ar": titleAr,
-        "title_en": titleEn,
-        "description_ku": descriptionKu,
-        "description_ar": descriptionAr,
-        "description_en": descriptionEn,
-        "discountPercentage": discountPercentage,
-        "status": status,
-        "currentPrice": currentPrice,
-        "currency": currency,
-        "image": image?.toJson(),
-        "office": office?.toJson(),
-        "discountedPrice": discountedPrice,
-        "isDeleted": isDeleted,
-        "startTime": startTime?.toIso8601String(),
-        "endTime": endTime?.toIso8601String(),
-        "booked_number": bookedNumber,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
 }
 
 class Doctor {
@@ -216,28 +181,6 @@ class Doctor {
       speciality: json["speciality"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "firstName": firstName,
-        "firstName_ku": firstNameKu,
-        "firstName_en": firstNameEn,
-        "firstName_ar": firstNameAr,
-        "username": username,
-        "gender": gender,
-        "education": education.map((x) => x?.toJson()).toList(),
-        "lastName_ku": lastNameKu,
-        "lastName_ar": lastNameAr,
-        "lastName_en": lastNameEn,
-        "experienceByYear": experienceByYear,
-        "typeOfUser": typeOfUser,
-        "languages": languages.map((x) => x).toList(),
-        "profilePicture": profilePicture,
-        "usePictureAsLink": usePictureAsLink,
-        "dateOfBirth": dateOfBirth?.toIso8601String(),
-        "level": level,
-        "speciality": speciality,
-      };
 }
 
 class Education {

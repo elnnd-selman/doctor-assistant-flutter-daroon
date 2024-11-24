@@ -288,7 +288,8 @@ class AppPages {
     ),
     GetPage(
       name: Routes.doctorChatRoom,
-      page: () => const DoctorChatRoom(),
+      page: () => const DocotrChatPage(),
+      binding: DoctorMesaageBinding(),
     ),
     GetPage(
       name: Routes.doctorNotification,

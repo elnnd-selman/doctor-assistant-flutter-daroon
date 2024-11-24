@@ -45,6 +45,7 @@ abstract class Routes {
   static const doctorChangeEmail = "/doctorChangeEmail";
   static const doctorChangeUserName = "/doctorChangeUserName";
   static const doctorMessage = "/doctorMessage";
+
   static const doctorChatRoom = "/doctorChatRoom";
   static const doctorNotification = "/doctorNotification";
   static const addDoctorAdress = "/addDoctorAdress";
