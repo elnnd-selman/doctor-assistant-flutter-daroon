@@ -61,8 +61,9 @@ class ChatTitle extends StatelessWidget {
                   )
             : Text(
                 '$time',
-                style: AppTextStyles.normal
-                    .copyWith(fontSize: 14, color: const Color(0xff535353)),
+                style: AppTextStyles.normal.copyWith(
+                    fontSize: 1.4 * SizeConfig.heightMultiplier,
+                    color: const Color(0xff535353)),
               ),
         Flexible(
           child: Container(
@@ -86,16 +87,18 @@ class ChatTitle extends StatelessWidget {
             ),
             child: Text(
               '$message',
-              style: AppTextStyles.normal
-                  .copyWith(color: const Color(0xff11142D), fontSize: 16),
+              style: AppTextStyles.normal.copyWith(
+                  color: const Color(0xff11142D),
+                  fontSize: 1.7 * SizeConfig.heightMultiplier),
             ),
           ),
         ),
         chat == 1
             ? Text(
                 '$time',
-                style: AppTextStyles.normal
-                    .copyWith(fontSize: 14, color: const Color(0xff535353)),
+                style: AppTextStyles.normal.copyWith(
+                    fontSize: 1.4 * SizeConfig.heightMultiplier,
+                    color: const Color(0xff535353)),
               )
             : const SizedBox(),
       ],

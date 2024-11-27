@@ -3,6 +3,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/cancel
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class CancelAppointmentController extends GetxController {
   final TextEditingController reasonTextField = TextEditingController();
 
   cancelAppointmentApi(BuildContext context, AppointmentModel appointmentModel,
-      String previousCategory) async {
+      String previousCategory, bool isMainPage) async {
     try {
       _processing.value = true;
       final response = await ApiService.putWithHeader(
@@ -36,37 +37,42 @@ class CancelAppointmentController extends GetxController {
       );
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
-          if (previousCategory == "requesting") {
-            Get.find<DoctorAppointmentController>()
-                .requestAppointmentList
-                .removeWhere((item) => item.id == appointmentModel.id);
-          } else if (previousCategory == 'upcoming') {
-            Get.find<DoctorAppointmentController>()
-                .upcomingAppointmentList
-                .removeWhere((item) => item.id == appointmentModel.id);
-          } else if (previousCategory == "confirmed") {
-            Get.find<DoctorAppointmentController>()
-                .confirmedAppointmentList
-                .removeWhere((item) => item.id == appointmentModel.id);
-          }
+          // if (previousCategory == "requesting") {
+          //   Get.find<DoctorAppointmentController>()
+          //       .requestAppointmentList
+          //       .removeWhere((item) => item.id == appointmentModel.id);
+          // } else if (previousCategory == 'upcoming') {
+          //   Get.find<DoctorAppointmentController>()
+          //       .upcomingAppointmentList
+          //       .removeWhere((item) => item.id == appointmentModel.id);
+          // } else if (previousCategory == "confirmed") {
+          //   Get.find<DoctorAppointmentController>()
+          // //       .confirmedAppointmentList
+          // //       .removeWhere((item) => item.id == appointmentModel.id);
+          // // }
 
-          appointmentModel.cancelledReason = currentIndex.value == 4
-              ? reasonTextField.text
-              : cancelAppointmentList[currentIndex.value].title;
-          Get.find<DoctorAppointmentController>()
-              .cancelAppointmentList
-              .add(appointmentModel);
+          // appointmentModel.cancelledReason = currentIndex.value == 4
+          //     ? reasonTextField.text
+          //     : cancelAppointmentList[currentIndex.value].title;
+          // Get.find<DoctorAppointmentController>()
+          //     .cancelAppointmentList
+          //     .add(appointmentModel);
+          Get.find<DoctorAppointmentController>().getDoctorAppointments();
+          if (isMainPage) {
+            Get.back();
+          } else {
+            Get.back();
+            Get.back();
+          }
           Get.back();
           Get.back();
-          showToastMessage(
+          successTextMessage(
               message: "Appointment cancelled successfully.",
-              context: context,
               color: const Color(0xff5BA66B),
               icon: Icons.check);
         } else {
-          showToastMessage(
-              message: response.body,
-              context: context,
+          successTextMessage(
+              message: response.body.extractErrorMessage(),
               color: const Color(0xffEC1C24),
               icon: Icons.check);
         }

@@ -1,29 +1,3 @@
-class DoctorOfficeAddressModel {
-  DoctorOfficeAddressModel({
-    required this.message,
-    required this.success,
-    required this.data,
-    required this.status,
-  });
-
-  final String? message;
-  final bool? success;
-  final List<OfficeAddreesModel> data;
-  final int? status;
-
-  factory DoctorOfficeAddressModel.fromJson(Map<String, dynamic> json) {
-    return DoctorOfficeAddressModel(
-      message: json["message"],
-      success: json["success"],
-      data: json["data"] == null
-          ? []
-          : List<OfficeAddreesModel>.from(
-              json["data"]!.map((x) => OfficeAddreesModel.fromJson(x))),
-      status: json["status"],
-    );
-  }
-}
-
 class OfficeAddreesModel {
   OfficeAddreesModel({
     required this.fee,
@@ -40,7 +14,7 @@ class OfficeAddreesModel {
     required this.typeOfCurrency,
     required this.phoneNumbers,
     required this.isDeleted,
-    // required this.appointmentTimes,
+    required this.appointmentTimes,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
@@ -49,7 +23,7 @@ class OfficeAddreesModel {
   final Fee? fee;
   final Address? address;
   final String? id;
-  final String? doctor;
+  final Doctor? doctor;
   final String? title;
   final String? description;
   final List<String> daysOpen;
@@ -60,7 +34,7 @@ class OfficeAddreesModel {
   final TypeOfCurrency? typeOfCurrency;
   final List<String> phoneNumbers;
   final bool? isDeleted;
-  // final AppointmentTimes? appointmentTimes;
+  final AppointmentTimes? appointmentTimes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -71,7 +45,7 @@ class OfficeAddreesModel {
       address:
           json["address"] == null ? null : Address.fromJson(json["address"]),
       id: json["_id"],
-      doctor: json["doctor"],
+      doctor: json["doctor"] == null ? null : Doctor.fromJson(json["doctor"]),
       title: json["title"],
       description: json["description"],
       daysOpen: json["daysOpen"] == null
@@ -88,35 +62,14 @@ class OfficeAddreesModel {
           ? []
           : List<String>.from(json["phoneNumbers"]!.map((x) => x)),
       isDeleted: json["isDeleted"],
-      // appointmentTimes: json["appointmentTimes"] == null
-      //     ? null
-      //     : AppointmentTimes.fromJson(json["appointmentTimes"]),
+      appointmentTimes: json["appointmentTimes"] == null
+          ? null
+          : AppointmentTimes.fromJson(json["appointmentTimes"]),
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "fee": fee?.toJson(),
-        "address": address?.toJson(),
-        "_id": id,
-        "doctor": doctor,
-        "title": title,
-        "description": description,
-        "daysOpen": daysOpen.map((x) => x).toList(),
-        "startTime": startTime,
-        "endTime": endTime,
-        "appointmentDuration": appointmentDuration,
-        "appointmentTimeType": appointmentTimeType,
-        "typeOfCurrency": typeOfCurrency?.toJson(),
-        "phoneNumbers": phoneNumbers.map((x) => x).toList(),
-        "isDeleted": isDeleted,
-        // "appointmentTimes": appointmentTimes?.toJson(),
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
 }
 
 class Address {
@@ -151,15 +104,6 @@ class Address {
           : TypeOfOffice.fromJson(json["typeOfOffice"]),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "coordinate": coordinate?.toJson(),
-        "country": country?.toJson(),
-        "city": city,
-        "town": town,
-        "street": street,
-        "typeOfOffice": typeOfOffice?.toJson(),
-      };
 }
 
 class Coordinate {
@@ -177,11 +121,6 @@ class Coordinate {
       longitude: json["longitude"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "latitude": latitude,
-        "longitude": longitude,
-      };
 }
 
 class Country {
@@ -217,17 +156,6 @@ class Country {
       v: json["__v"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "isDeleted": isDeleted,
-        "_id": id,
-        "country_ku": countryKu,
-        "country_ar": countryAr,
-        "country_en": countryEn,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
 }
 
 class TypeOfOffice {
@@ -263,28 +191,194 @@ class TypeOfOffice {
       v: json["__v"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "isDeleted": isDeleted,
-        "_id": id,
-        "typeOfOffice_ku": typeOfOfficeKu,
-        "typeOfOffice_ar": typeOfOfficeAr,
-        "typeOfOffice_en": typeOfOfficeEn,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
 }
 
 class AppointmentTimes {
-  AppointmentTimes({required this.json});
-  final Map<String, dynamic> json;
+  AppointmentTimes({
+    required this.sunday,
+    required this.monday,
+    required this.tuesday,
+    required this.wednesday,
+    required this.thursday,
+    required this.friday,
+    required this.saturday,
+  });
+
+  final List<Day> sunday;
+  final List<Day> monday;
+  final List<Day> tuesday;
+  final List<Day> wednesday;
+  final List<Day> thursday;
+  final List<Day> friday;
+  final List<Day> saturday;
 
   factory AppointmentTimes.fromJson(Map<String, dynamic> json) {
-    return AppointmentTimes(json: json);
+    return AppointmentTimes(
+      sunday: json["sunday"] == null
+          ? []
+          : List<Day>.from(json["sunday"]!.map((x) => Day.fromJson(x))),
+      monday: json["monday"] == null
+          ? []
+          : List<Day>.from(json["monday"]!.map((x) => Day.fromJson(x))),
+      tuesday: json["tuesday"] == null
+          ? []
+          : List<Day>.from(json["tuesday"]!.map((x) => Day.fromJson(x))),
+      wednesday: json["wednesday"] == null
+          ? []
+          : List<Day>.from(json["wednesday"]!.map((x) => Day.fromJson(x))),
+      thursday: json["thursday"] == null
+          ? []
+          : List<Day>.from(json["thursday"]!.map((x) => Day.fromJson(x))),
+      friday: json["friday"] == null
+          ? []
+          : List<Day>.from(json["friday"]!.map((x) => Day.fromJson(x))),
+      saturday: json["saturday"] == null
+          ? []
+          : List<Day>.from(json["saturday"]!.map((x) => Day.fromJson(x))),
+    );
   }
+}
 
-  Map<String, dynamic> toJson() => {};
+class Day {
+  Day({
+    required this.time,
+    required this.isBooked,
+  });
+
+  final String? time;
+  final bool? isBooked;
+
+  factory Day.fromJson(Map<String, dynamic> json) {
+    return Day(
+      time: json["time"],
+      isBooked: json["isBooked"],
+    );
+  }
+}
+
+class Doctor {
+  Doctor({
+    required this.phone,
+    required this.backgroundPicture,
+    required this.id,
+    required this.firstName,
+    required this.firstNameKu,
+    required this.firstNameEn,
+    required this.firstNameAr,
+    required this.username,
+    required this.email,
+    required this.isEmailVerified,
+    required this.gender,
+    required this.isActive,
+    required this.education,
+    required this.lastNameKu,
+    required this.lastNameAr,
+    required this.lastNameEn,
+    required this.experienceByYear,
+    required this.typeOfUser,
+    required this.languages,
+    required this.appLang,
+    required this.profilePicture,
+    required this.isThirdParty,
+    required this.usePictureAsLink,
+    required this.dateOfBirth,
+    required this.isDeleted,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.v,
+    required this.level,
+    required this.speciality,
+    required this.isVip,
+  });
+
+  final Phone? phone;
+  final dynamic backgroundPicture;
+  final String? id;
+  final String? firstName;
+  final String? firstNameKu;
+  final String? firstNameEn;
+  final String? firstNameAr;
+  final String? username;
+  final String? email;
+  final bool? isEmailVerified;
+  final String? gender;
+  final bool? isActive;
+  final List<dynamic> education;
+  final String? lastNameKu;
+  final String? lastNameAr;
+  final String? lastNameEn;
+  final int? experienceByYear;
+  final String? typeOfUser;
+  final List<String> languages;
+  final String? appLang;
+  final String? profilePicture;
+  final bool? isThirdParty;
+  final bool? usePictureAsLink;
+  final DateTime? dateOfBirth;
+  final bool? isDeleted;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
+  final dynamic level;
+  final dynamic speciality;
+  final bool? isVip;
+
+  factory Doctor.fromJson(Map<String, dynamic> json) {
+    return Doctor(
+      phone: json["phone"] == null ? null : Phone.fromJson(json["phone"]),
+      backgroundPicture: json["background_picture"],
+      id: json["_id"],
+      firstName: json["firstName"],
+      firstNameKu: json["firstName_ku"],
+      firstNameEn: json["firstName_en"],
+      firstNameAr: json["firstName_ar"],
+      username: json["username"],
+      email: json["email"],
+      isEmailVerified: json["isEmailVerified"],
+      gender: json["gender"],
+      isActive: json["isActive"],
+      education: json["education"] == null
+          ? []
+          : List<dynamic>.from(json["education"]!.map((x) => x)),
+      lastNameKu: json["lastName_ku"],
+      lastNameAr: json["lastName_ar"],
+      lastNameEn: json["lastName_en"],
+      experienceByYear: json["experienceByYear"],
+      typeOfUser: json["typeOfUser"],
+      languages: json["languages"] == null
+          ? []
+          : List<String>.from(json["languages"]!.map((x) => x)),
+      appLang: json["appLang"],
+      profilePicture: json["profilePicture"],
+      isThirdParty: json["isThirdParty"],
+      usePictureAsLink: json["usePictureAsLink"],
+      dateOfBirth: DateTime.tryParse(json["dateOfBirth"] ?? ""),
+      isDeleted: json["isDeleted"],
+      createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
+      updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
+      v: json["__v"],
+      level: json["level"],
+      speciality: json["speciality"],
+      isVip: json["is_vip"],
+    );
+  }
+}
+
+class Phone {
+  Phone({
+    required this.number,
+    required this.isVerified,
+  });
+
+  final String? number;
+  final bool? isVerified;
+
+  factory Phone.fromJson(Map<String, dynamic> json) {
+    return Phone(
+      number: json["number"],
+      isVerified: json["isVerified"],
+    );
+  }
 }
 
 class Fee {
@@ -308,57 +402,39 @@ class Fee {
       feeVideoCall: json["feeVideoCall"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "feeClinic": feeClinic,
-        "feeMessage": feeMessage,
-        "feeCall": feeCall,
-        "feeVideoCall": feeVideoCall,
-      };
 }
 
 class TypeOfCurrency {
   TypeOfCurrency({
-    required this.isDeleted,
     required this.id,
     required this.typeOfCurrencyKu,
     required this.typeOfCurrencyAr,
     required this.typeOfCurrencyEn,
+    required this.isDeleted,
     required this.createdAt,
     required this.updatedAt,
     required this.v,
   });
 
-  final bool? isDeleted;
   final String? id;
   final String? typeOfCurrencyKu;
   final String? typeOfCurrencyAr;
   final String? typeOfCurrencyEn;
+  final bool? isDeleted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
 
   factory TypeOfCurrency.fromJson(Map<String, dynamic> json) {
     return TypeOfCurrency(
-      isDeleted: json["isDeleted"],
       id: json["_id"],
       typeOfCurrencyKu: json["typeOfCurrency_ku"],
       typeOfCurrencyAr: json["typeOfCurrency_ar"],
       typeOfCurrencyEn: json["typeOfCurrency_en"],
+      isDeleted: json["isDeleted"],
       createdAt: DateTime.tryParse(json["createdAt"] ?? ""),
       updatedAt: DateTime.tryParse(json["updatedAt"] ?? ""),
       v: json["__v"],
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "isDeleted": isDeleted,
-        "_id": id,
-        "typeOfCurrency_ku": typeOfCurrencyKu,
-        "typeOfCurrency_ar": typeOfCurrencyAr,
-        "typeOfCurrency_en": typeOfCurrencyEn,
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
-      };
 }

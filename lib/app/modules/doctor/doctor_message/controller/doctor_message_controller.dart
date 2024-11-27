@@ -24,11 +24,14 @@ class DoctorMessageController extends GetxController {
       );
       if (response!.statusCode == 200 || response.statusCode == 201) {
         List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
-        print(jsonResponse);
+
         doctorConversationList.value = jsonResponse
             .map((data) => DoctorMessageModelData.fromJson(data))
             .toList();
       }
+      doctorConversationList
+          .sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
+
       isLoading.value = false;
     } catch (e) {
       isLoading.value = false;

@@ -4,6 +4,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_h
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/controller/doctor_offers_controller.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:http/http.dart' as http;
 
@@ -225,7 +226,7 @@ class OfferEditController extends GetxController {
         } else {
           _processing.value = false;
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               // ignore: use_build_context_synchronously
               context: context,
               color: const Color(0xffEC1C24),

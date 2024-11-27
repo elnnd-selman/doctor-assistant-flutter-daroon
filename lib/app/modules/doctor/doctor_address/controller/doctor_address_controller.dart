@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -136,7 +137,7 @@ class DoctorAddressController extends GetxController {
         } else {
           printInfo(info: "Error While Deleting Office ${response.body}");
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);

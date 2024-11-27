@@ -1,8 +1,10 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/controller/doctor_message_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/model/doctor_message_model.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -144,11 +146,34 @@ CustomCupertinoButton _buildChatContainer(
         margin: const EdgeInsets.only(top: 20),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 28,
-              backgroundImage: NetworkImage(
-                  doctorMessageModelData.patient!.profilePicture!.md!),
-            ),
+            doctorMessageModelData.patient!.profilePicture == null
+                ? Container(
+                    height: 6 * SizeConfig.heightMultiplier,
+                    width: 6 * SizeConfig.heightMultiplier,
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                        color: AppColors.blackBGColor, shape: BoxShape.circle),
+                    child: Center(
+                      child: FittedBox(
+                        child: Text(
+                          '${doctorMessageModelData.patient!.firstName![0].toUpperCase()}${doctorMessageModelData.patient!.lastNameEn![0].toUpperCase()}',
+                          style: AppTextStyles.bold.copyWith(
+                            color: Colors.white,
+                            fontSize: Spaces.fontSize(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ))
+                : ClipOval(
+                    child: NetWorkImageLoader(
+                      shape: BoxShape.circle,
+                      boxFit: BoxFit.cover,
+                      height: 6 * SizeConfig.heightMultiplier,
+                      width: 6 * SizeConfig.heightMultiplier,
+                      imageURL:
+                          doctorMessageModelData.patient!.profilePicture!.md!,
+                    ),
+                  ),
             const SizedBox(
               width: 20,
             ),
@@ -157,7 +182,7 @@ CustomCupertinoButton _buildChatContainer(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  doctorMessageModelData.patient!.firstName!,
+                  "${doctorMessageModelData.patient!.firstName!} ${doctorMessageModelData.patient!.lastNameEn!}",
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackBGColor,
@@ -165,9 +190,7 @@ CustomCupertinoButton _buildChatContainer(
                   ),
                 ),
                 Text(
-                  doctorMessageModelData.messages.isEmpty
-                      ? '--'
-                      : doctorMessageModelData.messages[0],
+                  "@${doctorMessageModelData.patient!.username!}",
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: const Color(0xff707281),
@@ -176,40 +199,40 @@ CustomCupertinoButton _buildChatContainer(
                 ),
               ],
             ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                // ? const Icon(
-                //     Icons.done_all,
-                //     color: AppColors.primaryColor,
-                //   )
-                // :
-                CircleAvatar(
-                  radius: 1.2 * SizeConfig.heightMultiplier,
-                  backgroundColor: AppColors.primaryColor,
-                  child: Center(
-                    child: Text(
-                      '1',
-                      style: AppTextStyles.medium.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.whiteBGColor,
-                        fontSize: SizeConfig.heightMultiplier * 1.3,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  "am",
-                  style: AppTextStyles.medium.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: const Color(0xff707281),
-                    fontSize: SizeConfig.heightMultiplier * 1.2,
-                  ),
-                )
-              ],
-            ),
+            // const Spacer(),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.end,
+            //   children: [
+            //     // ? const Icon(
+            //     //     Icons.done_all,
+            //     //     color: AppColors.primaryColor,
+            //     //   )
+            //     // :
+            //     CircleAvatar(
+            //       radius: 1.2 * SizeConfig.heightMultiplier,
+            //       backgroundColor: AppColors.primaryColor,
+            //       child: Center(
+            //         child: Text(
+            //           '1',
+            //           style: AppTextStyles.medium.copyWith(
+            //             fontWeight: FontWeight.w500,
+            //             color: AppColors.whiteBGColor,
+            //             fontSize: SizeConfig.heightMultiplier * 1.3,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //     const SizedBox(height: 4),
+            //     Text(
+            //       "am",
+            //       style: AppTextStyles.medium.copyWith(
+            //         fontWeight: FontWeight.w400,
+            //         color: const Color(0xff707281),
+            //         fontSize: SizeConfig.heightMultiplier * 1.2,
+            //       ),
+            //     )
+            //   ],
+            // ),
           ],
         )),
   );

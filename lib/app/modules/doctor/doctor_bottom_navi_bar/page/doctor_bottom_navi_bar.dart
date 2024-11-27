@@ -212,8 +212,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           HapticFeedback.lightImpact();
                         });
 
-                        if (Get.find<DoctorAppointmentController>()
-                            .initialized) {
+                        if (Get.isRegistered<DoctorAppointmentController>()) {
                           Get.find<DoctorAppointmentController>()
                               .getDoctorAppointments();
                         }
@@ -251,7 +250,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           _controller5!.reverse();
                           HapticFeedback.lightImpact();
                         });
-                        if (Get.find<DoctorAddressController>().initialized) {
+                        if (Get.isRegistered<DoctorAddressController>()) {
                           Get.find<DoctorAddressController>()
                               .getDoctorOfficeAddress();
                         }
@@ -263,7 +262,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           ? AppColors.primaryColor
                           : const Color(0xff979797),
                       ontap: () {
-                        if (Get.find<DoctorProfileController>().initialized) {
+                        if (Get.isRegistered<DoctorProfileController>()) {
                           Get.find<DoctorProfileController>()
                               .getDoctorPost(postType: 'post');
                           Get.find<DoctorProfileController>()

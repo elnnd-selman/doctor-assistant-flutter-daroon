@@ -6,6 +6,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_address/model/office_typ
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/custom_dialog_box.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
@@ -138,7 +139,7 @@ class EditDoctorAddressController extends GetxController {
         } else {
           _processing.value = false;
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);
@@ -146,7 +147,7 @@ class EditDoctorAddressController extends GetxController {
       } else {
         _processing.value = false;
         showToastMessage(
-            message: response!.body,
+            message: "Response is Empty",
             context: context,
             color: const Color(0xffEC1C24),
             icon: Icons.close);

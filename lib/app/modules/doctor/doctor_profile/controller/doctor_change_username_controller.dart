@@ -3,6 +3,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/docto
 import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
@@ -96,7 +97,7 @@ class DoctorChangeUserNameController extends GetxController {
         } else {
           isError.value = true;
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);

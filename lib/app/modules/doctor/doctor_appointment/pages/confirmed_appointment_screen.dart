@@ -12,34 +12,41 @@ class ConfirmedAppointmentScreen extends GetView<DoctorAppointmentController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.isLoading.value
-        ? const LoadingWidget()
-        : controller.confirmedAppointmentList.isEmpty
-            ? Center(
-                child: Text(
-                  "No Confirmed appointment\nis found.",
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.medium.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.lighttextColor),
-                ),
-              )
-            : ListView.builder(
-                padding: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                shrinkWrap: true,
-                itemCount: controller.confirmedAppointmentList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom: index ==
-                                controller.confirmedAppointmentList.length - 1
-                            ? 12 * SizeConfig.heightMultiplier
-                            : 0),
-                    child: ConfirmedAppointmentContainer(
-                        appointmentModel:
-                            controller.confirmedAppointmentList[index]),
-                  );
-                });
+    return Obx(
+      () => controller.isLoading.value
+          ? const Center(child: LoadingWidget())
+          : controller.confirmedAppointmentList.isEmpty
+              ? Center(
+                  child: Text(
+                    "No Confirmed appointment\nis found.",
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.medium.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.lighttextColor),
+                  ),
+                )
+              : controller.confirmProcessing
+                  ? const Center(child: LoadingWidget())
+                  : ListView.builder(
+                      padding:
+                          EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                      shrinkWrap: true,
+                      itemCount: controller.confirmedAppointmentList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: index ==
+                                      controller
+                                              .confirmedAppointmentList.length -
+                                          1
+                                  ? 12 * SizeConfig.heightMultiplier
+                                  : 0),
+                          child: ConfirmedAppointmentContainer(
+                              appointmentModel:
+                                  controller.confirmedAppointmentList[index]),
+                        );
+                      }),
+    );
   }
 }

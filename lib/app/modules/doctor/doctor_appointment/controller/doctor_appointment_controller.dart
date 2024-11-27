@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
 import 'package:daroon_doctor/app/model/user_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
@@ -150,9 +152,51 @@ class DoctorAppointmentController extends GetxController {
   ].obs;
 
   RxBool processing = false.obs;
+  // reScheduleAppointment(
+  //   AppointmentModel appointmentModel,
+  //   BuildContext context,
+  // ) async {
+  //   try {
+  //     processing.value = true;
+  //     final response = await ApiService.putWithHeader(
+  //         userToken: {
+  //           'Content-Type': 'application/json',
+  //           "Authorization":
+  //               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+  //         },
+  //         endPoint:
+  //             '${AppTokens.apiURl}/doctors/appointments/${appointmentModel.id}/reschedule',
+  //         body: {
+  //           "selectedDay": weekDaysListFull[currentIndex.value],
+  //           "selectedTime": timeDaysList[currentTimeIndex.value],
+  //         });
+
+  //     if (response != null) {
+  //       if (response.statusCode == 200 || response.statusCode == 201) {
+  //         print(response.body);
+  //       } else {
+  //         print(response.body);
+  //         showToastMessage(
+  //             message: response.body,
+  //             // ignore: use_build_context_synchronously
+  //             context: context,
+  //             color: const Color(0xffEC1C24),
+  //             icon: Icons.close);
+  //       }
+  //     }
+  //     processing.value = false;
+  //   } catch (e) {
+  //     processing.value = false;
+  //     printInfo(info: e.toString());
+  //   }
+  // }
+
+  RxString selectedTime = "".obs;
+
   reScheduleAppointment(
     AppointmentModel appointmentModel,
     BuildContext context,
+    String appointmetType,
   ) async {
     try {
       processing.value = true;
@@ -163,21 +207,33 @@ class DoctorAppointmentController extends GetxController {
                 "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
           },
           endPoint:
-              '${AppTokens.apiURl}/doctors/appointments/${appointmentModel.id}/reschedule',
+              '${AppTokens.apiURl}/appointments/${appointmentModel.id}/reschedule',
           body: {
             "selectedDay": weekDaysListFull[currentIndex.value],
-            "selectedTime": timeDaysList[currentTimeIndex.value],
+            "selectedTime": selectedTime.value,
           });
 
       if (response != null) {
         if (response.statusCode == 200 || response.statusCode == 201) {
-          print(response.body);
+          if (appointmetType.toLowerCase() == "completed") {
+            completedAppointmentList
+                .removeWhere((item) => item.id == appointmentModel.id);
+
+            requestAppointmentList.add(appointmentModel);
+          }
+          Get.back();
+          successTextMessage(
+              message:
+                  'You send a request for appointment with Dr.${appointmentModel.doctor!.firstName!}',
+              // ignore: use_build_context_synchronously
+
+              color: const Color(0xffEC1C24),
+              icon: Icons.close);
         } else {
-          print(response.body);
-          showToastMessage(
+          successTextMessage(
               message: response.body,
               // ignore: use_build_context_synchronously
-              context: context,
+
               color: const Color(0xffEC1C24),
               icon: Icons.close);
         }
@@ -195,6 +251,7 @@ class DoctorAppointmentController extends GetxController {
     AppointmentModel appointmentModel,
     BuildContext context,
     String status,
+    bool isMainPage,
   ) async {
     try {
       _confirmProcessing.value = true;
@@ -214,40 +271,63 @@ class DoctorAppointmentController extends GetxController {
             upcomingAppointmentList
                 .removeWhere((item) => item.id == appointmentModel.id);
             confirmedAppointmentList.add(appointmentModel);
-            Get.back();
-            showToastMessage(
+            // Get.back();
+            successTextMessage(
                 message: "Successfully confirmed appointmetnt",
                 // ignore: use_build_context_synchronously
-                context: context,
+
                 color: const Color(0xff5BA66B),
                 icon: Icons.check);
-          } else {
+          } else if (status == "completed") {
             confirmedAppointmentList
                 .removeWhere((item) => item.id == appointmentModel.id);
             completedAppointmentList.add(appointmentModel);
-            Get.back();
-            showToastMessage(
+            // Get.back();
+            successTextMessage(
                 message: "Successfully complete appointmetnt",
                 // ignore: use_build_context_synchronously
-                context: context,
+
                 color: const Color(0xff5BA66B),
                 icon: Icons.check);
           }
-          print(response.body);
+          if (!isMainPage) {
+            Get.back();
+          }
         } else {
-          print(response.body);
-          showToastMessage(
-              message: response.body,
+          successTextMessage(
+              message: response.body.extractErrorMessage(),
               // ignore: use_build_context_synchronously
-              context: context,
+
               color: const Color(0xffEC1C24),
               icon: Icons.close);
         }
       }
       _confirmProcessing.value = false;
     } catch (e) {
-      _confirmProcessing.value = false;
       print(e.toString());
+      _confirmProcessing.value = false;
+    }
+  }
+
+  ////////////////
+  RxList<Day> appointmentTimeList = <Day>[].obs;
+  setAppointmentData(AppointmentTimes appointmentTimes) {
+    appointmentTimeList.value = [];
+
+    if (currentIndex.value == 0) {
+      appointmentTimeList.value = appointmentTimes.sunday;
+    } else if (currentIndex.value == 1) {
+      appointmentTimeList.value = appointmentTimes.monday;
+    } else if (currentIndex.value == 2) {
+      appointmentTimeList.value = appointmentTimes.tuesday;
+    } else if (currentIndex.value == 3) {
+      appointmentTimeList.value = appointmentTimes.wednesday;
+    } else if (currentIndex.value == 4) {
+      appointmentTimeList.value = appointmentTimes.thursday;
+    } else if (currentIndex.value == 5) {
+      appointmentTimeList.value = appointmentTimes.friday;
+    } else if (currentIndex.value == 6) {
+      appointmentTimeList.value = appointmentTimes.saturday;
     }
   }
 }

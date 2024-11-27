@@ -1,6 +1,7 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
 import 'package:daroon_doctor/global/utils/spaces.dart';
+import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,46 +23,39 @@ class DoctorProfileHeadrer extends GetView<DoctorProfileController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Get.find<DoctorHomeController>()
-                    .userModel
-                    .value!
-                    .user!
-                    .profilePicture ==
-                null
-            ? Container(
-                height: 10 * SizeConfig.heightMultiplier,
-                width: 10 * SizeConfig.heightMultiplier,
-                padding: const EdgeInsets.all(10),
-                decoration: const BoxDecoration(
-                  color: AppColors.blackBGColor,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: FittedBox(
-                    child: Text(
-                      '${Get.find<DoctorHomeController>().userModel.value!.user!.username![0].toUpperCase()}${Get.find<DoctorHomeController>().userModel.value!.user!.firstName![0].toUpperCase()}',
-                      style: AppTextStyles.bold.copyWith(
-                        color: Colors.white,
-                        fontSize: Spaces.fontSize(fontSize: 18),
-                      ),
-                    ),
-                  ),
-                ))
-            : CircleAvatar(
-                radius: 14,
-                child: ClipOval(
-                  child: NetWorkImageLoader(
-                    imageURL: Get.find<DoctorHomeController>()
-                        .userModel
-                        .value!
-                        .user!
-                        .profilePicture,
+        controller.processing.value
+            ? const LoadingWidget()
+            : controller.userProfileModel.value!.userProfile!.profilePicture ==
+                    null
+                ? Container(
                     height: 10 * SizeConfig.heightMultiplier,
                     width: 10 * SizeConfig.heightMultiplier,
-                    shape: BoxShape.circle,
+                    padding: const EdgeInsets.all(10),
+                    decoration: const BoxDecoration(
+                      color: AppColors.blackBGColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: FittedBox(
+                        child: Text(
+                          '${controller.userProfileModel.value!.userProfile!.username![0].toUpperCase()}${controller.userProfileModel.value!.userProfile!.firstName![0].toUpperCase()}',
+                          style: AppTextStyles.bold.copyWith(
+                            color: Colors.white,
+                            fontSize: Spaces.fontSize(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    ))
+                : ClipOval(
+                    child: NetWorkImageLoader(
+                      imageURL: controller.userProfileModel.value!.userProfile!
+                          .profilePicture!.md!,
+                      height: 10 * SizeConfig.heightMultiplier,
+                      width: 10 * SizeConfig.heightMultiplier,
+                      boxFit: BoxFit.cover,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-              ),
         14.horizontalSpace,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,8 +71,7 @@ class DoctorProfileHeadrer extends GetView<DoctorProfileController> {
             ),
             4.verticalSpace,
             Text(
-              "f",
-              // "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.speciality!.specialityEn}",
+              "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.speciality == null ? "--" : controller.userProfileModel.value!.userProfile!.speciality!.specialityEn}",
               style: AppTextStyles.medium.copyWith(
                 fontWeight: FontWeight.w500,
                 color: AppColors.lighttextColor,
@@ -94,8 +87,7 @@ class DoctorProfileHeadrer extends GetView<DoctorProfileController> {
                 ),
                 10.horizontalSpace,
                 Text(
-                  "cc",
-                  // "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.level!.levelEn}",
+                  "${controller.processing.value ? '--' : controller.userProfileModel.value == null ? "--" : controller.userProfileModel.value!.userProfile!.level == null ? "--" : controller.userProfileModel.value!.userProfile!.level!.levelEn}",
                   style: AppTextStyles.medium.copyWith(
                     fontWeight: FontWeight.w400,
                     color: AppColors.lighttextColor,

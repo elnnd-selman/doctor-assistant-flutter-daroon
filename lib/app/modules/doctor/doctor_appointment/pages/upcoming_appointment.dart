@@ -28,26 +28,30 @@ class UpcomingAppointment extends GetView<DoctorAppointmentController> {
                         color: AppColors.lighttextColor),
                   ),
                 )
-              : ListView.builder(
-                  padding:
-                      EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                  shrinkWrap: true,
-                  itemCount: controller.upcomingAppointmentList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: index ==
-                                  controller.upcomingAppointmentList.length - 1
-                              ? 12 * SizeConfig.heightMultiplier
-                              : 0),
-                      child: UpcomingAppointmentContainer(
-                        isPadding: true,
-                        appointmentModel:
-                            controller.upcomingAppointmentList[index],
-                      ),
-                    );
-                  },
-                ),
+              : controller.confirmProcessing
+                  ? const Center(child: LoadingWidget())
+                  : ListView.builder(
+                      padding:
+                          EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                      shrinkWrap: true,
+                      itemCount: controller.upcomingAppointmentList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: index ==
+                                      controller
+                                              .upcomingAppointmentList.length -
+                                          1
+                                  ? 12 * SizeConfig.heightMultiplier
+                                  : 0),
+                          child: UpcomingAppointmentContainer(
+                            isPadding: true,
+                            appointmentModel:
+                                controller.upcomingAppointmentList[index],
+                          ),
+                        );
+                      },
+                    ),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
@@ -48,7 +49,7 @@ class DoctorAddPostController extends GetxController {
       Get.find<DoctorProfileController>().getDoctorPost(postType: 'post');
     } else {
       showToastMessage(
-          message: response.body,
+          message: response.body.extractErrorMessage(),
           context: context,
           color: const Color(0xffEC1C24),
           icon: Icons.close);

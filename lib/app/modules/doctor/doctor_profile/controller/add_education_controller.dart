@@ -2,6 +2,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_h
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_edit_profile_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/foundation.dart';
@@ -76,7 +77,7 @@ class AddEducationController extends GetxController {
           _processing.value = false;
           printInfo(info: "Error While Updating  Eduatuion ${response.body}");
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               // ignore: use_build_context_synchronously
               context: context,
               color: const Color(0xffEC1C24),

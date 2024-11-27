@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
@@ -51,7 +52,7 @@ class OptController extends GetxController {
             icon: Icons.check);
       } else {
         showToastMessage(
-            message: response.body,
+            message: response.body.extractErrorMessage(),
             // ignore: use_build_context_synchronously
             context: context,
             color: const Color(0xffEC1C24),
@@ -111,7 +112,7 @@ class OptController extends GetxController {
       } else {
         _processing.value = false;
         showToastMessage(
-            message: response.body,
+            message: response.body.extractErrorMessage(),
             // ignore: use_build_context_synchronously
             context: context,
             color: const Color(0xffEC1C24),
@@ -120,7 +121,7 @@ class OptController extends GetxController {
     } else {
       _processing.value = false;
       showToastMessage(
-          message: response!.body,
+          message: "Response is Empty",
           // ignore: use_build_context_synchronously
           context: context,
           color: const Color(0xffEC1C24),

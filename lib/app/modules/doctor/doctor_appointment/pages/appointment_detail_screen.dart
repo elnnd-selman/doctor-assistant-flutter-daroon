@@ -1,6 +1,5 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/widgets/change_appointment_time.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -25,8 +24,6 @@ class AppointmentDetailScreen extends StatelessWidget {
   final appointmentModel = Get.arguments[7] as AppointmentModel;
   @override
   Widget build(BuildContext context) {
-    print(appointmentModel.bookedBy!.id!);
-    print(appointmentModel.doctor!.id!);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.black,
@@ -392,19 +389,14 @@ class AppointmentDetailScreen extends StatelessWidget {
                           ontap: () {
                             if (Get.arguments[0] == "Completed") {
                               Get.find<DoctorAppointmentController>()
-                                  .confirmAppointment(
-                                      appointmentModel, context, "completed");
+                                  .confirmAppointment(appointmentModel, context,
+                                      "completed", false);
                             } else {
                               //
                               Get.find<DoctorAppointmentController>()
-                                  .confirmAppointment(
-                                      appointmentModel, context, "confirmed");
+                                  .confirmAppointment(appointmentModel, context,
+                                      "confirmed", false);
                             }
-                            // showToastMessage(
-                            //     message: "Appointment completed successfully.",
-                            //     context: context,
-                            //     color: const Color(0xff5BA66B),
-                            //     icon: Icons.check);
                           },
                           name: Get.arguments[0],
                         )
@@ -418,6 +410,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                               arguments: [
                                 appointmentModel,
                                 Get.arguments[1],
+                                false,
                               ],
                             );
                           },
@@ -430,14 +423,14 @@ class AppointmentDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(0),
                           minSize: 0,
                           onPressed: () {
-                            Get.bottomSheet(
-                              ChangeAppointmentTimeBottomSheet(
-                                  appointmentModel: appointmentModel),
-                              backgroundColor: Colors.transparent,
-                              isScrollControlled: true,
-                              isDismissible: false,
-                              enableDrag: false,
-                            );
+                            // Get.bottomSheet(
+                            //   ChangeAppointmentTimeBottomSheet(
+                            //       appointmentModel: appointmentModel),
+                            //   backgroundColor: Colors.transparent,
+                            //   isScrollControlled: true,
+                            //   isDismissible: false,
+                            //   enableDrag: false,
+                            // );
                           },
                           child: Center(
                             child: Text(

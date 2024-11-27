@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/model/user_profile_model.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -56,7 +58,9 @@ class DoctorEditProfileController extends GetxController {
       userToken: Get.find<DoctorHomeController>().userModel.value!.token!,
       url: '${AppTokens.apiURl}/users/profile-picture',
     );
-    print(respose.statusCode);
+    if (kDebugMode) {
+      printInfo(info: respose.statusCode.toString());
+    }
   }
 
   final imagePicker = ImagePicker();
@@ -130,7 +134,7 @@ class DoctorEditProfileController extends GetxController {
           update();
         } else {
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);

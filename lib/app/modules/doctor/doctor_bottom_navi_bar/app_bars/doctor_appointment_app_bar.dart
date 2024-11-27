@@ -1,14 +1,14 @@
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_bottom_navi_bar/controller/doctor_custom_navi_controller.dart';
 import 'package:daroon_doctor/generated/assets.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
 import 'package:daroon_doctor/global/constants/size_config.dart';
 import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
-class DoctorAppointmentAppBar extends GetView<DoctorCustomNaviController> {
+class DoctorAppointmentAppBar extends GetView<DoctorAppointmentController> {
   const DoctorAppointmentAppBar({super.key});
 
   @override

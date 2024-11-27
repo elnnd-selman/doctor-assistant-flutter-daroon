@@ -137,7 +137,10 @@ class CancelAppointmentDetail extends GetView<CancelAppointmentController> {
                         if (controller.currentIndex.value == 4) {
                           if (controller.reasonTextField.text.isNotEmpty) {
                             controller.cancelAppointmentApi(
-                                context, Get.arguments[0], Get.arguments[1]);
+                                context,
+                                Get.arguments[0],
+                                Get.arguments[1],
+                                Get.arguments[2]);
                           } else {
                             showToastMessage(
                                 message: "Please give reason",
@@ -147,7 +150,10 @@ class CancelAppointmentDetail extends GetView<CancelAppointmentController> {
                           }
                         } else {
                           controller.cancelAppointmentApi(
-                              context, Get.arguments[0], Get.arguments[1]);
+                              context,
+                              Get.arguments[0],
+                              Get.arguments[1],
+                              Get.arguments[2]);
                         }
                         // showToastMessage(
                         //     message: "Appointment cancelled successfully.",

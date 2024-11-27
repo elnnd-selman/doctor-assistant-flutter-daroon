@@ -12,36 +12,39 @@ class RequestAppointmentScreen extends GetView<DoctorAppointmentController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.isLoading.value
-        ? const LoadingWidget()
-        : controller.requestAppointmentList.isEmpty
-            ? Center(
-                child: Text(
-                  "No Request appointment\nis found.",
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.medium.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.lighttextColor),
+    return Obx(
+      () => controller.isLoading.value
+          ? const LoadingWidget()
+          : controller.requestAppointmentList.isEmpty
+              ? Center(
+                  child: Text(
+                    "No Request appointment\nis found.",
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.medium.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.lighttextColor),
+                  ),
+                )
+              : ListView.builder(
+                  padding:
+                      EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                  shrinkWrap: true,
+                  itemCount: controller.requestAppointmentList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: index ==
+                                  controller.requestAppointmentList.length - 1
+                              ? 12 * SizeConfig.heightMultiplier
+                              : 0),
+                      child: RequestAppointmentContainer(
+                        appointmentModel:
+                            controller.requestAppointmentList[index],
+                      ),
+                    );
+                  },
                 ),
-              )
-            : ListView.builder(
-                padding: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                shrinkWrap: true,
-                itemCount: controller.requestAppointmentList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom: index ==
-                                controller.requestAppointmentList.length - 1
-                            ? 12 * SizeConfig.heightMultiplier
-                            : 0),
-                    child: RequestAppointmentContainer(
-                      appointmentModel:
-                          controller.requestAppointmentList[index],
-                    ),
-                  );
-                },
-              );
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/model/doctor_offer_model.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:daroon_doctor/global/widgets/toast_message.dart';
 import 'package:daroon_doctor/services/api.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +141,7 @@ class DoctorOffersController extends GetxController {
         } else {
           printInfo(info: "Error While Deleting Offer ${response.body}");
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);

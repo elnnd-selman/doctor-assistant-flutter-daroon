@@ -12,34 +12,38 @@ class CancelAppointmentScreen extends GetView<DoctorAppointmentController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.isLoading.value
-        ? const LoadingWidget()
-        : controller.cancelAppointmentList.isEmpty
-            ? Center(
-                child: Text(
-                  "No Cancel appointment\nis found.",
-                  textAlign: TextAlign.center,
-                  style: AppTextStyles.medium.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.lighttextColor),
-                ),
-              )
-            : ListView.builder(
-                padding: EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                shrinkWrap: true,
-                itemCount: controller.cancelAppointmentList.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        bottom:
-                            index == controller.cancelAppointmentList.length - 1
-                                ? 12 * SizeConfig.heightMultiplier
-                                : 0),
-                    child: CancelAppointmentContainer(
-                      appointmentModel: controller.cancelAppointmentList[index],
-                    ),
-                  );
-                });
+    return Obx(
+      () => controller.isLoading.value
+          ? const LoadingWidget()
+          : controller.cancelAppointmentList.isEmpty
+              ? Center(
+                  child: Text(
+                    "No Cancel appointment\nis found.",
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.medium.copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.lighttextColor),
+                  ),
+                )
+              : ListView.builder(
+                  padding:
+                      EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                  shrinkWrap: true,
+                  itemCount: controller.cancelAppointmentList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: index ==
+                                  controller.cancelAppointmentList.length - 1
+                              ? 12 * SizeConfig.heightMultiplier
+                              : 0),
+                      child: CancelAppointmentContainer(
+                        appointmentModel:
+                            controller.cancelAppointmentList[index],
+                      ),
+                    );
+                  }),
+    );
   }
 }

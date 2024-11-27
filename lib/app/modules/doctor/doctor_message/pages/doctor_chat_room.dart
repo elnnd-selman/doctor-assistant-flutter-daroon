@@ -1,4 +1,6 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
+
+import 'dart:async';
 
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/controller/doctor_chat_room_controller.dart';
@@ -12,10 +14,10 @@ import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:get/get.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
 class DocotrChatPage extends StatefulWidget {
   const DocotrChatPage({super.key});
@@ -28,6 +30,15 @@ class DocotrChatPage extends StatefulWidget {
 final ctrl = Get.put(DoctorChatRoomController());
 
 class _DocotrChatPageState extends State<DocotrChatPage> {
+  @override
+  void dispose() {
+    super.dispose();
+    leaveConversation();
+    socket.disconnect();
+
+    socket.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,26 +60,36 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
   @override
   void initState() {
     super.initState();
+    ctrl.hasScrolled.value = false;
     userMessageModelData = Get.arguments[0];
-    connect();
+    connectAndListen();
     ctrl.getUserChatConversation(userMessageModelData.id!);
   }
 
-  Future<void> connect() async {
+  StreamSocket streamSocket = StreamSocket();
+
+  void connectAndListen() {
     print(userMessageModelData.id!);
     socket = io.io(AppTokens.apiURl, <String, dynamic>{
       'autoConnect': false,
       'transports': ['websocket'],
     });
+
     socket.connect();
     joinChat();
-    socket.on("new_message", (msg) {
-      print(msg);
+    socket.onConnect((_) {
+      print('connect');
     });
-    socket.onDisconnect((_) => print('Connection Disconnection'));
-    socket.onConnectError((err) => print(err));
-    socket.onError((err) => print(err));
-    print(socket.connected);
+    socket.on("connect", (data) {
+      print("Connected to Socket.IO server: ${socket.id}");
+    });
+
+    //When an event recieved from server, data is added to the stream
+    socket.on('new_message', (data) {
+      print("TEsttsffs");
+      streamSocket.addResponse(data);
+    });
+    socket.onDisconnect((_) => print('disconnect'));
   }
 
   getData() {
@@ -85,21 +106,32 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
   joinChat() {
     socket.emit(
       "join_conversation",
-      [
-        userMessageModelData.id!,
-        "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
-      ],
+      {
+        "conversationID": userMessageModelData.id!,
+        "token":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+      },
     );
   }
 
-  sendMessage() {
-    print(userMessageModelData.id);
-    socket.emit("send_message", {
-      'conversationId': userMessageModelData.id!,
+  leaveConversation() {
+    socket.emit("join_conversation", {
+      "conversationID": userMessageModelData.id!,
       "token":
           "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
-      "text": "Test Chehcefhf",
     });
+  }
+
+  sendMessage() {
+    socket.emit(
+      "send_message",
+      {
+        "conversationID": userMessageModelData.id!,
+        "token":
+            "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+        "text": "HCehhehfhr",
+      },
+    );
   }
 
   _topChat() {
@@ -112,28 +144,19 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
             children: [
               CustomCupertinoButton(
                 onTap: () => Navigator.of(context).pop(),
-                child: const Icon(
+                child: Icon(
                   Icons.arrow_back_ios,
-                  size: 25,
+                  size: 2.2 * SizeConfig.heightMultiplier,
                   color: Colors.white,
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  // connect();
-                  // joinChat();
-                  sendMessage();
-                  // newMeasa();
-                  // getData();
-                  // sendMessage();
-                },
-                child: Text(
-                  "${userMessageModelData.doctor!.firstNameEn!.capitalizeFirst!} ${userMessageModelData.doctor!.lastNameEn!.capitalizeFirst!}",
-                  style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
+              SizedBox(width: 2 * SizeConfig.widthMultiplier),
+              Text(
+                "${userMessageModelData.patient!.firstNameEn!.capitalizeFirst!} ${userMessageModelData.patient!.lastNameEn!.capitalizeFirst!}",
+                style: TextStyle(
+                    fontSize: 3 * SizeConfig.heightMultiplier,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ],
           ),
@@ -145,24 +168,22 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.black12,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.call,
-                  size: 25,
+                  size: 2.2 * SizeConfig.heightMultiplier,
                   color: Colors.white,
                 ),
               ),
-              const SizedBox(
-                width: 20,
-              ),
+              SizedBox(width: 2 * SizeConfig.heightMultiplier),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.black12,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.videocam,
-                  size: 25,
+                  size: 2.2 * SizeConfig.heightMultiplier,
                   color: Colors.white,
                 ),
               ),
@@ -176,7 +197,10 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
   Widget _bodyChat() {
     return Expanded(
       child: Container(
-          padding: const EdgeInsets.only(left: 25, right: 25, top: 0),
+          padding: EdgeInsets.only(
+              left: 2.5 * SizeConfig.widthMultiplier,
+              right: 2.5 * SizeConfig.widthMultiplier,
+              top: 0),
           width: double.infinity,
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
@@ -189,6 +213,7 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
                 : ctrl.userChatList.isEmpty
                     ? const NoDataWidget(title: "No chat available")
                     : ListView.builder(
+                        controller: ctrl.scrollController.value,
                         shrinkWrap: true,
                         itemCount: ctrl.userChatList.length,
                         itemBuilder: (context, index) {
@@ -286,15 +311,21 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
     return formattedTime;
   }
 
+  TextEditingController message = TextEditingController();
+
   Widget _formChat() {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
         color: AppColors.whiteBGColor,
         child: Padding(
-          padding:
-              const EdgeInsets.only(left: 25, right: 25, bottom: 10, top: 10),
+          padding: EdgeInsets.only(
+              left: 2.5 * SizeConfig.widthMultiplier,
+              right: 2.5 * SizeConfig.widthMultiplier,
+              top: 1 * SizeConfig.heightMultiplier,
+              bottom: 1 * SizeConfig.heightMultiplier),
           child: TextField(
+            controller: message,
             style: AppTextStyles.normal.copyWith(
               color: AppColors.blackBGColor,
               fontWeight: FontWeight.w500,
@@ -306,36 +337,44 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
                 color: const Color(0xff535353),
                 fontSize: 1.6 * SizeConfig.heightMultiplier,
               ),
-              prefixIcon: Container(
-                // color: Colors.red,
-                width: 14 * SizeConfig.widthMultiplier,
-                margin: EdgeInsets.only(
-                    left: 4 * SizeConfig.widthMultiplier,
-                    right: 4 * SizeConfig.widthMultiplier),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/camer_up.svg",
-                      height: 3 * SizeConfig.heightMultiplier,
+              // prefixIcon: Container(
+              //   // color: Colors.red,
+              //   width: 14 * SizeConfig.widthMultiplier,
+              //   margin: EdgeInsets.only(
+              //       left: 4 * SizeConfig.widthMultiplier,
+              //       right: 4 * SizeConfig.widthMultiplier),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       SvgPicture.asset(
+              //         "assets/icons/camer_up.svg",
+              //         height: 3 * SizeConfig.heightMultiplier,
+              //       ),
+              //       SizedBox(width: 1 * SizeConfig.widthMultiplier),
+              //       SvgPicture.asset(
+              //         "assets/icons/mic_icon.svg",
+              //         height: 3 * SizeConfig.heightMultiplier,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              suffixIcon: CustomCupertinoButton(
+                onTap: () {
+                  if (message.text.isNotEmpty) {
+                    sendMessage();
+                    message.clear();
+                  }
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.all(14),
+                  child: Text(
+                    "Send",
+                    style: AppTextStyles.bold.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xff535353),
+                      fontSize: 1.7 * SizeConfig.heightMultiplier,
                     ),
-                    SizedBox(width: 1 * SizeConfig.widthMultiplier),
-                    SvgPicture.asset(
-                      "assets/icons/mic_icon.svg",
-                      height: 3 * SizeConfig.heightMultiplier,
-                    ),
-                  ],
-                ),
-              ),
-              suffixIcon: Container(
-                margin: const EdgeInsets.only(right: 10),
-                padding: const EdgeInsets.all(14),
-                child: Text(
-                  "Send",
-                  style: AppTextStyles.bold.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: const Color(0xff535353),
-                    fontSize: 1.7 * SizeConfig.heightMultiplier,
                   ),
                 ),
               ),
@@ -368,5 +407,17 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
         ),
       ),
     );
+  }
+}
+
+class StreamSocket {
+  final _socketResponse = StreamController<String>();
+
+  void Function(String) get addResponse => _socketResponse.sink.add;
+
+  Stream<String> get getResponse => _socketResponse.stream;
+
+  void dispose() {
+    _socketResponse.close();
   }
 }

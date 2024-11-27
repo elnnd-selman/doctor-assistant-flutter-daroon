@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:daroon_doctor/global/utils/json_message_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
@@ -59,7 +60,7 @@ class LoginCtrl extends GetxController {
         } else {
           _processing.value = false;
           showToastMessage(
-              message: response.body,
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);
