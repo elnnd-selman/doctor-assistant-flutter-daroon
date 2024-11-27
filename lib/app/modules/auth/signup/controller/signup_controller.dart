@@ -95,7 +95,7 @@ class SignUpCtrl extends GetxController {
         } else {
           _processing.value = false;
           showToastMessage(
-              message: response.body!.extractErrorMessage(),
+              message: response.body.extractErrorMessage(),
               context: context,
               color: const Color(0xffEC1C24),
               icon: Icons.close);
