@@ -57,18 +57,37 @@ class DoctorMessageScreen extends GetView<DoctorMessageController> {
                           child: NoDataWidget(
                           title: "No chat available",
                         ))
-                      : Expanded(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemCount:
-                                  controller.doctorConversationList.length,
-                              itemBuilder: (context, int index) {
-                                return _buildChatContainer(
-                                    controller.doctorConversationList[index],
-                                    context);
-                              }),
-                        ),
+                      : controller.isSearch.value
+                          ? controller.searchDoctorList.isEmpty
+                              ? const Expanded(
+                                  child: NoDataWidget(
+                                  title: "No search user available",
+                                ))
+                              : Expanded(
+                                  child: ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount:
+                                          controller.searchDoctorList.length,
+                                      itemBuilder: (context, int index) {
+                                        return _buildChatContainer(
+                                            controller.searchDoctorList[index],
+                                            context);
+                                      }),
+                                )
+                          : Expanded(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount:
+                                      controller.doctorConversationList.length,
+                                  itemBuilder: (context, int index) {
+                                    return _buildChatContainer(
+                                        controller
+                                            .doctorConversationList[index],
+                                        context);
+                                  }),
+                            ),
             )
           ],
         ),
@@ -130,6 +149,14 @@ class DoctorMessageScreen extends GetView<DoctorMessageController> {
           color: const Color(0xff787B80),
         ),
       ),
+      onChanged: (val) {
+        if (val.isEmpty) {
+          controller.isSearch.value = false;
+        } else {
+          controller.isSearch.value = true;
+          controller.searchUserMessage(val);
+        }
+      },
     );
   }
 }

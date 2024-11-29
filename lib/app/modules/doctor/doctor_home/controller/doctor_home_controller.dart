@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/model/public_ads_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_offers/model/doctor_offer_model.dart';
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
@@ -31,10 +32,11 @@ class DoctorHomeController extends GetxController {
 
   Rxn<UserModel> userModel = Rxn();
 
+  TextEditingController searchTextField = TextEditingController();
   @override
   Future<void> onInit() async {
     super.onInit();
-    // signOutUser();
+
     // Get.find<LocalStorageController>().daroonBox!.delete("isLogin");
 
     userModel.value = await Get.find<LocalStorageController>()
@@ -47,6 +49,7 @@ class DoctorHomeController extends GetxController {
     getDoctorAppointments();
     getDoctorOfersData();
     _getCurrentPosition();
+    getPublicAds();
   }
 
   signOutUser() {
@@ -77,6 +80,10 @@ class DoctorHomeController extends GetxController {
       isLoading.value = false;
     } else {
       isLoading.value = false;
+      final jsonData = jsonDecode(response.body);
+      if (jsonData["message"] == 'unauthorized') {
+        signOutUser();
+      }
     }
   }
 
@@ -170,6 +177,31 @@ class DoctorHomeController extends GetxController {
       }
     } catch (e) {
       return 'Error getting address: $e';
+    }
+  }
+
+  RxList<PublicAdsModel> publicADSList = <PublicAdsModel>[].obs;
+  RxBool isAdsLoading = false.obs;
+  getPublicAds() async {
+    try {
+      publicADSList.value = [];
+      isAdsLoading.value = true;
+      final response = await ApiService.getwithUserToken(
+        endPoint: "${AppTokens.apiURl}/ads",
+        userToken: {
+          "Authorization":
+              "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
+        },
+      );
+      if (response!.statusCode == 200 || response.statusCode == 201) {
+        List<dynamic> jsonResponse = jsonDecode(response.body)['data'];
+        publicADSList.value =
+            jsonResponse.map((data) => PublicAdsModel.fromJson(data)).toList();
+      }
+      isAdsLoading.value = false;
+    } catch (e) {
+      isAdsLoading.value = false;
+      printInfo(info: e.toString());
     }
   }
 }

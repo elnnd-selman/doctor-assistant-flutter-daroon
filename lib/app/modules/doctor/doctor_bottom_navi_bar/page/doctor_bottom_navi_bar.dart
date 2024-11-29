@@ -1,5 +1,6 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_address/controller/doctor_address_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_profile/controller/doctor_profile_controller.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
 
   final List _appBars = [
     const DoctorHomeAppBar(),
-    const DoctorAppointmentAppBar(),
+    DoctorAppointmentAppBar(),
     const DoctorPostAppBar(),
     const DoctorLocationAppBar(),
     const DoctorProfileAppBar(),
@@ -211,6 +212,8 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           _controller5!.reverse();
                           HapticFeedback.lightImpact();
                         });
+                        Get.find<DoctorHomeController>().searchTextField =
+                            TextEditingController();
 
                         if (Get.isRegistered<DoctorAppointmentController>()) {
                           Get.find<DoctorAppointmentController>()
@@ -250,6 +253,7 @@ class _DoctorBottomNaviBarState extends State<DoctorBottomNaviBar>
                           _controller5!.reverse();
                           HapticFeedback.lightImpact();
                         });
+
                         if (Get.isRegistered<DoctorAddressController>()) {
                           Get.find<DoctorAddressController>()
                               .getDoctorOfficeAddress();

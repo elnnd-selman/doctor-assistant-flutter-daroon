@@ -295,7 +295,8 @@ class AddDoctorEducation extends GetView<AddEducationController> {
       onTap: ontap,
       child: Container(
         padding: EdgeInsets.symmetric(
-            horizontal: 4 * SizeConfig.widthMultiplier, vertical: 22),
+            horizontal: 4 * SizeConfig.widthMultiplier,
+            vertical: 2.2 * SizeConfig.heightMultiplier),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: const Color(0xffF7F7F8),

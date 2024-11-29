@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
 
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/controller/doctor_chat_room_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_message/model/doctor_chat_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/model/doctor_message_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_message/widget/chat_title.dart';
 import 'package:daroon_doctor/global/constants/app_colors.dart';
@@ -87,7 +90,21 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
     //When an event recieved from server, data is added to the stream
     socket.on('new_message', (data) {
       print("TEsttsffs");
-      streamSocket.addResponse(data);
+      print(data);
+      String jsonString = '''$data''';
+      log(jsonString.toString());
+      final encode = jsonEncode(data);
+      Map<String, dynamic> jsonData = jsonDecode(encode);
+      print(jsonData);
+      print("testtdff");
+
+      final chatData = DoctorChatModel.fromJson(jsonData);
+
+      // print(ctrl.userChatList.length);
+      // ctrl.userChatList.add(chatData);
+      print("Checkin ${ctrl.userChatList.length}");
+      // streamSocket.addResponse(data);
+      // print(data);
     });
     socket.onDisconnect((_) => print('disconnect'));
   }
@@ -151,12 +168,16 @@ class _DocotrChatPageState extends State<DocotrChatPage> {
                 ),
               ),
               SizedBox(width: 2 * SizeConfig.widthMultiplier),
-              Text(
-                "${userMessageModelData.patient!.firstNameEn!.capitalizeFirst!} ${userMessageModelData.patient!.lastNameEn!.capitalizeFirst!}",
-                style: TextStyle(
-                    fontSize: 3 * SizeConfig.heightMultiplier,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.49,
+                child: Text(
+                  "${userMessageModelData.patient!.firstNameEn!.capitalizeFirst!} ${userMessageModelData.patient!.lastNameEn!.capitalizeFirst!}",
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontSize: 2.5 * SizeConfig.heightMultiplier,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
               ),
             ],
           ),

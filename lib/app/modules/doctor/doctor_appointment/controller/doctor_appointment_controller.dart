@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:daroon_doctor/app/controllers/local_storage_controller.dart';
 import 'package:daroon_doctor/app/model/user_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
-import 'package:daroon_doctor/app/modules/doctor/doctor_assistant/model/assistant_model.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:daroon_doctor/global/constants/app_tokens.dart';
 import 'package:daroon_doctor/global/utils/json_message_extension.dart';
@@ -15,6 +14,8 @@ import 'package:get/get.dart';
 class DoctorAppointmentController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isAppBarOpen = false.obs;
+  RxBool isSearch = false.obs;
+  final searchTextField = TextEditingController();
 
   RxList<AppointmentModel> appointmentModelList = RxList();
 
@@ -111,35 +112,35 @@ class DoctorAppointmentController extends GetxController {
     "Sat",
   ].obs;
 
-  RxInt currentTimeIndex = RxInt(-1);
+  // RxInt currentTimeIndex = RxInt(-1);
 
-  RxList<String> timeDaysList = [
-    "8:00",
-    "8:30",
-    "9:00",
-    "9:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "13:00",
-    "13:30",
-    "14:00",
-    "14:30",
-    "15:00",
-    "15:30",
-    "16:00",
-    "16:30",
-    "17:00",
-    "17:30",
-    "18:00",
-    "18:30",
-    "19:00",
-    "19:30",
-    "20:00",
-  ].obs;
+  // RxList<String> timeDaysList = [
+  //   "8:00",
+  //   "8:30",
+  //   "9:00",
+  //   "9:30",
+  //   "10:00",
+  //   "10:30",
+  //   "11:00",
+  //   "11:30",
+  //   "12:00",
+  //   "12:30",
+  //   "13:00",
+  //   "13:30",
+  //   "14:00",
+  //   "14:30",
+  //   "15:00",
+  //   "15:30",
+  //   "16:00",
+  //   "16:30",
+  //   "17:00",
+  //   "17:30",
+  //   "18:00",
+  //   "18:30",
+  //   "19:00",
+  //   "19:30",
+  //   "20:00",
+  // ].obs;
 
   RxList<String> weekDaysListFull = [
     "sunday",
@@ -152,44 +153,6 @@ class DoctorAppointmentController extends GetxController {
   ].obs;
 
   RxBool processing = false.obs;
-  // reScheduleAppointment(
-  //   AppointmentModel appointmentModel,
-  //   BuildContext context,
-  // ) async {
-  //   try {
-  //     processing.value = true;
-  //     final response = await ApiService.putWithHeader(
-  //         userToken: {
-  //           'Content-Type': 'application/json',
-  //           "Authorization":
-  //               "Bearer ${Get.find<DoctorHomeController>().userModel.value!.token!}",
-  //         },
-  //         endPoint:
-  //             '${AppTokens.apiURl}/doctors/appointments/${appointmentModel.id}/reschedule',
-  //         body: {
-  //           "selectedDay": weekDaysListFull[currentIndex.value],
-  //           "selectedTime": timeDaysList[currentTimeIndex.value],
-  //         });
-
-  //     if (response != null) {
-  //       if (response.statusCode == 200 || response.statusCode == 201) {
-  //         print(response.body);
-  //       } else {
-  //         print(response.body);
-  //         showToastMessage(
-  //             message: response.body,
-  //             // ignore: use_build_context_synchronously
-  //             context: context,
-  //             color: const Color(0xffEC1C24),
-  //             icon: Icons.close);
-  //       }
-  //     }
-  //     processing.value = false;
-  //   } catch (e) {
-  //     processing.value = false;
-  //     printInfo(info: e.toString());
-  //   }
-  // }
 
   RxString selectedTime = "".obs;
 
@@ -224,16 +187,12 @@ class DoctorAppointmentController extends GetxController {
           Get.back();
           successTextMessage(
               message:
-                  'You send a request for appointment with Dr.${appointmentModel.doctor!.firstName!}',
-              // ignore: use_build_context_synchronously
-
+                  'You send a request for appointment with ${appointmentModel.bookedBy!.firstName!}',
               color: const Color(0xffEC1C24),
               icon: Icons.close);
         } else {
           successTextMessage(
-              message: response.body,
-              // ignore: use_build_context_synchronously
-
+              message: response.body.extractErrorMessage(),
               color: const Color(0xffEC1C24),
               icon: Icons.close);
         }
@@ -245,6 +204,7 @@ class DoctorAppointmentController extends GetxController {
     }
   }
 
+  RxInt currentTimeIndex = RxInt(-1);
   final _confirmProcessing = false.obs;
   bool get confirmProcessing => _confirmProcessing.value;
   confirmAppointment(
@@ -274,8 +234,6 @@ class DoctorAppointmentController extends GetxController {
             // Get.back();
             successTextMessage(
                 message: "Successfully confirmed appointmetnt",
-                // ignore: use_build_context_synchronously
-
                 color: const Color(0xff5BA66B),
                 icon: Icons.check);
           } else if (status == "completed") {
@@ -285,8 +243,6 @@ class DoctorAppointmentController extends GetxController {
             // Get.back();
             successTextMessage(
                 message: "Successfully complete appointmetnt",
-                // ignore: use_build_context_synchronously
-
                 color: const Color(0xff5BA66B),
                 icon: Icons.check);
           }
@@ -294,17 +250,16 @@ class DoctorAppointmentController extends GetxController {
             Get.back();
           }
         } else {
+          print(response.body);
           successTextMessage(
               message: response.body.extractErrorMessage(),
-              // ignore: use_build_context_synchronously
-
               color: const Color(0xffEC1C24),
               icon: Icons.close);
         }
       }
       _confirmProcessing.value = false;
     } catch (e) {
-      print(e.toString());
+      printInfo(info: e.toString());
       _confirmProcessing.value = false;
     }
   }
@@ -329,5 +284,29 @@ class DoctorAppointmentController extends GetxController {
     } else if (currentIndex.value == 6) {
       appointmentTimeList.value = appointmentTimes.saturday;
     }
+  }
+
+  TabController? tabController;
+  RxList<AppointmentModel> serachAppointmentList = RxList();
+  serachAppointment(String query) {
+    // FocusManager.instance.primaryFocus?.unfocus();
+    serachAppointmentList.value = [];
+    List<AppointmentModel> tempAppointment = [];
+    if (tabController!.index == 0) {
+      tempAppointment = upcomingAppointmentList;
+    } else if (tabController!.index == 1) {
+      tempAppointment = confirmedAppointmentList;
+    } else if (tabController!.index == 2) {
+      tempAppointment = completedAppointmentList;
+    } else if (tabController!.index == 3) {
+      tempAppointment = cancelAppointmentList;
+    } else if (tabController!.index == 4) {
+      tempAppointment = requestAppointmentList;
+    }
+
+    serachAppointmentList.value = tempAppointment
+        .where((message) =>
+            message.fullName!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 }

@@ -26,24 +26,58 @@ class CompleteAppointmentScreen extends GetView<DoctorAppointmentController> {
                         color: AppColors.lighttextColor),
                   ),
                 )
-              : ListView.builder(
-                  padding:
-                      EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                  shrinkWrap: true,
-                  itemCount: controller.completedAppointmentList.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: index ==
-                                  controller.completedAppointmentList.length - 1
-                              ? 12 * SizeConfig.heightMultiplier
-                              : 0),
-                      child: CompleteAppointmentContainer(
-                        appointmentModel:
-                            controller.completedAppointmentList[index],
-                      ),
-                    );
-                  }),
+              : controller.isSearch.value
+                  ? controller.serachAppointmentList.isEmpty
+                      ? Center(
+                          child: Text(
+                            "No Completed appointment\nis found.",
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.medium.copyWith(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.lighttextColor),
+                          ),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.only(
+                              top: 2 * SizeConfig.heightMultiplier),
+                          shrinkWrap: true,
+                          itemCount: controller.serachAppointmentList.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: index ==
+                                          controller.serachAppointmentList
+                                                  .length -
+                                              1
+                                      ? 12 * SizeConfig.heightMultiplier
+                                      : 0),
+                              child: CompleteAppointmentContainer(
+                                appointmentModel:
+                                    controller.serachAppointmentList[index],
+                              ),
+                            );
+                          })
+                  : ListView.builder(
+                      padding:
+                          EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
+                      shrinkWrap: true,
+                      itemCount: controller.completedAppointmentList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              bottom: index ==
+                                      controller
+                                              .completedAppointmentList.length -
+                                          1
+                                  ? 12 * SizeConfig.heightMultiplier
+                                  : 0),
+                          child: CompleteAppointmentContainer(
+                            appointmentModel:
+                                controller.completedAppointmentList[index],
+                          ),
+                        );
+                      }),
     );
   }
 }

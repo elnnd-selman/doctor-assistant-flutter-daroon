@@ -4,6 +4,7 @@ import 'package:daroon_doctor/app/modules/doctor/doctor_home/widget/more_offer_c
 import 'package:daroon_doctor/app/routes/app_routes.dart';
 import 'package:daroon_doctor/global/utils/widget_spacing.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
+import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:daroon_doctor/global/widgets/no_data_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,25 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImageSlider(context),
+            Obx(
+              () => controller.isAdsLoading.value
+                  ? Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      decoration: BoxDecoration(
+                          color: AppColors.lightgreyColor,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: const Center(child: LoadingWidget()),
+                    )
+                  : controller.publicADSList.isEmpty
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          decoration: BoxDecoration(
+                              color: AppColors.lightgreyColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Center(
+                              child: NoDataWidget(title: "No Ads available")))
+                      : _buildImageSlider(context),
+            ),
             SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
             _buildCirclurContainer(),
             SizedBox(height: 4 * SizeConfig.heightMultiplier),
@@ -89,15 +108,6 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
                       ),
                     ),
                   )),
-                ),
-                const Spacer(),
-                Text(
-                  "See All",
-                  style: AppTextStyles.medium.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.primaryColor,
-                    fontSize: 1.7 * SizeConfig.heightMultiplier,
-                  ),
                 ),
               ],
             ),
@@ -177,25 +187,25 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
     );
   }
 
-  Row _buildCirclurContainer() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        ...List.generate(3, (int index) {
-          return Obx(() => Container(
-                margin: const EdgeInsets.only(right: 6),
-                height: controller.isSelected.value == index ? 8 : 8,
-                width: controller.isSelected.value == index ? 8 : 8,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: controller.isSelected.value == index
-                        ? AppColors.primaryColor
-                        : Colors.black.withOpacity(0.12)),
-              ));
-        }),
-      ],
-    );
+  Obx _buildCirclurContainer() {
+    return Obx(() => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...List.generate(controller.publicADSList.length, (int index) {
+              return Obx(() => Container(
+                    margin: const EdgeInsets.only(right: 6),
+                    height: controller.isSelected.value == index ? 8 : 8,
+                    width: controller.isSelected.value == index ? 8 : 8,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: controller.isSelected.value == index
+                            ? AppColors.primaryColor
+                            : Colors.black.withOpacity(0.12)),
+                  ));
+            }),
+          ],
+        ));
   }
 
   CarouselSlider _buildImageSlider(BuildContext context) {
@@ -217,44 +227,64 @@ class DoctorHomeScreen extends GetView<DoctorHomeController> {
           controller.isSelected.value = val;
         },
       ),
-      itemCount: 3,
+      itemCount: controller.publicADSList.length,
       itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
           Container(
-        margin: const EdgeInsets.symmetric(horizontal: 2),
-        height: 5 * SizeConfig.heightMultiplier,
+        margin: const EdgeInsets.symmetric(horizontal: 0),
+        height: MediaQuery.of(context).size.height * 0.2,
         width: 100 * SizeConfig.widthMultiplier,
-        padding: EdgeInsets.only(left: 3 * SizeConfig.widthMultiplier),
+        padding: EdgeInsets.only(left: 2 * SizeConfig.widthMultiplier),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          image: const DecorationImage(
-            image: AssetImage("assets/images/tempImage.png"),
-            fit: BoxFit.fill,
-          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: NetWorkImageLoader(
+                boxFit: BoxFit.cover,
+                imageURL: controller.publicADSList[itemIndex].image!.md!,
+                height: MediaQuery.of(context).size.height * 0.2,
+                width: 100 * SizeConfig.widthMultiplier,
+              ),
+            ),
+            // SizedBox(height: 1.5 * SizeConfig.heightMultiplier),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+            //   decoration: BoxDecoration(
+            //       color: Colors.white, borderRadius: BorderRadius.circular(20)),
+            //   child: Text(
+            //     "Special for you",
+            //     style: AppTextStyles.medium.copyWith(
+            //       fontWeight: FontWeight.w500,
+            //       color: AppColors.primaryColor,
+            //       fontSize: 12,
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 2.8 * SizeConfig.heightMultiplier),
+            Positioned(
+              bottom: 5 * SizeConfig.heightMultiplier,
+              left: 6 * SizeConfig.widthMultiplier,
               child: Text(
-                "Special for you",
+                controller.publicADSList[itemIndex].titleAr!,
                 style: AppTextStyles.medium.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.primaryColor,
-                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.whiteBGColor,
+                  fontSize: 20,
                 ),
               ),
             ),
-            SizedBox(height: 2.8 * SizeConfig.heightMultiplier),
-            Text(
-              "Pay More\nReach More !",
-              style: AppTextStyles.medium.copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.whiteBGColor,
-                fontSize: 24,
+            Positioned(
+              bottom: 2 * SizeConfig.heightMultiplier,
+              left: 6 * SizeConfig.widthMultiplier,
+              child: Text(
+                controller.publicADSList[itemIndex].descriptionEn!,
+                style: AppTextStyles.medium.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.lightgreyColor,
+                  fontSize: 20,
+                ),
               ),
             ),
           ],

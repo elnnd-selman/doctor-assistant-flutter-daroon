@@ -142,8 +142,9 @@ class EditAddressDoctor extends GetView<EditDoctorAddressController> {
                                           color: AppColors.borderColor),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 22),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical:
+                                            2.2 * SizeConfig.heightMultiplier),
                                     border: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           color: AppColors.borderColor),
@@ -278,8 +279,9 @@ class EditAddressDoctor extends GetView<EditDoctorAddressController> {
                                           color: AppColors.borderColor),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 22),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical:
+                                            2.2 * SizeConfig.heightMultiplier),
                                     border: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           color: AppColors.borderColor),
@@ -359,8 +361,9 @@ class EditAddressDoctor extends GetView<EditDoctorAddressController> {
                                           color: AppColors.borderColor),
                                       borderRadius: BorderRadius.circular(15),
                                     ),
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 22),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical:
+                                            2.2 * SizeConfig.heightMultiplier),
                                     border: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           color: AppColors.borderColor),

@@ -18,8 +18,8 @@ class DoctorAppointmentScreen extends StatefulWidget {
       _DoctorAppointmentScreenState();
 }
 
-class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
-  TabController? _tabController;
+class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen>
+    with SingleTickerProviderStateMixin {
   final controller = Get.put(DoctorAppointmentController());
 
   List<Widget> appointmentBasetabs = [
@@ -29,6 +29,12 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
     const Tab(text: "Cancelled"),
     const Tab(text: "Request"),
   ];
+  @override
+  void initState() {
+    super.initState();
+    controller.tabController = TabController(vsync: this, length: 5);
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -40,7 +46,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
           SizedBox(
             height: 30,
             child: TabBar(
-              controller: _tabController,
+              controller: controller.tabController,
               tabAlignment: TabAlignment.start,
               labelPadding: const EdgeInsets.only(left: 25, bottom: 10),
               isScrollable: true,
@@ -49,6 +55,10 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
                 fontSize: 15,
                 color: AppColors.primaryColor,
               ),
+              onTap: (vv) {
+                controller.isSearch.value = false;
+                FocusScope.of(context).unfocus();
+              },
               overlayColor: WidgetStateProperty.all(Colors.transparent),
               indicatorColor: AppColors.primaryColor,
               unselectedLabelStyle: AppTextStyles.semiBold.copyWith(
@@ -61,7 +71,7 @@ class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
           ),
           Expanded(
             child: TabBarView(
-              controller: _tabController,
+              controller: controller.tabController,
               children: const [
                 UpcomingAppointment(),
                 ConfirmedAppointmentScreen(),

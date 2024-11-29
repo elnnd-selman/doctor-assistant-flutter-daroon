@@ -31,7 +31,7 @@ class HomeUpcomingAppointment extends GetView<DoctorHomeController> {
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.blackBGColor,
+                        color: AppColors.lightgreyColor,
                         fontSize: 14,
                       ),
                     ),

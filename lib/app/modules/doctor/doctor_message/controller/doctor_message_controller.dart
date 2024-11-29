@@ -9,7 +9,10 @@ import 'package:get/get.dart';
 class DoctorMessageController extends GetxController {
   RxList<DoctorMessageModelData> doctorConversationList =
       <DoctorMessageModelData>[].obs;
+  RxList<DoctorMessageModelData> searchDoctorList =
+      <DoctorMessageModelData>[].obs;
   RxBool isLoading = false.obs;
+  RxBool isSearch = false.obs;
   //
 
   getDoctorAllConversation() async {
@@ -43,5 +46,14 @@ class DoctorMessageController extends GetxController {
   void onInit() {
     super.onInit();
     getDoctorAllConversation();
+  }
+
+  searchUserMessage(String query) {
+    searchDoctorList.value = [];
+    searchDoctorList.value = doctorConversationList
+        .where((message) => message.patient!.firstNameEn!
+            .toLowerCase()
+            .contains(query.toLowerCase()))
+        .toList();
   }
 }

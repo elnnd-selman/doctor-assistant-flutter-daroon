@@ -1,4 +1,5 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_home/controller/doctor_home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ import 'package:daroon_doctor/global/utils/app_text_style.dart';
 import 'package:searchbar_animation/searchbar_animation.dart';
 
 class DoctorAppointmentAppBar extends GetView<DoctorAppointmentController> {
-  const DoctorAppointmentAppBar({super.key});
+  DoctorAppointmentAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +49,23 @@ class DoctorAppointmentAppBar extends GetView<DoctorAppointmentController> {
               hintText: "Search Appointment",
               buttonBorderColour: Colors.black45,
               searchBoxWidth: MediaQuery.of(context).size.width * 0.94,
-              onChanged: (val) {},
+              onChanged: (val) {
+                final query = val.toString();
+                if (query.isEmpty) {
+                  controller.isSearch.value = false;
+                } else {
+                  controller.isSearch.value = true;
+                  controller.serachAppointment(query);
+                }
+              },
               onFieldSubmitted: (String value) {
                 debugPrint('onFieldSubmitted value $value');
               },
               onPressButton: (open) {
                 controller.isAppBarOpen.value = open;
               },
-              textEditingController: TextEditingController(),
+              textEditingController:
+                  Get.find<DoctorHomeController>().searchTextField,
               trailingWidget: SvgPicture.asset(
                 Assets.serachIcon,
                 colorFilter:

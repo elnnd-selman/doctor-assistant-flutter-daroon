@@ -48,6 +48,7 @@ class ConfirmedAppointmentContainer extends StatelessWidget {
                       SizedBox(height: 4 * SizeConfig.heightMultiplier),
                       CustomCupertinoButton(
                         onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           Get.toNamed(Routes.doctorAppointmentDetail,
                               arguments: [
                                 "Completed",
@@ -135,6 +136,7 @@ class ConfirmedAppointmentContainer extends StatelessWidget {
                       SizedBox(height: 2 * SizeConfig.heightMultiplier),
                       CustomCupertinoButton(
                         onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           Get.toNamed(Routes.doctorAppointmentDetail,
                               arguments: [
                                 "Completed",
@@ -212,6 +214,7 @@ class ConfirmedAppointmentContainer extends StatelessWidget {
                             Expanded(
                               child: CustomCupertinoButton(
                                 onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   Get.toNamed(
                                     Routes.cancelAppointment,
                                     arguments: [
@@ -248,6 +251,7 @@ class ConfirmedAppointmentContainer extends StatelessWidget {
                             Expanded(
                               child: CustomCupertinoButton(
                                 onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   Get.find<DoctorAppointmentController>()
                                       .confirmAppointment(
                                     appointmentModel,

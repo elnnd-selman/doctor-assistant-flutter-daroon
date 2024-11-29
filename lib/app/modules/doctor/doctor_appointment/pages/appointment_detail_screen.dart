@@ -1,5 +1,6 @@
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
+import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/widgets/change_appointment_time.dart';
 import 'package:daroon_doctor/global/widgets/loading_overlay.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -177,7 +178,7 @@ class AppointmentDetailScreen extends StatelessWidget {
                                   ),
                                   20.verticalSpace,
                                   ReadMoreText(
-                                    appointmentModel.cancelledReason,
+                                    appointmentModel.cancelledReason!,
                                     trimMode: TrimMode.Line,
                                     trimLines: 2,
                                     colorClickableText: Colors.pink,
@@ -423,14 +424,14 @@ class AppointmentDetailScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(0),
                           minSize: 0,
                           onPressed: () {
-                            // Get.bottomSheet(
-                            //   ChangeAppointmentTimeBottomSheet(
-                            //       appointmentModel: appointmentModel),
-                            //   backgroundColor: Colors.transparent,
-                            //   isScrollControlled: true,
-                            //   isDismissible: false,
-                            //   enableDrag: false,
-                            // );
+                            Get.bottomSheet(
+                              ChangeAppointmentTimeBottomSheet(
+                                appointmentModel: appointmentModel,
+                              ),
+                              barrierColor: Colors.black45,
+                              isScrollControlled: true,
+                              isDismissible: true,
+                            );
                           },
                           child: Center(
                             child: Text(

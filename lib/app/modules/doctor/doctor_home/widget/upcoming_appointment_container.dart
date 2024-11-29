@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/controller/doctor_appointment_controller.dart';
 import 'package:daroon_doctor/app/modules/doctor/doctor_appointment/model/doctor_appointmet_model.dart';
+import 'package:daroon_doctor/global/utils/spaces.dart';
 import 'package:daroon_doctor/global/widgets/custom_cupertino_button.dart';
 import 'package:daroon_doctor/global/widgets/network_image_loader.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,7 @@ class UpcomingAppointmentContainer extends StatelessWidget {
                       SizedBox(height: 4 * SizeConfig.heightMultiplier),
                       CustomCupertinoButton(
                         onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           Get.toNamed(
                             Routes.doctorAppointmentDetail,
                             arguments: [
@@ -71,26 +73,42 @@ class UpcomingAppointmentContainer extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: NetWorkImageLoader(
-                                    containerColor: Colors.black54,
-                                    imageURL: appointmentModel
-                                        .bookedBy!.profilePicture!.bg!,
-                                    height: 9 * SizeConfig.heightMultiplier,
-                                    width: 18 * SizeConfig.widthMultiplier,
-                                  ),
-                                ),
-                                // Container(
-                                //   height: 9 * SizeConfig.heightMultiplier,
-                                //   width: 18 * SizeConfig.widthMultiplier,
-                                //   decoration: BoxDecoration(
-                                //     image: const DecorationImage(
-                                //         image: AssetImage(
-                                //             "assets/images/Rectangle 25.png")),
-                                //     borderRadius: BorderRadius.circular(10),
-                                //   ),
-                                // ),
+                                appointmentModel.bookedBy!.profilePicture ==
+                                        null
+                                    ? Container(
+                                        height: 9 * SizeConfig.heightMultiplier,
+                                        width: 18 * SizeConfig.widthMultiplier,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.blackBGColor,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Center(
+                                          child: FittedBox(
+                                            child: Text(
+                                              '${appointmentModel.bookedBy!.username![0].toUpperCase()}${appointmentModel.bookedBy!.firstName![0].toUpperCase()}',
+                                              style:
+                                                  AppTextStyles.bold.copyWith(
+                                                color: Colors.white,
+                                                fontSize: Spaces.fontSize(
+                                                    fontSize: 18),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: NetWorkImageLoader(
+                                          containerColor: Colors.black54,
+                                          imageURL: appointmentModel
+                                              .bookedBy!.profilePicture!.bg!,
+                                          height:
+                                              9 * SizeConfig.heightMultiplier,
+                                          width:
+                                              18 * SizeConfig.widthMultiplier,
+                                        ),
+                                      ),
                                 14.horizontalSpace,
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,6 +166,7 @@ class UpcomingAppointmentContainer extends StatelessWidget {
                       SizedBox(height: 2 * SizeConfig.heightMultiplier),
                       CustomCupertinoButton(
                         onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
                           Get.toNamed(
                             Routes.doctorAppointmentDetail,
                             arguments: [
@@ -227,6 +246,7 @@ class UpcomingAppointmentContainer extends StatelessWidget {
                             Expanded(
                               child: CustomCupertinoButton(
                                 onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   Get.toNamed(
                                     Routes.cancelAppointment,
                                     arguments: [
@@ -263,6 +283,7 @@ class UpcomingAppointmentContainer extends StatelessWidget {
                             Expanded(
                               child: CustomCupertinoButton(
                                 onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   Get.find<DoctorAppointmentController>()
                                       .confirmAppointment(
                                     appointmentModel,

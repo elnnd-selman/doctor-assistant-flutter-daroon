@@ -20,7 +20,7 @@ class UpcomingAppointment extends GetView<DoctorAppointmentController> {
           : controller.upcomingAppointmentList.isEmpty
               ? Center(
                   child: Text(
-                    "No Upcoming appointment\nis found.",
+                    "No Upcoming appointment\n found.",
                     textAlign: TextAlign.center,
                     style: AppTextStyles.medium.copyWith(
                         fontSize: 16,
@@ -30,28 +30,63 @@ class UpcomingAppointment extends GetView<DoctorAppointmentController> {
                 )
               : controller.confirmProcessing
                   ? const Center(child: LoadingWidget())
-                  : ListView.builder(
-                      padding:
-                          EdgeInsets.only(top: 2 * SizeConfig.heightMultiplier),
-                      shrinkWrap: true,
-                      itemCount: controller.upcomingAppointmentList.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
+                  : controller.isSearch.value
+                      ? controller.serachAppointmentList.isEmpty
+                          ? Center(
+                              child: Text(
+                                "No Upcoming appointment\n found.",
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.medium.copyWith(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.lighttextColor),
+                              ),
+                            )
+                          : ListView.builder(
+                              padding: EdgeInsets.only(
+                                  top: 2 * SizeConfig.heightMultiplier),
+                              shrinkWrap: true,
+                              itemCount:
+                                  controller.serachAppointmentList.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: index ==
+                                              controller.serachAppointmentList
+                                                      .length -
+                                                  1
+                                          ? 12 * SizeConfig.heightMultiplier
+                                          : 0),
+                                  child: UpcomingAppointmentContainer(
+                                    isPadding: true,
+                                    appointmentModel:
+                                        controller.serachAppointmentList[index],
+                                  ),
+                                );
+                              },
+                            )
+                      : ListView.builder(
                           padding: EdgeInsets.only(
-                              bottom: index ==
-                                      controller
-                                              .upcomingAppointmentList.length -
-                                          1
-                                  ? 12 * SizeConfig.heightMultiplier
-                                  : 0),
-                          child: UpcomingAppointmentContainer(
-                            isPadding: true,
-                            appointmentModel:
-                                controller.upcomingAppointmentList[index],
-                          ),
-                        );
-                      },
-                    ),
+                              top: 2 * SizeConfig.heightMultiplier),
+                          shrinkWrap: true,
+                          itemCount: controller.upcomingAppointmentList.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                  bottom: index ==
+                                          controller.upcomingAppointmentList
+                                                  .length -
+                                              1
+                                      ? 12 * SizeConfig.heightMultiplier
+                                      : 0),
+                              child: UpcomingAppointmentContainer(
+                                isPadding: true,
+                                appointmentModel:
+                                    controller.upcomingAppointmentList[index],
+                              ),
+                            );
+                          },
+                        ),
     );
   }
 }

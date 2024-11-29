@@ -30,6 +30,7 @@ class CompleteAppointmentContainer extends StatelessWidget {
         padding: EdgeInsets.zero,
         minSize: 0,
         onPressed: () {
+          FocusManager.instance.primaryFocus?.unfocus();
           Get.toNamed(
             Routes.doctorAppointmentDetail,
             arguments: [
